@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { Eye, EyeOff, Lock, Building2, Mail, CheckCircle2, Briefcase } from 'lucide-react'
-import { Button } from '@/components/ui/Button' // 👈 match your existing Button file
-
+import { Button } from '@/components/ui/button' // 👈 match your existing Button file
+import Link from "next/link"
 export default function EmployerRegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
@@ -115,10 +115,13 @@ export default function EmployerRegisterPage() {
 
                 {/* Login Link */}
                 <div className="text-center pt-2">
-                  <span className="text-text-secondary">Already have an account? </span>
-                  <a href="#" className="text-primary font-semibold hover:underline">
-                    Announce
-                  </a>
+                    <span className="text-text-secondary">Already have an account? </span>
+                    <Link
+                        href="/employer/login"
+                        className="text-primary font-semibold hover:underline"
+                    >
+                        Announce
+                    </Link>
                 </div>
               </form>
             </div>
