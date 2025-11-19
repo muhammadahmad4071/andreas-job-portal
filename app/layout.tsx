@@ -1,24 +1,28 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import { SiteHeader } from '@/components/layout/SiteHeader'
-import { SiteFooter } from '@/components/layout/SiteFooter'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Oberland Jobs - The largest selection of jobs in Oberland region',
-  description: 'Find current jobs in the Bavarian Oberland. Regional job offers, apprenticeships and mini-jobs.',
-}
+import "./globals.css"
+import { SiteHeader } from "@/components/layout/SiteHeader"
+import { usePathname } from "next/navigation"
+// ⬇️ If you have a Footer component, keep this import. If not, delete this line & the Footer JSX.
+// import { Footer } from "@/components/footer"
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+
+  // true ONLY on /employer/register (and deeper, if any)
+  const isEmployerRegister = pathname.startsWith("/employer/register")
+
   return (
     <html lang="en">
-      <body>
-        <SiteHeader />
+      <body className="bg-background text-foreground">
+        {/* Show main header on all pages EXCEPT employer/register */}
+        {!isEmployerRegister && <SiteHeader />}
+
         {children}
-        <SiteFooter />
+
+        {/* Show footer on all pages EXCEPT employer/register */}
+        {/* If you don't have a Footer component, remove this block */}
+        {/* {!isEmployerRegister && <Footer />} */}
       </body>
     </html>
   )
