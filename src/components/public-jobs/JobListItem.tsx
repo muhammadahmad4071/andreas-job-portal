@@ -41,6 +41,7 @@ export function JobListItem({ job, isSelected, onClick }: JobListItemProps) {
             )}
           </div>
 
+
           <p className="text-sm font-medium text-foreground line-clamp-1">{job.companyName}</p>
 
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
