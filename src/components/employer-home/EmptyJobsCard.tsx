@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Plus } from 'lucide-react'
-
+import Link from "next/link"
 export function EmptyJobsCard() {
   return (
     <div className="bg-white rounded-lg shadow-sm p-12">
@@ -28,13 +28,15 @@ export function EmptyJobsCard() {
           You have not published any job advertisements at the moment. As soon as you create a new job advertisement, it will appear here.
         </p>
 
-        <Button 
-          className="bg-primary hover:bg-primary/90 text-primary-foreground"
-          size="lg"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Add a job ad
-        </Button>
+        <Link href="/employer/jobs/add-job">
+          <Button 
+            className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            size="lg"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add a job ad
+          </Button>
+        </Link>
       </div>
     </div>
   )
