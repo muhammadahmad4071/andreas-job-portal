@@ -1,0 +1,231 @@
+"use client"
+
+import { useState } from "react"
+import Link from "next/link"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { MapPin, Briefcase, Building2, ChevronRight, Check, Share2, Crown } from "lucide-react"
+import type { JobDetail } from "@/../../app/public/jobs/[jobId]/page"
+
+type JobDetailLayoutProps = {
+  job: JobDetail
+}
+
+export function JobDetailLayout({ job }: JobDetailLayoutProps) {
+  // start collapsed
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  return (
+    <>
+      {/* Dark grey header banner */}
+      <div className="bg-[#5A6470] h-40 w-full" />
+
+      <div className="bg-muted min-h-screen -mt-24">
+        <div className="container-custom py-10">
+          <div className="max-w-5xl mx-auto">
+            <Card className="rounded-2xl shadow-lg border bg-white">
+              {/* Breadcrumb and Apply Button */}
+              <div className="p-6 sm:p-8 border-b">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
+                    <Link href="/public/jobs" className="text-[#FDB714] hover:underline">
+                      Jobs
+                    </Link>
+                    <ChevronRight className="w-4 h-4" />
+                    <Link href={`/public/jobs?category=${job.category}`} className="text-[#FDB714] hover:underline">
+                      {job.category}
+                    </Link>
+                    <ChevronRight className="w-4 h-4" />
+                    <span className="text-foreground">{job.title}</span>
+                  </div>
+                  <Button
+                    size="lg"
+                    className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground whitespace-nowrap"
+                  >
+                    <Briefcase className="w-4 h-4 mr-2" />
+                    Apply
+                  </Button>
+                </div>
+              </div>
+
+              {/* Job Header */}
+              <div className="p-6 sm:p-8 space-y-6">
+                <div className="flex items-start gap-6">
+                  {/* Company Logo Placeholder */}
+                  <div className="flex-shrink-0 w-20 h-20 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 font-bold text-xl">
+                    {job.companyName.substring(0, 2).toUpperCase()}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 flex-wrap mb-2">
+                      <h1 className="text-2xl sm:text-3xl font-bold text-foreground">{job.title}</h1>
+                      {job.isTopJob && (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-[#FDB714] text-white">
+                            <Crown className="w-3 h-3" />
+                            Top Job
+                        </span>
+                    )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-[#FDB714]">
+                        <Building2 className="w-4 h-4" />
+                        <span className="font-medium">{job.companyName}</span>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <MapPin className="w-4 h-4" />
+                        <span className="text-sm">{job.location}</span>
+                      </div>
+
+                      <div className="text-sm text-muted-foreground">
+                        {job.category} | {job.employmentType} | {job.professionalExperience} | {job.salaryRange}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Summary Section */}
+                <div className="space-y-4 pt-6 border-t">
+                  <h2 className="text-xl font-semibold text-foreground">Summary</h2>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
+                      <p>
+                        <span className="font-medium">Job Title:</span> {job.title}
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
+                      <p>
+                        <span className="font-medium">Location:</span> {job.workplace}
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
+                      <p>
+                        <span className="font-medium">Employment Type:</span>{" "}
+                        {job.employmentType.includes("Permanent") ? "Full-time" : job.employmentType}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* About Us Section */}
+                <div className="space-y-4 pt-6 border-t">
+                  <h2 className="text-xl font-semibold text-foreground">About us</h2>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{job.aboutUs}</p>
+                </div>
+
+                {/* Your Tasks Section */}
+                <div className="space-y-4 pt-6 border-t">
+                  <h2 className="text-xl font-semibold text-foreground">Your tasks</h2>
+                  <div className="space-y-3">
+                    {job.yourTasks.map((task, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
+                        <p className="text-sm text-muted-foreground">{task}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* What We Are Looking For Section */}
+                <div className="space-y-4 pt-6 border-t">
+                  <h2 className="text-xl font-semibold text-foreground">What we are looking for</h2>
+                  <div className="space-y-3">
+                    {job.whatWeLookingFor.map((item, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
+                        <p className="text-sm text-muted-foreground">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Why You Should Come to Us Section */}
+                <div className="space-y-4 pt-6 border-t">
+                  <h2 className="text-xl font-semibold text-foreground">Why you should come to us</h2>
+                  <div className="space-y-3">
+                    {job.whyJoinUs.map((benefit, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
+                        <p className="text-sm text-muted-foreground">{benefit}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* --- EXPANDABLE PART STARTS HERE --- */}
+                {isExpanded && (
+                  <>
+                    {/* Our Hiring Process Section */}
+                    <div className="space-y-4 pt-6 border-t">
+                      <h2 className="text-xl font-semibold text-foreground">Our Hiring Process</h2>
+                      <div className="space-y-3">
+                        {job.hiringProcess.map((step, index) => (
+                          <div key={index} className="flex items-start gap-3">
+                            <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
+                            <p className="text-sm text-muted-foreground">{step}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Workplace Section */}
+                    <div className="space-y-4 pt-6 border-t">
+                      <h2 className="text-xl font-semibold text-foreground">Workplace</h2>
+                      <div className="flex items-start gap-3">
+                        <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
+                        <p className="text-sm text-muted-foreground">{job.workplace}</p>
+                      </div>
+                    </div>
+
+                    {/* Professional Experience Section */}
+                    <div className="space-y-2">
+                      <h3 className="font-semibold text-foreground">Professional experience</h3>
+                      <p className="text-sm text-muted-foreground">{job.professionalExperience}</p>
+                    </div>
+
+                    {/* Salary Range Section */}
+                    <div className="space-y-2">
+                      <h3 className="font-semibold text-foreground">Salary range</h3>
+                      <p className="text-sm text-muted-foreground">{job.salaryRange}</p>
+                    </div>
+                  </>
+                )}
+                {/* --- EXPANDABLE PART ENDS HERE --- */}
+
+                {/* Show More/Less Toggle */}
+                <div className="pt-4">
+                  <button
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className="text-[#FDB714] hover:underline text-sm font-medium border border-[#FDB714] px-4 py-2 rounded-md"
+                  >
+                    {isExpanded ? "Show less" : "Show more"}
+                  </button>
+                </div>
+
+                {/* Bottom Action Row */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-6 border-t">
+                  <Button
+                    variant="outline"
+                    className="border-[#FDB714] text-[#FDB714] hover:bg-[#FDB714]/10 bg-transparent"
+                  >
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Divide
+                  </Button>
+
+                  <Button size="lg" className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground sm:hidden">
+                    <Briefcase className="w-4 h-4 mr-2" />
+                    Apply
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
