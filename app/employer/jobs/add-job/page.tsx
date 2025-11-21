@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { ApplicationProcessCard } from "@/components/employer-add-jobs/ApplicationProcessCard"
 import { SalaryIndicationCard } from "@/components/employer-add-jobs/SalaryIndicationCard"
 import { ReleaseDatesCard } from "@/components/employer-add-jobs/ReleaseDatesCard"
@@ -24,9 +25,18 @@ export default function NewJobPage() {
       {/* Logo Header */}
       <div className="bg-white border-b border-border py-6">
         <div className="flex justify-center">
-          <Image src="/logo.png" alt="Oberland JOBS" width={160} height={45} priority />
+            <Link href="/employer/home">
+            <Image
+                src="/logo.png"
+                alt="Oberland JOBS"
+                width={160}
+                height={45}
+                priority
+                className="cursor-pointer"
+            />
+            </Link>
         </div>
-      </div>
+        </div>
 
       {/* Page Header */}
       <div className="w-full md:w-[70%] mx-auto px-4 py-12 text-center">

@@ -16,15 +16,15 @@ import { usePathname } from "next/navigation"
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/employer/home", hasSubmenu: false },
-  { icon: Briefcase, label: "Jobs", href: "/employer/jobs", hasSubmenu: false },
-  { icon: Users, label: "Candidacies", href: "/employer/candidacies", hasSubmenu: false },
-  {
-    icon: FileText,
-    label: "Contract & Products",
-    href: "/employer/contracts",
-    hasSubmenu: true,
-  },
-  { icon: Building2, label: "Enterprise", href: "/employer/enterprise", hasSubmenu: false },
+  { icon: Briefcase, label: "Jobs", href: "/employer/jobs/all-jobs", hasSubmenu: false },
+  // { icon: Users, label: "Candidacies", href: "/employer/candidacies", hasSubmenu: false },
+  // {
+  //   icon: FileText,
+  //   label: "Contract & Products",
+  //   href: "/employer/contracts",
+  //   hasSubmenu: true,
+  // },
+  // { icon: Building2, label: "Enterprise", href: "/employer/enterprise", hasSubmenu: false },
   { icon: UserCircle, label: "Employer Profile", href: "/employer/profile", hasSubmenu: false },
 ]
 
