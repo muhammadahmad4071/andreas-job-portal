@@ -115,12 +115,12 @@ export function JobCard({ job }: JobCardProps) {
                   </p>
                 )}
 
-                {job.statisticsSummary && (
+                {/* {job.statisticsSummary && (
                   <p>
                     <span className="font-semibold">Statistics: </span>
                     <span>{job.statisticsSummary}</span>
                   </p>
-                )}
+                )} */}
               </div>
             )}
           </div>

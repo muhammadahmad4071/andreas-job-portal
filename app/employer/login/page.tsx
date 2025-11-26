@@ -5,7 +5,7 @@ import { Eye, EyeOff, LogIn, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { apiFetch } from "@/lib/api"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { z } from "zod"
 
 const loginSchema = z.object({
@@ -15,6 +15,7 @@ const loginSchema = z.object({
 
 export default function EmployerLoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const [showPassword, setShowPassword] = useState(false)
   const [emailOrUsername, setEmailOrUsername] = useState("")
@@ -43,7 +44,7 @@ export default function EmployerLoginPage() {
     try {
       loginSchema.parse(payload)
     } catch (err) {
-      if (err instanceof z.ZodError) {
+        if (err instanceof z.ZodError) {
         const newErrors: { login?: string; password?: string } = {}
 
         err.errors.forEach((issue) => {
@@ -66,6 +67,7 @@ export default function EmployerLoginPage() {
     setIsSubmitting(true)
 
     try {
+      // apiFetch should return parsed JSON or throw on non-2xx
       const res = await apiFetch("/login", {
         method: "POST",
         body: JSON.stringify(payload),
@@ -73,13 +75,27 @@ export default function EmployerLoginPage() {
 
       // Save JWT token (if backend returns it)
       if (res?.token) {
-        localStorage.setItem("token", res.token)
+        // Optional: keep using localStorage if the rest of your app expects it
+        try {
+          localStorage.setItem("token", res.token)
+        } catch {
+          // ignore localStorage errors (SSR / disabled)
+        }
+
+        // 🔐 IMPORTANT: also set a cookie so middleware.ts can see it
+        // 2 hours = 7200 seconds
+        const maxAgeSeconds = 60 * 60 * 2
+        document.cookie = `token=${encodeURIComponent(
+          res.token,
+        )}; Max-Age=${maxAgeSeconds}; Path=/`
       }
 
       setSuccess("Login successful! Redirecting...")
       setError(null)
 
-      router.push("/employer/home")
+      // Respect ?redirectTo=... from middleware, fallback to /employer/home
+      const redirectTo = searchParams.get("redirectTo") || "/employer/home"
+      router.push(redirectTo)
     } catch (err: any) {
       console.error("Login failed:", err)
 
@@ -120,11 +136,9 @@ export default function EmployerLoginPage() {
   return (
     <div className="min-h-screen bg-white">
       <div className="grid grid-cols-1 lg:grid-cols-2 h-screen">
-
         {/* Left Column */}
         <div className="bg-white p-8 lg:p-12 flex flex-col justify-center">
           <div className="max-w-md w-full mx-auto">
-
             {/* Logo */}
             <div className="mb-12">
               <Link href="/">
@@ -145,7 +159,6 @@ export default function EmployerLoginPage() {
 
             {/* Form */}
             <form onSubmit={handleLogin} className="space-y-6">
-
               {/* Login (email or username) */}
               <div>
                 <input
@@ -236,7 +249,6 @@ export default function EmployerLoginPage() {
                 </a>
               </p>
             </div>
-
           </div>
         </div>
 
@@ -247,7 +259,6 @@ export default function EmployerLoginPage() {
         >
           <div className="absolute inset-0 bg-black/10"></div>
         </div>
-
       </div>
     </div>
   )
