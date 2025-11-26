@@ -95,7 +95,7 @@ export function AllJobsFilters({
             <Select value={filterSource} onValueChange={onFilterSourceChange}>
               <SelectTrigger className="bg-white min-w-[140px] justify-between">
                 <SelectValue placeholder="All Jobs" />
-                <ChevronDown className="w-4 h-4 ml-2" />
+                {/* <ChevronDown className="w-4 h-4 ml-2" /> */}
               </SelectTrigger>
               <SelectContent className="bg-white">
                 {SOURCE_OPTIONS.map((option) => (
@@ -130,7 +130,7 @@ export function AllJobsFilters({
           <Select value={filterSource} onValueChange={onFilterSourceChange}>
             <SelectTrigger className="bg-white md:flex-[2] justify-between">
               <SelectValue placeholder="Any Source" />
-              <ChevronDown className="w-4 h-4 ml-2" />
+              {/* <ChevronDown className="w-4 h-4 ml-2" /> */}
             </SelectTrigger>
             <SelectContent className="bg-white">
               {SOURCE_OPTIONS.map((option) => (
@@ -150,7 +150,7 @@ export function AllJobsFilters({
           >
             <SelectTrigger className="bg-white md:flex-1 justify-between">
               <SelectValue placeholder="Any type of employment" />
-              <ChevronDown className="w-4 h-4 ml-2" />
+              {/* <ChevronDown className="w-4 h-4 ml-2" /> */}
             </SelectTrigger>
             <SelectContent className="bg-white">
               {EMPLOYMENT_TYPE_OPTIONS.map((option) => (
@@ -167,7 +167,7 @@ export function AllJobsFilters({
           >
             <SelectTrigger className="bg-white md:flex-1 justify-between">
               <SelectValue placeholder="Any application workflow" />
-              <ChevronDown className="w-4 h-4 ml-2" />
+              {/* <ChevronDown className="w-4 h-4 ml-2" /> */}
             </SelectTrigger>
             <SelectContent className="bg-white">
               {WORKFLOW_OPTIONS.map((option) => (
@@ -184,7 +184,7 @@ export function AllJobsFilters({
           >
             <SelectTrigger className="bg-white md:flex-1 justify-between">
               <SelectValue placeholder="Any frontend" />
-              <ChevronDown className="w-4 h-4 ml-2" />
+              {/* <ChevronDown className="w-4 h-4 ml-2" /> */}
             </SelectTrigger>
             <SelectContent className="bg-white">
               {FRONTEND_OPTIONS.map((option) => (

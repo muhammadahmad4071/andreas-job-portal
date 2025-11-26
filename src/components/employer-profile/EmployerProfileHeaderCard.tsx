@@ -33,7 +33,7 @@ export function EmployerProfileHeaderCard({
   const address = org?.address ?? "No address provided"
   const country = org?.country ?? "Country not specified"
 
-  // organization.logo is the backend path
+  // backend returns logo path in organization.logo
   const logoPath: string | undefined = org?.logo
   const logoSrc =
     logoPath && API_BASE_URL
@@ -54,8 +54,8 @@ export function EmployerProfileHeaderCard({
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // 🔁 Whenever you enter edit mode OR the profile changes,
-  // sync the edit fields + preview with the current API data.
+  // 🔁 When entering edit mode OR when profile changes,
+  // sync edit fields & preview with current API data
   useEffect(() => {
     if (isEditing) {
       setEditCompanyTitle(companyTitle)
@@ -97,24 +97,35 @@ export function EmployerProfileHeaderCard({
         throw new Error("No authentication token found in localStorage.")
       }
 
-      // Use FormData for text + file
+      // ⚠️ Laravel expects multipart POST + _method=PATCH
       const formData = new FormData()
-      formData.append("title", editCompanyTitle)
-      formData.append("area", editHeadOfficeArea)
-      formData.append("address", editAddress)
-      formData.append("country", editCountry)
+      formData.append("_method", "PATCH")
 
+      // Only append fields if there is a non-empty value
+      if (editCompanyTitle.trim()) {
+        formData.append("title", editCompanyTitle.trim())
+      }
+      if (editHeadOfficeArea.trim()) {
+        formData.append("area", editHeadOfficeArea.trim())
+      }
+      if (editAddress.trim()) {
+        formData.append("address", editAddress.trim())
+      }
+      if (editCountry.trim()) {
+        formData.append("country", editCountry.trim())
+      }
+
+      // logo file (optional)
       if (logoFile) {
-        // backend: $request->file('logo')
         formData.append("logo", logoFile)
       }
 
       const res = await fetch(`${API_BASE_URL}/organization`, {
-        method: "PATCH",
+        method: "POST", // <- important: POST + _method=PATCH
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token}`,
-          // DO NOT set Content-Type manually for FormData
+          // NO manual Content-Type for FormData
         },
         body: formData,
       })
@@ -133,6 +144,7 @@ export function EmployerProfileHeaderCard({
         body
       )
 
+      // refresh /me in parent so new values + logo show up
       await onProfileRefresh()
       onCancel()
     } catch (err: any) {
