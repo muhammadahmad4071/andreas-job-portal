@@ -69,13 +69,13 @@ export function JobCard({ job }: JobCardProps) {
                 <span>{shownDescription}</span>
               </p>
 
-              {/* Always show toggle so user can open extra fields even if description is short */}
+              {/* Toggle to show/hide extra details */}
               <button
                 type="button"
                 onClick={() => setExpanded((prev) => !prev)}
                 className="mt-1 inline-flex items-center text-sm font-medium text-gray-800 hover:text-gray-900"
               >
-                {expanded ? " " : " "}
+                {expanded ? "See less details" : "See more details"}
                 {expanded ? (
                   <ChevronUp className="w-4 h-4 ml-1" />
                 ) : (
@@ -114,13 +114,6 @@ export function JobCard({ job }: JobCardProps) {
                     <span>{updatedDate}</span>
                   </p>
                 )}
-
-                {/* {job.statisticsSummary && (
-                  <p>
-                    <span className="font-semibold">Statistics: </span>
-                    <span>{job.statisticsSummary}</span>
-                  </p>
-                )} */}
               </div>
             )}
           </div>

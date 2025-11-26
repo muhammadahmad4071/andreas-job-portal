@@ -21,20 +21,28 @@ export function UserMenu() {
     setIsLoggingOut(true)
 
     try {
-      // 🔥 Automatically sends Authorization: Bearer <token>
+      // 🔥 Automatically sends Authorization: Bearer <token> (if present)
       await apiFetch("/logout", {
         method: "POST",
       })
     } catch (err) {
       console.error("Logout error:", err)
-      // Continue anyway
+      // Continue anyway – we still want to clear tokens client-side
     } finally {
-      // ❌ Remove token no matter what
       if (typeof window !== "undefined") {
-        localStorage.removeItem("token")
+        // ❌ Remove token from localStorage
+        try {
+          localStorage.removeItem("token")
+        } catch {
+          // ignore
+        }
+
+        // ❌ Remove token cookie used by middleware & apiFetch
+        // Overwrite with empty value and Max-Age=0
+        document.cookie = "token=; Max-Age=0; Path=/"
       }
 
-      // Redirect user to login page
+      // 🔁 Redirect user to login page
       router.push("/employer/login")
 
       setIsLoggingOut(false)
@@ -45,7 +53,7 @@ export function UserMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="w-10 h-10 rounded-full bg-primary text-white font-semibold flex items-center justify-center hover:bg-primary-dark">
-          
+          {/* You can put initials here later if you want */}
         </button>
       </DropdownMenuTrigger>
 
@@ -53,7 +61,9 @@ export function UserMenu() {
         align="end"
         className="w-44 bg-white border border-border shadow-lg rounded-md"
       >
-        <DropdownMenuLabel className="text-text-primary">My Account</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-text-primary">
+          My Account
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
         <DropdownMenuItem onClick={() => router.push("/employer/settings")}>
