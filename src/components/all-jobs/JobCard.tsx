@@ -4,8 +4,27 @@ import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import type { EmployerJob } from "@/components/all-jobs/types"
-import { Info, MapPin, ChevronDown, ChevronUp, Edit } from "lucide-react"
+import {
+  Info,
+  MapPin,
+  ChevronDown,
+  ChevronUp,
+  Edit,
+  Trash2,
+} from "lucide-react"
 import Link from "next/link"
+import { apiFetch } from "@/lib/api"
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog"
 
 type JobCardProps = {
   job: EmployerJob
@@ -13,6 +32,7 @@ type JobCardProps = {
 
 export function JobCard({ job }: JobCardProps) {
   const [expanded, setExpanded] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const shownDescription =
     expanded || job.description.length <= 140
@@ -27,6 +47,32 @@ export function JobCard({ job }: JobCardProps) {
     job.updatedAt && typeof job.updatedAt === "string"
       ? job.updatedAt.slice(0, 10)
       : ""
+
+  const handleDeleteConfirmed = async () => {
+    if (isDeleting) return
+
+    try {
+      setIsDeleting(true)
+
+      // 🔥 DELETE /jobs/{id} – auth + cookies handled by apiFetch
+      await apiFetch(`/jobs/${job.id}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+        },
+      })
+
+      // Simplest way to refresh list after delete
+      if (typeof window !== "undefined") {
+        window.location.reload()
+      }
+    } catch (err) {
+      console.error("Failed to delete job:", err)
+      alert("Failed to delete job. Please try again.")
+    } finally {
+      setIsDeleting(false)
+    }
+  }
 
   return (
     <Card className="shadow-sm border border-gray-200">
@@ -118,7 +164,7 @@ export function JobCard({ job }: JobCardProps) {
             )}
           </div>
 
-          {/* Right side: Edit */}
+          {/* Right side: Edit + Delete */}
           <div className="mt-2 flex items-start gap-3 md:mt-0 md:flex-col md:items-end">
             <Button
               asChild
@@ -131,6 +177,50 @@ export function JobCard({ job }: JobCardProps) {
                 Edit
               </Link>
             </Button>
+
+            {/* DELETE with nice confirmation dialog */}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  className="mt-1 md:mt-2"
+                  disabled={isDeleting}
+                >
+                  <Trash2 className="w-4 h-4 mr-1" />
+                  {isDeleting ? "Deleting…" : "Delete"}
+                </Button>
+              </AlertDialogTrigger>
+
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Delete this job?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure you want to delete the job{" "}
+                    <span className="font-semibold">{job.title}</span>? This
+                    action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={isDeleting}>
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleDeleteConfirmed()
+                    }}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    disabled={isDeleting}
+                  >
+                    {isDeleting ? "Deleting…" : "Delete"}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       </CardContent>
