@@ -1,11 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Eye, EyeOff, LogIn, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { apiFetch } from "@/lib/api"
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { z } from "zod"
 
 const loginSchema = z.object({
@@ -15,7 +15,6 @@ const loginSchema = z.object({
 
 export default function EmployerLoginPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
 
   const [showPassword, setShowPassword] = useState(false)
   const [emailOrUsername, setEmailOrUsername] = useState("")
@@ -23,11 +22,21 @@ export default function EmployerLoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
+  const [redirectTo, setRedirectTo] = useState<string | null>(null)
 
   const [fieldErrors, setFieldErrors] = useState<{
     login?: string
     password?: string
   }>({})
+
+  // Read ?redirectTo=... from URL on the client
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search)
+      const value = params.get("redirectTo")
+      if (value) setRedirectTo(value)
+    }
+  }, [])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -44,7 +53,7 @@ export default function EmployerLoginPage() {
     try {
       loginSchema.parse(payload)
     } catch (err) {
-        if (err instanceof z.ZodError) {
+      if (err instanceof z.ZodError) {
         const newErrors: { login?: string; password?: string } = {}
 
         err.errors.forEach((issue) => {
@@ -94,8 +103,8 @@ export default function EmployerLoginPage() {
       setError(null)
 
       // Respect ?redirectTo=... from middleware, fallback to /employer/home
-      const redirectTo = searchParams.get("redirectTo") || "/employer/home"
-      router.push(redirectTo)
+      const target = redirectTo || "/employer/home"
+      router.push(target)
     } catch (err: any) {
       console.error("Login failed:", err)
 
