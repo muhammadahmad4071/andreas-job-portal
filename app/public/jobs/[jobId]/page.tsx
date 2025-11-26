@@ -1,6 +1,6 @@
 import { JobDetailLayout } from "@/components/job-details/JobDetailPage"
 
-// Type definition for job detail data
+// Type definition for job detail data – aligned with backend
 export type JobDetail = {
   id: string
   title: string
@@ -9,15 +9,21 @@ export type JobDetail = {
   companyLogo?: string
   location: string
   salaryRange: string
+  salaryUnit?: string
   employmentType: string
   professionalExperience: string
   isTopJob: boolean
   aboutUs: string
   yourTasks: string[]
   whatWeLookingFor: string[]
+  languages: string[]
   whyJoinUs: string[]
   hiringProcess: string[]
   workplace: string
+  homeOffice?: string
+  releaseDate?: string
+  expirationDate?: string
+  contactEmails: string[]
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -50,6 +56,17 @@ async function getJobById(jobId: string): Promise<JobDetail> {
     salaryRange = `Up to €${maxSalary}`
   }
 
+  // salary_unit → human readable label
+  const rawUnit: string = (apiJob.salary_unit ?? "").toLowerCase()
+  let salaryUnitLabel: string | undefined
+  if (rawUnit === "hourly") {
+    salaryUnitLabel = "per hour"
+  } else if (rawUnit === "monthly") {
+    salaryUnitLabel = "per month"
+  } else if (rawUnit) {
+    salaryUnitLabel = rawUnit
+  }
+
   // ---- Employment type (employment_types[0]) ----
   const rawEmploymentType =
     Array.isArray(apiJob.employment_types) && apiJob.employment_types.length > 0
@@ -61,8 +78,8 @@ async function getJobById(jobId: string): Promise<JobDetail> {
     employmentType = "Full-time"
   } else if (rawEmploymentType.includes("part")) {
     employmentType = "Part-time"
-  } else if (rawEmploymentType.includes("mini")) {
-    employmentType = "Mini-job"
+  } else if (rawEmploymentType.includes("apprent")) {
+    employmentType = "Apprenticeship"
   }
 
   // ---- Professional experience mapping ----
@@ -76,6 +93,22 @@ async function getJobById(jobId: string): Promise<JobDetail> {
     professionalExperience = "With professional experience (5+ years)"
   }
 
+  const yourTasks: string[] = Array.isArray(apiJob.required_skills)
+    ? apiJob.required_skills
+    : []
+
+  const whatWeLookingFor: string[] = Array.isArray(apiJob.required_educational_qualifications)
+    ? apiJob.required_educational_qualifications
+    : []
+
+  const languages: string[] = Array.isArray(apiJob.required_language_skills)
+    ? apiJob.required_language_skills
+    : []
+
+  const contactEmails: string[] = Array.isArray(apiJob.emails)
+    ? apiJob.emails
+    : []
+
   const jobDetail: JobDetail = {
     id: String(apiJob.id ?? jobId),
     title: apiJob.title ?? "Job",
@@ -84,21 +117,23 @@ async function getJobById(jobId: string): Promise<JobDetail> {
     companyLogo: apiJob.company_logo ?? undefined,
     location: apiJob.workplace_location ?? "Location not specified",
     salaryRange,
+    salaryUnit: salaryUnitLabel,
     employmentType,
     professionalExperience,
     // you can wire this to a real flag later if backend supports it
     isTopJob: false,
     aboutUs: apiJob.description ?? "No description provided yet.",
-    yourTasks: Array.isArray(apiJob.required_skills)
-      ? apiJob.required_skills
-      : [],
-    whatWeLookingFor: Array.isArray(apiJob.required_educational_qualifications)
-      ? apiJob.required_educational_qualifications
-      : [],
+    yourTasks,
+    whatWeLookingFor,
+    languages,
     // backend doesn’t provide these yet – keep as empty arrays for now
     whyJoinUs: [],
     hiringProcess: [],
     workplace: apiJob.workplace_location ?? "",
+    homeOffice: apiJob.home_office ?? undefined,
+    releaseDate: apiJob.release_date ?? undefined,
+    expirationDate: apiJob.expiration_date ?? undefined,
+    contactEmails,
   }
 
   return jobDetail

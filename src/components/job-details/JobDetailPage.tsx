@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { MapPin, Briefcase, Building2, ChevronRight, Check, Share2, Crown } from "lucide-react"
@@ -12,8 +13,14 @@ type JobDetailLayoutProps = {
 }
 
 export function JobDetailLayout({ job }: JobDetailLayoutProps) {
-  // start collapsed
   const [isExpanded, setIsExpanded] = useState(false)
+
+  const hasTasks = job.yourTasks && job.yourTasks.length > 0
+  const hasRequirements = job.whatWeLookingFor && job.whatWeLookingFor.length > 0
+  const hasWhyJoin = job.whyJoinUs && job.whyJoinUs.length > 0
+  const hasHiringProcess = job.hiringProcess && job.hiringProcess.length > 0
+  const hasLanguages = job.languages && job.languages.length > 0
+  const hasContactEmails = job.contactEmails && job.contactEmails.length > 0
 
   return (
     <>
@@ -31,31 +38,50 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                     <Link href="/public/jobs" className="text-[#FDB714] hover:underline">
                       Jobs
                     </Link>
-                    <ChevronRight className="w-4 h-4" />
-                    <Link href={`/public/jobs?category=${job.category}`} className="text-[#FDB714] hover:underline">
-                      {job.category}
-                    </Link>
+                    {job.category && (
+                      <>
+                        <ChevronRight className="w-4 h-4" />
+                        <Link
+                          href={`/public/jobs?category=${encodeURIComponent(job.category)}`}
+                          className="text-[#FDB714] hover:underline"
+                        >
+                          {job.category}
+                        </Link>
+                      </>
+                    )}
                     <ChevronRight className="w-4 h-4" />
                     <span className="text-foreground">{job.title}</span>
                   </div>
                   <Link href={`/public/jobs/${job.id}/apply`}>
                     <Button
-                        size="lg"
-                        className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground whitespace-nowrap"
+                      size="lg"
+                      className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground whitespace-nowrap"
                     >
-                        <Briefcase className="w-4 h-4 mr-2" />
-                        Apply
+                      <Briefcase className="w-4 h-4 mr-2" />
+                      Apply
                     </Button>
-                </Link>
+                  </Link>
                 </div>
               </div>
 
               {/* Job Header */}
               <div className="p-6 sm:p-8 space-y-6">
                 <div className="flex items-start gap-6">
-                  {/* Company Logo Placeholder */}
-                  <div className="flex-shrink-0 w-20 h-20 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 font-bold text-xl">
-                    {job.companyName.substring(0, 2).toUpperCase()}
+                  {/* Company Logo / Initials */}
+                  <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-blue-100 flex items-center justify-center">
+                    {job.companyLogo ? (
+                      <Image
+                        src={job.companyLogo}
+                        alt={job.companyName}
+                        width={80}
+                        height={80}
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <span className="text-blue-600 font-bold text-xl">
+                        {job.companyName.substring(0, 2).toUpperCase()}
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex-1 min-w-0">
@@ -63,10 +89,10 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                       <h1 className="text-2xl sm:text-3xl font-bold text-foreground">{job.title}</h1>
                       {job.isTopJob && (
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-[#FDB714] text-white">
-                            <Crown className="w-3 h-3" />
-                            Top Job
+                          <Crown className="w-3 h-3" />
+                          Top Job
                         </span>
-                    )}
+                      )}
                     </div>
 
                     <div className="space-y-2">
@@ -81,7 +107,23 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                       </div>
 
                       <div className="text-sm text-muted-foreground">
-                        {job.category} | {job.employmentType} | {job.professionalExperience} | {job.salaryRange}
+                        {job.category && <span>{job.category} | </span>}
+                        <span>{job.employmentType}</span>
+                        {job.professionalExperience && (
+                          <>
+                            {" | "}
+                            <span>{job.professionalExperience}</span>
+                          </>
+                        )}
+                        {job.salaryRange && (
+                          <>
+                            {" | "}
+                            <span>
+                              {job.salaryRange}
+                              {job.salaryUnit ? ` (${job.salaryUnit})` : ""}
+                            </span>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -100,100 +142,186 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                     <div className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                       <p>
-                        <span className="font-medium">Location:</span> {job.workplace}
+                        <span className="font-medium">Location:</span> {job.workplace || job.location}
                       </p>
                     </div>
                     <div className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                       <p>
-                        <span className="font-medium">Employment Type:</span>{" "}
-                        {job.employmentType.includes("Permanent") ? "Full-time" : job.employmentType}
+                        <span className="font-medium">Employment Type:</span> {job.employmentType}
                       </p>
                     </div>
+                    {job.homeOffice && (
+                      <div className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
+                        <p>
+                          <span className="font-medium">Home office:</span> {job.homeOffice}
+                        </p>
+                      </div>
+                    )}
+                    {job.professionalExperience && (
+                      <div className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
+                        <p>
+                          <span className="font-medium">Experience:</span> {job.professionalExperience}
+                        </p>
+                      </div>
+                    )}
+                    {job.salaryRange && (
+                      <div className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
+                        <p>
+                          <span className="font-medium">Salary:</span>{" "}
+                          {job.salaryRange}
+                          {job.salaryUnit ? ` (${job.salaryUnit})` : ""}
+                        </p>
+                      </div>
+                    )}
+                    {hasLanguages && (
+                      <div className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
+                        <p>
+                          <span className="font-medium">Language skills:</span>{" "}
+                          {job.languages.join(", ")}
+                        </p>
+                      </div>
+                    )}
+                    {job.releaseDate && (
+                      <div className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
+                        <p>
+                          <span className="font-medium">Published on:</span> {job.releaseDate}
+                        </p>
+                      </div>
+                    )}
+                    {job.expirationDate && (
+                      <div className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
+                        <p>
+                          <span className="font-medium">Valid until:</span> {job.expirationDate}
+                        </p>
+                      </div>
+                    )}
+                    {hasContactEmails && (
+                      <div className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
+                        <p>
+                          <span className="font-medium">Contact:</span>{" "}
+                          {job.contactEmails.join(", ")}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 {/* About Us Section */}
-                <div className="space-y-4 pt-6 border-t">
-                  <h2 className="text-xl font-semibold text-foreground">About us</h2>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{job.aboutUs}</p>
-                </div>
+                {job.aboutUs && (
+                  <div className="space-y-4 pt-6 border-t">
+                    <h2 className="text-xl font-semibold text-foreground">About us</h2>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{job.aboutUs}</p>
+                  </div>
+                )}
 
                 {/* Your Tasks Section */}
-                <div className="space-y-4 pt-6 border-t">
-                  <h2 className="text-xl font-semibold text-foreground">Your tasks</h2>
-                  <div className="space-y-3">
-                    {job.yourTasks.map((task, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
-                        <p className="text-sm text-muted-foreground">{task}</p>
-                      </div>
-                    ))}
+                {hasTasks && (
+                  <div className="space-y-4 pt-6 border-t">
+                    <h2 className="text-xl font-semibold text-foreground">Your tasks</h2>
+                    <div className="space-y-3">
+                      {job.yourTasks.map((task, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                          <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
+                          <p className="text-sm text-muted-foreground">{task}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* What We Are Looking For Section */}
-                <div className="space-y-4 pt-6 border-t">
-                  <h2 className="text-xl font-semibold text-foreground">What we are looking for</h2>
-                  <div className="space-y-3">
-                    {job.whatWeLookingFor.map((item, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
-                        <p className="text-sm text-muted-foreground">{item}</p>
-                      </div>
-                    ))}
+                {hasRequirements && (
+                  <div className="space-y-4 pt-6 border-t">
+                    <h2 className="text-xl font-semibold text-foreground">What we are looking for</h2>
+                    <div className="space-y-3">
+                      {job.whatWeLookingFor.map((item, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                          <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
+                          <p className="text-sm text-muted-foreground">{item}</p>
+                        </div>
+                      ))}
+                      {hasLanguages && (
+                        <div className="flex items-start gap-3">
+                          <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
+                          <p className="text-sm text-muted-foreground">
+                            Language skills: {job.languages.join(", ")}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
 
-                {/* Why You Should Come to Us Section */}
-                <div className="space-y-4 pt-6 border-t">
-                  <h2 className="text-xl font-semibold text-foreground">Why you should come to us</h2>
-                  <div className="space-y-3">
-                    {job.whyJoinUs.map((benefit, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
-                        <p className="text-sm text-muted-foreground">{benefit}</p>
-                      </div>
-                    ))}
+                {/* Why You Should Come to Us Section (only if backend provides something later) */}
+                {hasWhyJoin && (
+                  <div className="space-y-4 pt-6 border-t">
+                    <h2 className="text-xl font-semibold text-foreground">Why you should come to us</h2>
+                    <div className="space-y-3">
+                      {job.whyJoinUs.map((benefit, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                          <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
+                          <p className="text-sm text-muted-foreground">{benefit}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* --- EXPANDABLE PART STARTS HERE --- */}
                 {isExpanded && (
                   <>
                     {/* Our Hiring Process Section */}
-                    <div className="space-y-4 pt-6 border-t">
-                      <h2 className="text-xl font-semibold text-foreground">Our Hiring Process</h2>
-                      <div className="space-y-3">
-                        {job.hiringProcess.map((step, index) => (
-                          <div key={index} className="flex items-start gap-3">
-                            <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
-                            <p className="text-sm text-muted-foreground">{step}</p>
-                          </div>
-                        ))}
+                    {hasHiringProcess && (
+                      <div className="space-y-4 pt-6 border-t">
+                        <h2 className="text-xl font-semibold text-foreground">Our Hiring Process</h2>
+                        <div className="space-y-3">
+                          {job.hiringProcess.map((step, index) => (
+                            <div key={index} className="flex items-start gap-3">
+                              <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
+                              <p className="text-sm text-muted-foreground">{step}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* Workplace Section */}
-                    <div className="space-y-4 pt-6 border-t">
-                      <h2 className="text-xl font-semibold text-foreground">Workplace</h2>
-                      <div className="flex items-start gap-3">
-                        <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
-                        <p className="text-sm text-muted-foreground">{job.workplace}</p>
+                    {job.workplace && (
+                      <div className="space-y-4 pt-6 border-t">
+                        <h2 className="text-xl font-semibold text-foreground">Workplace</h2>
+                        <div className="flex items-start gap-3">
+                          <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
+                          <p className="text-sm text-muted-foreground">{job.workplace}</p>
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* Professional Experience Section */}
-                    <div className="space-y-2">
-                      <h3 className="font-semibold text-foreground">Professional experience</h3>
-                      <p className="text-sm text-muted-foreground">{job.professionalExperience}</p>
-                    </div>
+                    {job.professionalExperience && (
+                      <div className="space-y-2">
+                        <h3 className="font-semibold text-foreground">Professional experience</h3>
+                        <p className="text-sm text-muted-foreground">{job.professionalExperience}</p>
+                      </div>
+                    )}
 
                     {/* Salary Range Section */}
-                    <div className="space-y-2">
-                      <h3 className="font-semibold text-foreground">Salary range</h3>
-                      <p className="text-sm text-muted-foreground">{job.salaryRange}</p>
-                    </div>
+                    {job.salaryRange && (
+                      <div className="space-y-2">
+                        <h3 className="font-semibold text-foreground">Salary range</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {job.salaryRange}
+                          {job.salaryUnit ? ` (${job.salaryUnit})` : ""}
+                        </p>
+                      </div>
+                    )}
                   </>
                 )}
                 {/* --- EXPANDABLE PART ENDS HERE --- */}
@@ -218,10 +346,16 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                     Divide
                   </Button>
 
-                  <Button size="lg" className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground sm:hidden">
-                    <Briefcase className="w-4 h-4 mr-2" />
-                    Apply
-                  </Button>
+                  {/* Mobile Apply Button with link */}
+                  <Link href={`/public/jobs/${job.id}/apply`} className="sm:hidden w-full">
+                    <Button
+                      size="lg"
+                      className="w-full bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground"
+                    >
+                      <Briefcase className="w-4 h-4 mr-2" />
+                      Apply
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </Card>
