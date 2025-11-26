@@ -24,7 +24,7 @@ export function SiteHeader() {
           {/* NAVIGATION LINKS */}
           <div className="hidden md:flex items-center gap-6">
             <Link
-              href="/apprenticeship"
+              href="/public/jobs?employmentType=Apprenticeship"
               className="text-gray-700 hover:text-gray-900 font-medium"
             >
               Find an apprenticeship
