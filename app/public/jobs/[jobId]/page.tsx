@@ -20,104 +20,96 @@ export type JobDetail = {
   workplace: string
 }
 
-// Mock data - ready to be replaced with API calls
-const MOCK_JOBS: Record<string, JobDetail> = {
-  "housekeeping-maid": {
-    id: "housekeeping-maid",
-    title: "Housekeeping / Maid",
-    category: "Hotels and restaurants",
-    companyName: "Kesma Establishment",
-    location: "82467 Garmisch-Partenkirchen, Germany",
-    salaryRange: "€14 – €16 per hour",
-    employmentType: "Permanent Employment",
-    professionalExperience: "With professional experience (1 to 3 years)",
-    isTopJob: true,
-    aboutUs: "We are still looking for a dedicated chambermaid for our private household to support our team.",
-    yourTasks: [
-      "Cleaning and maintenance of guest rooms",
-      "Help out in the laundry if necessary",
-      "Ensuring cleanliness in all common areas",
-      "Reporting damage or necessary repairs",
-    ],
-    whatWeLookingFor: [
-      "Required skills: Experience in housekeeping or a similar role",
-      "Good communication skills",
-      "Ability to work in a team and reliability",
-      "Good knowledge of German and English",
-    ],
-    whyJoinUs: ["Pleasant working environment", "Flexible working hours", "small, long-standing team"],
-    hiringProcess: [
-      "Receipt of applications and pre-selection",
-      "Invitation to an interview",
-      "Practical exercise or trial working day",
-      "Final decision and offer",
-    ],
-    workplace: "Location: Garmisch Partenkirchen",
-  },
-  "dermatology-assistant": {
-    id: "dermatology-assistant",
-    title: "Medical pedicure (m/f/d)",
-    category: "Healthcare",
-    companyName: "Dermatologist Oberland",
-    location: "Tegernseer Str. 3, 83703 Gmund am Tegernsee, Germany",
-    salaryRange: "€18 – €22 per hour",
-    employmentType: "Permanent Employment",
-    professionalExperience: "With professional experience (1 to 3 years)",
-    isTopJob: true,
-    aboutUs:
-      "Hautarzt Oberland - with three locations in Gmund, Miesbach and Holzkirchen, we are one of the top addresses in the region. We are all about modern dermatology, podiatry, laser medicine, aesthetic treatments and, above all, the people we accompany every day.",
-    yourTasks: [
-      "Medical foot care with heart and know-how.",
-      "You work independently, keeping an eye on the team.",
-      "Advising, treating and making your patients happy.",
-      "Appointments, documentation and billing - you have the overview.",
-    ],
-    whatWeLookingFor: [
-      "You have completed training in foot care or podiatry.",
-      "You have experience in foot care or podiatry (would be great!)",
-      "You work in an organized and independent way - you know what you are doing.",
-      "Stressful situations? No problem, you stay calm, focused and keep an overview.",
-      "You enjoy working with people and bring positive energy.",
-      "Do you know yourself with cosmetic treatments? We look forward to your know-how!",
-    ],
-    whyJoinUs: [
-      "Team that rocks! Look forward to an environment in which respect and appreciation are at the top of the list.",
-      "Work-life balance at its best! 30 days of vacation (freely selectable) + no work on 24./31.12.",
-      "More money, more recognition! Because good work earns good money.",
-      "Long-term and safe! With us, you have a stable career perspective through over 45 years of family tradition.",
-    ],
-    hiringProcess: [
-      "Receipt of applications and pre-selection",
-      "Invitation to an interview",
-      "Practical exercise or trial working day",
-      "Final decision and offer",
-    ],
-    workplace: "Location: Gmund am Tegernsee",
-  },
-}
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-// Backend-ready helper function
 async function getJobById(jobId: string): Promise<JobDetail> {
-  // For now, return mock data
-  const job = MOCK_JOBS[jobId] ?? MOCK_JOBS["housekeeping-maid"]
+  const res = await fetch(`${API_BASE_URL}/jobs/${jobId}`, {
+    cache: "no-store",
+    headers: {
+      Accept: "application/json",
+    },
+  })
 
-  // Later, replace with actual API call:
-  // const res = await fetch(`${process.env.API_URL}/jobs/${jobId}`, {
-  //   cache: "no-store"
-  // })
-  // if (!res.ok) throw new Error("Job not found")
-  // return res.json()
+  if (!res.ok) {
+    throw new Error(`Failed to load job: ${res.status}`)
+  }
 
-  return job
+  const apiJob = await res.json()
+  // console.log("Job detail response:", apiJob)
+
+  // ---- Salary mapping (min_salary / max_salary) ----
+  const minSalary = apiJob.min_salary
+  const maxSalary = apiJob.max_salary
+
+  let salaryRange = "Salary not specified"
+  if (minSalary != null && maxSalary != null) {
+    salaryRange = `€${minSalary} - €${maxSalary}`
+  } else if (minSalary != null) {
+    salaryRange = `From €${minSalary}`
+  } else if (maxSalary != null) {
+    salaryRange = `Up to €${maxSalary}`
+  }
+
+  // ---- Employment type (employment_types[0]) ----
+  const rawEmploymentType =
+    Array.isArray(apiJob.employment_types) && apiJob.employment_types.length > 0
+      ? String(apiJob.employment_types[0]).toLowerCase()
+      : ""
+
+  let employmentType = "Employment"
+  if (rawEmploymentType.includes("full")) {
+    employmentType = "Full-time"
+  } else if (rawEmploymentType.includes("part")) {
+    employmentType = "Part-time"
+  } else if (rawEmploymentType.includes("mini")) {
+    employmentType = "Mini-job"
+  }
+
+  // ---- Professional experience mapping ----
+  const rawExperience = String(apiJob.professional_experience ?? "").toLowerCase()
+  let professionalExperience = apiJob.professional_experience ?? ""
+  if (rawExperience === "1-3") {
+    professionalExperience = "With professional experience (1 to 3 years)"
+  } else if (rawExperience === "3-5") {
+    professionalExperience = "With professional experience (3 to 5 years)"
+  } else if (rawExperience === "5+") {
+    professionalExperience = "With professional experience (5+ years)"
+  }
+
+  const jobDetail: JobDetail = {
+    id: String(apiJob.id ?? jobId),
+    title: apiJob.title ?? "Job",
+    category: apiJob.subject ?? apiJob.professional_discipline ?? "",
+    companyName: apiJob.company_name ?? apiJob.organization?.title ?? "Company",
+    companyLogo: apiJob.company_logo ?? undefined,
+    location: apiJob.workplace_location ?? "Location not specified",
+    salaryRange,
+    employmentType,
+    professionalExperience,
+    // you can wire this to a real flag later if backend supports it
+    isTopJob: false,
+    aboutUs: apiJob.description ?? "No description provided yet.",
+    yourTasks: Array.isArray(apiJob.required_skills)
+      ? apiJob.required_skills
+      : [],
+    whatWeLookingFor: Array.isArray(apiJob.required_educational_qualifications)
+      ? apiJob.required_educational_qualifications
+      : [],
+    // backend doesn’t provide these yet – keep as empty arrays for now
+    whyJoinUs: [],
+    hiringProcess: [],
+    workplace: apiJob.workplace_location ?? "",
+  }
+
+  return jobDetail
 }
 
 type PageProps = {
-  params: Promise<{ jobId: string }>
+  params: { jobId: string }
 }
 
 export default async function JobDetailPage({ params }: PageProps) {
-  const { jobId } = await params
-  const job = await getJobById(jobId)
+  const job = await getJobById(params.jobId)
 
   return <JobDetailLayout job={job} />
 }

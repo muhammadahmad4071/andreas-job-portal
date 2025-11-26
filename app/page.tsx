@@ -13,10 +13,10 @@ export default async function HomePage() {
   return (
     <main>
       <HomeHero />
-      <HomeBannerStrip regions={data.regions} />
+      <HomeBannerStrip/>
       <HomeTopEmployers employers={data.topEmployers} />
-      <HomeVideoHighlights videos={data.videoHighlights} />
-      <HomeFeaturedJobs jobs={data.featuredJobs} />
+      <HomeVideoHighlights />
+      <HomeFeaturedJobs/>
       <HomeSeoText />
     </main>
   )

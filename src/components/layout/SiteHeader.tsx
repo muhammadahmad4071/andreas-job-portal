@@ -36,17 +36,12 @@ export function SiteHeader() {
               Find jobs
             </Link>
             <Link
-              href="/employers"
+              href="/public/employer-list"
               className="text-gray-700 hover:text-gray-900 font-medium"
             >
               Discover employers
             </Link>
-            <Link
-              href="/regions"
-              className="text-gray-700 hover:text-gray-900 font-medium"
-            >
-              Regions
-            </Link>
+            
           </div>
 
           {/* RIGHT SIDE ACTIONS */}

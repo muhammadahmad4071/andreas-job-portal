@@ -1,58 +1,14 @@
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
+import Link from "next/link"
 import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { MapPin, Briefcase, Building, Zap, Mail } from "lucide-react"
+import { MapPin, Briefcase, Building, Zap } from "lucide-react"
 import type { Job } from "./JobsPageShell"
 
 type JobDetailPanelProps = {
   job: Job | null
-}
-
-const JOB_DETAIL_CONTENT = {
-  intro: "We are looking for you - Foot care (m/f/d) full-time/part-time - Cosmetic experience welcome",
-  aboutUs: {
-    title: "About us:",
-    content:
-      "Hautarzt Oberland - with three locations in Gmund, Miesbach and Holzkirchen, we are one of the top addresses in the region. We are all about modern dermatology, podiatry, laser medicine, aesthetic treatments and, above all, the people we accompany every day.",
-  },
-  expectations: {
-    title: "This is what you can expect from us:",
-    items: [
-      "Team that rocks! Look forward to an environment in which respect and appreciation are at the top of the list.",
-      "Work-life balance at its best! 30 days of vacation (freely selectable) + no work on 24./31.12.",
-      "More money, more recognition! Because good work earns good money.",
-      "Long-term and safe! With us, you have a stable career perspective through over 45 years of family tradition.",
-    ],
-  },
-  strengths: {
-    title: "Your strengths:",
-    items: [
-      "You have completed training in foot care or podiatry.",
-      "You have experience in foot care or podiatry (would be great!)",
-      "You work in an organized and independent way - you know what you are doing.",
-      "Stressful situations? No problem, you stay calm, focused and keep an overview.",
-      "You enjoy working with people and bring positive energy.",
-      "Do you know yourself with cosmetic treatments? We look forward to your know-how!",
-    ],
-  },
-  tasks: {
-    title: "Your tasks:",
-    items: [
-      "Medical foot care with heart and know-how.",
-      "You work independently, keeping an eye on the team.",
-      "Advising, treating and making your patients happy.",
-      "Appointments, documentation and billing - you have the overview.",
-    ],
-  },
-  contact: {
-    title: "Would you like to get started with us?",
-    content:
-      "Then we look forward to receiving your application by e-mail! Do you have any questions or want to get a taste of it in advance? Feel free to write to us!",
-    contactPerson: "Ms. Malin Friese",
-    email: "m.friese@hautarztoberiand.de",
-  },
 }
 
 function TagPill({ children }: { children: ReactNode }) {
@@ -75,13 +31,28 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
     )
   }
 
+  const hasSalary = Boolean(job.salary)
+
+  const formattedPublishedAt = job.publishedAt
+    ? new Date(job.publishedAt).toLocaleDateString()
+    : "–"
+
+  const formattedExpirationDate = job.expirationDate
+    ? new Date(job.expirationDate).toLocaleDateString()
+    : null
+
   return (
     <Card className="overflow-hidden">
       <ScrollArea className="h-[600px]">
         {/* Header Image */}
         {job.headerImageSrc && (
           <div className="relative h-48 w-full">
-            <Image src={job.headerImageSrc || "/placeholder.svg"} alt={job.title} fill className="object-cover" />
+            <Image
+              src={job.headerImageSrc || "/placeholder.svg"}
+              alt={job.title}
+              fill
+              className="object-cover"
+            />
           </div>
         )}
 
@@ -91,10 +62,13 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
           <div className="space-y-4">
             <div className="flex items-start justify-between gap-4">
               <h1 className="text-2xl font-bold leading-tight">{job.title}</h1>
-              <Button className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground flex-shrink-0">
-                <Zap className="h-4 w-4 mr-2" />
-                Express application
-              </Button>
+
+              <Link href={`/public/jobs/${job.id}/apply`}>
+                <Button className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground flex-shrink-0">
+                  {job.isExpressApplication && <Zap className="h-4 w-4 mr-2" />}
+                  {job.isExpressApplication ? "Express application" : "Apply now"}
+                </Button>
+              </Link>
             </div>
 
             {job.isTopJob && (
@@ -121,82 +95,98 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
           <div className="flex flex-wrap gap-2">
             <TagPill>{job.industry}</TagPill>
             <TagPill>{job.employmentType}</TagPill>
-            <TagPill>With professional experience ({job.workExperience.toLowerCase()})</TagPill>
+            <TagPill>{job.homeOfficeOption}</TagPill>
+            <TagPill>{job.workExperience}</TagPill>
           </div>
 
-          {/* Job Description */}
+          {/* Main content */}
           <div className="space-y-6 border-t pt-6">
-            {/* Intro */}
-            <div>
-              <h2 className="text-xl font-semibold mb-3">Become part of our team!</h2>
-              <p className="text-sm leading-relaxed">{JOB_DETAIL_CONTENT.intro}</p>
-            </div>
+            {/* Intro / teaser */}
+            <section>
+              <h2 className="text-xl font-semibold mb-3">Job description</h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {job.teaser || "No detailed description has been provided for this position yet."}
+              </p>
+            </section>
 
-            {/* About Us */}
-            <div>
-              <h3 className="text-lg font-semibold mb-2">{JOB_DETAIL_CONTENT.aboutUs.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{JOB_DETAIL_CONTENT.aboutUs.content}</p>
-            </div>
-
-            {/* Expectations */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">{JOB_DETAIL_CONTENT.expectations.title}</h3>
-              <ul className="space-y-2">
-                {JOB_DETAIL_CONTENT.expectations.items.map((item, idx) => (
-                  <li key={idx} className="flex gap-2 text-sm">
-                    <span className="text-[#FDB714] mt-1">✓</span>
-                    <span className="leading-relaxed text-muted-foreground">{item}</span>
+            {/* Key facts */}
+            <section className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                  Position details
+                </h3>
+                <ul className="space-y-1 text-sm text-muted-foreground">
+                  <li>
+                    <span className="font-medium">Type of employment:</span>{" "}
+                    {job.employmentType}
                   </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Strengths */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">{JOB_DETAIL_CONTENT.strengths.title}</h3>
-              <ul className="space-y-2">
-                {JOB_DETAIL_CONTENT.strengths.items.map((item, idx) => (
-                  <li key={idx} className="flex gap-2 text-sm">
-                    <span className="text-[#FDB714] mt-1">✓</span>
-                    <span className="leading-relaxed text-muted-foreground">{item}</span>
+                  <li>
+                    <span className="font-medium">Work model:</span>{" "}
+                    {job.homeOfficeOption}
                   </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Tasks */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">{JOB_DETAIL_CONTENT.tasks.title}</h3>
-              <ul className="space-y-2">
-                {JOB_DETAIL_CONTENT.tasks.items.map((item, idx) => (
-                  <li key={idx} className="flex gap-2 text-sm">
-                    <span className="text-[#FDB714] mt-1">✓</span>
-                    <span className="leading-relaxed text-muted-foreground">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Contact */}
-            <div className="bg-muted rounded-lg p-4 space-y-3">
-              <h3 className="text-lg font-semibold">{JOB_DETAIL_CONTENT.contact.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{JOB_DETAIL_CONTENT.contact.content}</p>
-              <div className="space-y-1">
-                <p className="text-sm font-medium">Contact person for application:</p>
-                <p className="text-sm font-semibold">{JOB_DETAIL_CONTENT.contact.contactPerson}</p>
-                <a
-                  href={`mailto:${JOB_DETAIL_CONTENT.contact.email}`}
-                  className="inline-flex items-center gap-2 text-sm text-[#FDB714] hover:underline"
-                >
-                  <Mail className="h-4 w-4" />
-                  {JOB_DETAIL_CONTENT.contact.email}
-                </a>
+                  {job.subject && (
+                    <li>
+                      <span className="font-medium">Subject:</span>{" "}
+                      {job.subject}
+                    </li>
+                  )}
+                  {job.discipline !== "Any" && (
+                    <li>
+                      <span className="font-medium">Discipline:</span>{" "}
+                      {job.discipline}
+                    </li>
+                  )}
+                </ul>
               </div>
-              <Button variant="outline" className="w-full bg-transparent">
-                <Mail className="h-4 w-4 mr-2" />
-                Send Application
-              </Button>
-            </div>
+
+              <div className="space-y-2">
+                {/* <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                  Compensation
+                </h3> */}
+                <ul className="space-y-1 text-sm text-muted-foreground">
+                  <li>
+                    <span className="font-medium">Experience level:</span>{" "}
+                    {job.workExperience}
+                  </li>
+                  {hasSalary && (
+                    <li>
+                      <span className="font-medium">Salary:</span>{" "}
+                      {job.salary}
+                    </li>
+                  )}
+                  {job.salaryUnit && (
+                    <li>
+                      <span className="font-medium">Salary Schedule:</span>{" "}
+                      {job.salaryUnit}
+                    </li>
+                  )}
+                  <li>
+                    <span className="font-medium">Published on:</span>{" "}
+                    {formattedPublishedAt}
+                  </li>
+                  {formattedExpirationDate && (
+                    <li>
+                      <span className="font-medium">Expires on:</span>{" "}
+                      {formattedExpirationDate}
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </section>
+
+            {/* How to apply */}
+            <section>
+              <h3 className="text-lg font-semibold mb-2">How to apply</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground mb-3">
+                Click on the application button below and follow the next steps to submit your documents for{" "}
+                {job.title} at {job.companyName}.
+              </p>
+              <Link href={`/public/jobs/${job.id}/apply`}>
+                <Button className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground">
+                  Apply now
+                </Button>
+              </Link>
+            </section>
           </div>
         </div>
       </ScrollArea>

@@ -2,7 +2,8 @@
 
 import type React from "react"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
+import { apiFetch } from "@/lib/api"
 import { JobsSearchFilters } from "./JobsSearchFilters"
 import { JobAlertBanner } from "./JobAlertBanner"
 import { JobsList } from "./JobsList"
@@ -38,79 +39,154 @@ export type Job = {
   headerImageSrc?: string
   publishedAt: string
   salary?: string
+  salaryUnit?: string
+  subject?: string
+  expirationDate?: string
 }
 
-const JOBS: Job[] = [
-  {
-    id: "1",
-    title: "Medical pedicure (m/f/d)",
-    companyName: "Dermatologist Oberland",
-    location: "Tegernseer Str. 3, 83703 Gmund am Tegernsee, Germany",
-    street: "Tegernseer Str. 3",
-    city: "Gmund am Tegernsee",
-    zip: "83703",
-    country: "Germany",
-    isTopJob: true,
-    isExpressApplication: true,
-    homeOfficeOption: "On-site",
-    employmentType: "Full-time",
-    industry: "Health service",
-    discipline: "Medicine",
-    workExperience: "1-3 years",
-    enterpriseSize: "Small",
-    teaser: "We are looking for you - Foot care (m/f/d) full-time/part-time - Cosmetic experience welcome",
-    logoSrc: "/dermatology-clinic-logo.jpg",
-    headerImageSrc: "/job-image1.png",
-    publishedAt: "2025-01-15",
-  },
-  {
-    id: "2",
-    title: "E-Commerce & Order Processing",
-    companyName: "Promed GmbH",
-    location: "82490 Farchant, Germany",
-    street: "Hauptstraße 45",
-    city: "Farchant",
-    zip: "82490",
-    country: "Germany",
-    isTopJob: false,
-    isExpressApplication: false,
-    homeOfficeOption: "Hybrid",
-    employmentType: "Full-time",
-    industry: "Retail",
-    discipline: "Sales",
-    workExperience: "1-3 years",
-    enterpriseSize: "Medium",
-    teaser: "Join our growing e-commerce team and help us process orders efficiently.",
-    logoSrc: "/promed-company-logo.jpg",
-    headerImageSrc: "/job-image1.png",
-    publishedAt: "2025-01-14",
-  },
-  {
-    id: "3",
-    title: "Financial Accountant (m/f/d)",
-    companyName: "Royal Aero GmbH",
-    location: "83714 Miesbach, Germany",
-    street: "Industriestraße 12",
-    city: "Miesbach",
-    zip: "83714",
-    country: "Germany",
-    isTopJob: false,
-    isExpressApplication: true,
-    homeOfficeOption: "Remote",
-    employmentType: "Full-time",
-    industry: "Finance",
-    discipline: "IT",
-    workExperience: "3-5 years",
-    enterpriseSize: "Large",
-    teaser: "Experienced financial accountant wanted for growing aviation company.",
-    logoSrc: "/royal-aero-logo.jpg",
-    headerImageSrc: "/job-image1.png",
-    publishedAt: "2025-01-13",
-    salary: "€4,000 - €5,000 per month",
-  },
-]
+// 🔁 Map backend job → frontend Job type
+function mapApiJobToJob(apiJob: any): Job {
+  const title: string = apiJob.title ?? "Untitled job"
+
+  const companyName: string =
+    apiJob.company_name ??
+    apiJob.organization?.title ??
+    "Unknown company"
+
+  const city: string = apiJob.workplace_location ?? ""
+  const country: string = "Germany" // fallback for now
+
+  const street: string = ""
+  const zip: string = ""
+
+  const location =
+    city && country ? `${city}, ${country}` : city || "Location not specified"
+
+  // home_office → HomeOfficeOption
+  const rawHomeOffice = String(apiJob.home_office ?? "").toLowerCase()
+  let homeOfficeOption: HomeOfficeOption = "Any"
+  if (rawHomeOffice.includes("remote")) {
+    homeOfficeOption = "Remote"
+  } else if (rawHomeOffice.includes("hybrid")) {
+    homeOfficeOption = "Hybrid"
+  } else if (
+    rawHomeOffice.includes("office") ||
+    rawHomeOffice.includes("onsite") ||
+    rawHomeOffice.includes("field")
+  ) {
+    homeOfficeOption = "On-site"
+  }
+
+  // employment_types[0] → EmploymentType
+  const rawEmploymentType =
+    Array.isArray(apiJob.employment_types) && apiJob.employment_types.length > 0
+      ? String(apiJob.employment_types[0]).toLowerCase()
+      : ""
+  let employmentType: EmploymentType = "Any"
+  if (rawEmploymentType.includes("full")) {
+    employmentType = "Full-time"
+  } else if (rawEmploymentType.includes("part")) {
+    employmentType = "Part-time"
+  } else if (rawEmploymentType.includes("mini")) {
+    employmentType = "Mini-job"
+  }
+
+  // professional_discipline → Discipline
+  const rawDiscipline = String(apiJob.professional_discipline ?? "").toLowerCase()
+  let discipline: Discipline = "Any"
+  if (rawDiscipline.includes("sales")) {
+    discipline = "Sales"
+  } else if (rawDiscipline.includes("nurse") || rawDiscipline.includes("pflege")) {
+    discipline = "Nursing"
+  } else if (rawDiscipline.includes("it") || rawDiscipline.includes("software") || rawDiscipline.includes("dev")) {
+    discipline = "IT"
+  } else if (rawDiscipline.includes("medicin") || rawDiscipline.includes("arzt") || rawDiscipline.includes("doctor")) {
+    discipline = "Medicine"
+  }
+
+  // There is no real industry field in the payload yet – keep "Any"
+  const industry: Industry = "Any"
+
+  // professional_experience → WorkExperience
+  const rawExperience = String(apiJob.professional_experience ?? "").toLowerCase()
+  let workExperience: WorkExperience = "Any"
+  if (rawExperience.includes("no") || rawExperience.includes("entry")) {
+    workExperience = "No experience"
+  } else if (rawExperience.includes("1-3") || rawExperience.includes("1 to 3") || rawExperience.includes("1–3")) {
+    workExperience = "1-3 years"
+  } else if (rawExperience.includes("3-5") || rawExperience.includes("3 to 5") || rawExperience.includes("3–5")) {
+    workExperience = "3-5 years"
+  } else if (rawExperience.includes("5+") || rawExperience.includes("senior") || rawExperience.includes("5+ years")) {
+    workExperience = "5+ years"
+  }
+
+  // Salary: min_salary / max_salary + salary_unit
+  const minSalary = apiJob.min_salary
+  const maxSalary = apiJob.max_salary
+  const salaryUnitRaw: string = apiJob.salary_unit ?? ""
+  const salaryUnit = salaryUnitRaw ? String(salaryUnitRaw).toLowerCase() : ""
+
+  let salaryText: string | undefined
+  if (minSalary != null && maxSalary != null) {
+    salaryText = `€${minSalary} - €${maxSalary}`
+  } else if (minSalary != null) {
+    salaryText = `From €${minSalary}`
+  } else if (maxSalary != null) {
+    salaryText = `Up to €${maxSalary}`
+  }
+
+
+  const teaser: string =
+    apiJob.description ??
+    "No description provided right now."
+
+  const publishedAt: string =
+    apiJob.release_date ??
+    apiJob.created_at ??
+    new Date().toISOString().slice(0, 10)
+
+  const subject: string | undefined = apiJob.subject ?? undefined
+  const expirationDate: string | undefined = apiJob.expiration_date ?? undefined
+
+  const isTopJob: boolean = false
+  const isExpressApplication: boolean = false
+
+  const logoSrc: string | undefined =
+    apiJob.company_logo ??
+    undefined
+
+  const headerImageSrc: string | undefined = undefined
+
+  return {
+    id: String(apiJob.id ?? ""),
+    title,
+    companyName,
+    location,
+    street,
+    city,
+    zip,
+    country,
+    isTopJob,
+    isExpressApplication,
+    homeOfficeOption,
+    employmentType,
+    industry,
+    discipline,
+    workExperience,
+    enterpriseSize: "Any",
+    teaser,
+    logoSrc,
+    headerImageSrc,
+    publishedAt,
+    salary: salaryText,
+    salaryUnit,
+    subject,
+    expirationDate,
+  }
+}
 
 export function JobsPageShell() {
+  // filters
   const [searchTerm, setSearchTerm] = useState("")
   const [locationTerm, setLocationTerm] = useState("")
   const [homeOfficeFilter, setHomeOfficeFilter] = useState<HomeOfficeOption>("Any")
@@ -120,9 +196,71 @@ export function JobsPageShell() {
   const [workExperienceFilter, setWorkExperienceFilter] = useState<WorkExperience>("Any")
   const [enterpriseSizeFilter, setEnterpriseSizeFilter] = useState<EnterpriseSize>("Any")
 
+  // api state
+  const [jobs, setJobs] = useState<Job[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    let isCancelled = false
+
+    const fetchJobs = async () => {
+      setIsLoading(true)
+      setError(null)
+
+      try {
+        const data = await apiFetch(`/jobs/public?page=${currentPage}`)
+
+        // 👀 log entire API result once per request
+        console.log("Public jobs API response:", data)
+
+        let apiJobs: any[] = []
+        let meta: any = null
+
+        if (Array.isArray(data)) {
+          apiJobs = data
+        } else if (data && Array.isArray(data.data)) {
+          apiJobs = data.data
+          meta = data
+        }
+
+        const mappedJobs = apiJobs.map(mapApiJobToJob)
+
+        if (!isCancelled) {
+          setJobs(mappedJobs)
+
+          if (meta && typeof meta.last_page === "number") {
+            setTotalPages(meta.last_page)
+          } else {
+            setTotalPages(1)
+          }
+        }
+      } catch (err: any) {
+        console.error("Failed to load public jobs:", err)
+        if (!isCancelled) {
+          setError(err?.message || "Failed to load jobs.")
+          setJobs([])
+          setTotalPages(1)
+        }
+      } finally {
+        if (!isCancelled) {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    fetchJobs()
+
+    return () => {
+      isCancelled = true
+    }
+  }, [currentPage])
+
   const filteredJobs = useMemo(() => {
-    return JOBS.filter((job) => {
-      // Search term filter
+    return jobs.filter((job) => {
+      // Search term
       if (searchTerm) {
         const search = searchTerm.toLowerCase()
         const matchesTitle = job.title.toLowerCase().includes(search)
@@ -149,6 +287,7 @@ export function JobsPageShell() {
       return true
     })
   }, [
+    jobs,
     searchTerm,
     locationTerm,
     homeOfficeFilter,
@@ -159,13 +298,13 @@ export function JobsPageShell() {
     enterpriseSizeFilter,
   ])
 
-  const [selectedJobId, setSelectedJobId] = useState<string | null>(filteredJobs.length > 0 ? filteredJobs[0].id : null)
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null)
 
-  // Update selected job when filtered jobs change
-  useMemo(() => {
+  // keep selected job in sync with filtered list
+  useEffect(() => {
     if (filteredJobs.length === 0) {
       setSelectedJobId(null)
-    } else if (!filteredJobs.find((job) => job.id === selectedJobId)) {
+    } else if (!selectedJobId || !filteredJobs.find((job) => job.id === selectedJobId)) {
       setSelectedJobId(filteredJobs[0].id)
     }
   }, [filteredJobs, selectedJobId])
@@ -174,7 +313,20 @@ export function JobsPageShell() {
 
   const handleSubmitSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    // Search is handled by real-time filtering, but this prevents page refresh
+  }
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => {
+      if (prev >= totalPages) return prev
+      return prev + 1
+    })
+  }
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => {
+      if (prev <= 1) return prev
+      return prev - 1
+    })
   }
 
   return (
@@ -182,8 +334,12 @@ export function JobsPageShell() {
       <section className="container-custom max-w-7xl mx-auto space-y-8">
         {/* Title */}
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold tracking-tight">{filteredJobs.length.toLocaleString()} Jobs</h1>
-          <p className="text-sm text-muted-foreground">Find your next opportunity in the Oberland region.</p>
+          <h1 className="text-4xl font-bold tracking-tight">
+            {filteredJobs.length.toLocaleString()} Jobs
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            Find your next opportunity in the Oberland region.
+          </p>
         </div>
 
         {/* Search + Filters */}
@@ -207,16 +363,39 @@ export function JobsPageShell() {
           onSubmitSearch={handleSubmitSearch}
         />
 
-        {/* Jobs layout */}
+        {/* Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] gap-6">
-          {/* Left: job list */}
+          {/* Left: list */}
           <div className="space-y-4">
             <JobAlertBanner />
-            <JobsList jobs={filteredJobs} selectedJobId={selectedJobId} onSelectJob={setSelectedJobId} />
-            <JobsPagination currentPage={1} totalPages={1} onNext={() => {}} onPrev={() => {}} />
+
+            {error && (
+              <div className="rounded-md border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive">
+                {error}
+              </div>
+            )}
+
+            {isLoading && !error && (
+              <div className="rounded-md border bg-background p-3 text-sm text-muted-foreground">
+                Loading jobs…
+              </div>
+            )}
+
+            <JobsList
+              jobs={filteredJobs}
+              selectedJobId={selectedJobId}
+              onSelectJob={setSelectedJobId}
+            />
+
+            <JobsPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onNext={handleNextPage}
+              onPrev={handlePrevPage}
+            />
           </div>
 
-          {/* Right: job detail */}
+          {/* Right: detail */}
           <JobDetailPanel job={selectedJob} />
         </div>
       </section>

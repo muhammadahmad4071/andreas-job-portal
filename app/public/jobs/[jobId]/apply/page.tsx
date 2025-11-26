@@ -1,7 +1,8 @@
 import { JobApplicationForm } from "@/components/apply/JobApplicationForm"
+import { apiFetch } from "@/lib/api"
 
 type PageProps = {
-  params: Promise<{ jobId: string }>
+  params: { jobId: string }
 }
 
 type JobSummary = {
@@ -10,38 +11,30 @@ type JobSummary = {
   company: string
 }
 
-const MOCK_JOBS: Record<string, JobSummary> = {
-  "housekeeping-maid": {
-    id: "housekeeping-maid",
-    title: "Housekeeping / Maid",
-    company: "Kesma Establishment",
-  },
-  "dermatology-assistant": {
-    id: "dermatology-assistant",
-    title: "Medical pedicure (m/f/d)",
-    company: "Dermatologist Oberland",
-  },
-  "e-commerce-order-processing": {
-    id: "e-commerce-order-processing",
-    title: "E-Commerce & Order Processing",
-    company: "Promed GmbH",
-  },
-}
-
 async function getJobSummary(jobId: string): Promise<JobSummary> {
-  // Mock data for now - easy to swap with real API call later
-  const job = MOCK_JOBS[jobId] ?? MOCK_JOBS["housekeeping-maid"]
-  return job
+  try {
+    // Assumes your backend exposes GET /jobs/{id}
+    const data = await apiFetch(`/jobs/${jobId}`)
 
-  // LATER (real backend):
-  // const res = await fetch(`${process.env.API_URL}/jobs/${jobId}`, { cache: "no-store" })
-  // if (!res.ok) throw new Error("Job not found")
-  // return res.json()
+    return {
+      id: String(data.id ?? jobId),
+      title: data.title ?? "Job",
+      company: data.company_name ?? data.organization?.title ?? "Company",
+    }
+  } catch (err) {
+    console.error("Failed to load job summary:", err)
+
+    // Fallback so the page still works even if the detail call fails
+    return {
+      id: jobId,
+      title: "Job",
+      company: "",
+    }
+  }
 }
 
 export default async function ApplyPage({ params }: PageProps) {
-  const resolvedParams = await params
-  const job = await getJobSummary(resolvedParams.jobId)
+  const job = await getJobSummary(params.jobId)
 
   return <JobApplicationForm job={job} />
 }
