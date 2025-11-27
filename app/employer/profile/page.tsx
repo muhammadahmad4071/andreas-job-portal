@@ -6,7 +6,7 @@ import { EmployerHeader } from "@/components/employer-home/EmployerHeader"
 import { EmployerFooter } from "@/components/employer-home/EmployerFooter"
 import { EmployerProfileHeaderCard } from "@/components/employer-profile/EmployerProfileHeaderCard"
 import { EmployerAboutCard } from "@/components/employer-profile/EmployerAboutCard"
-import { EmployerContactCard } from "@/components/employer-profile/EmployerContactCard"
+// import { EmployerContactCard } from "@/components/employer-profile/EmployerContactCard"
 import { EmployerAttachmentsCard } from "@/components/employer-profile/EmployerAttachmentsCard"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -119,21 +119,28 @@ export default function EmployerProfilePage() {
 
                   {/* Right column - Contact and Attachments */}
                   <div className="space-y-6">
+                    {/* --- CONTACT CARD COMMENTED OUT --- */}
+                    {/*
                     <EmployerContactCard
                       isEditing={false}
                       onEdit={() => setActiveSection("contact")}
                       onCancel={() => setActiveSection(null)}
                     />
-                    {/* <EmployerAttachmentsCard
+                    */}
+                    {/* Attachments Card (also currently commented by you) */}
+                    {/*
+                    <EmployerAttachmentsCard
                       isEditing={false}
                       onEdit={() => setActiveSection("attachments")}
                       onCancel={() => setActiveSection(null)}
-                    /> */}
+                    />
+                    */}
                   </div>
                 </div>
               )}
 
               {/* Edit mode - show only the active section */}
+
               {activeSection === "about" && (
                 <EmployerAboutCard
                   isEditing={true}
@@ -144,6 +151,8 @@ export default function EmployerProfilePage() {
                 />
               )}
 
+              {/* --- CONTACT EDIT SECTION COMMENTED OUT --- */}
+              {/*
               {activeSection === "contact" && (
                 <EmployerContactCard
                   isEditing={true}
@@ -151,6 +160,7 @@ export default function EmployerProfilePage() {
                   onCancel={() => setActiveSection(null)}
                 />
               )}
+              */}
 
               {activeSection === "attachments" && (
                 <EmployerAttachmentsCard

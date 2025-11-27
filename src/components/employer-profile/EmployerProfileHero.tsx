@@ -89,7 +89,7 @@ export function EmployerProfileHero() {
               </div>
 
               {/* Right Column - Find Us Links */}
-              <div className="text-center md:text-left">
+              {/* <div className="text-center md:text-left">
                 <h3 className="text-sm font-semibold text-foreground mb-3">Find us:</h3>
                 <div className="space-y-2">
                   <Button
@@ -123,7 +123,7 @@ export function EmployerProfileHero() {
                     </a>
                   </Button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </CardContent>
         </Card>

@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react"
 import { EmployerCard } from "./EmployerCard"
 import { EmployersFilters } from "./EmployersFilters"
 import { EmployersPagination } from "./EmployersPagination"
+import { apiFetch } from "@/lib/api"
 
 // Type definition for Employer
 export type Employer = {
@@ -25,57 +26,71 @@ export type Employer = {
   searchIndex: string
 }
 
-// Mock data - single employer template
-const BASE_EMPLOYER: Omit<Employer, "id" | "searchIndex"> = {
-  name: "AGROBS GmbH & Co. KG",
-  street: "Angerbreite 27",
-  postalCode: "82541",
-  city: "Degerndorf",
-  country: "Germany",
-  industry: "Retail and wholesale",
-  employeeRange: "100 - 149 employees",
-  openPositions: 8,
-  isHighlighted: false,
-  imageUrl: null,
-  logoUrl: null,
-  discipline: "Healthcare",
-  subject: "Dermatology",
-  location: "Degerndorf",
+// Filter options for dropdowns
+export const DISCIPLINE_OPTIONS = ["Healthcare", "Engineering", "IT", "Other"]
+export const INDUSTRY_OPTIONS = ["Retail and wholesale", "Other industry", "Crafts/trade"]
+export const SUBJECT_OPTIONS = ["Dermatology", "Podiatry", "Cosmetics"]
+
+// Map backend employer object -> UI Employer type
+function mapApiEmployerToEmployer(apiEmployer: any): Employer {
+  const org = apiEmployer.organization || {}
+
+  const name = org.title || apiEmployer.name || "Unknown employer"
+  const street = org.address || ""
+  const postalCode = org.postal_code || ""
+  const city = org.area || ""
+  const country = org.country || ""
+  const employeeRange = org.size || "Not specified"
+  const logo = org.logo || null
+
+  // Build a lowercased search index for free-text filtering
+  const searchIndex = [
+    name,
+    street,
+    postalCode,
+    city,
+    country,
+    employeeRange,
+    apiEmployer.username,
+    apiEmployer.email,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase()
+
+  return {
+    id: apiEmployer.id,
+    name,
+    street,
+    postalCode,
+    city,
+    country,
+    industry: "Not specified", // backend doesn't send industry in this endpoint
+    employeeRange,
+    openPositions: 0, // list API response doesn't include jobs_count/active_jobs_count
+    isHighlighted: false,
+    imageUrl: logo, // use logo as top banner image if present
+    logoUrl: logo,
+    discipline: "", // not in backend, kept for future use
+    subject: "", // not in backend, kept for future use
+    location: city || country,
+    searchIndex,
+  }
 }
 
-// Create 20 mock employers with the same data but unique IDs
-const MOCK_EMPLOYERS: Employer[] = Array.from({ length: 20 }, (_, index) => ({
-  ...BASE_EMPLOYER,
-  id: index + 1,
-  // Build search index from all searchable fields (lowercased for case-insensitive search)
-  searchIndex: [
-    BASE_EMPLOYER.name,
-    BASE_EMPLOYER.street,
-    BASE_EMPLOYER.city,
-    BASE_EMPLOYER.country,
-    BASE_EMPLOYER.industry,
-    BASE_EMPLOYER.employeeRange,
-  ]
-    .join(" ")
-    .toLowerCase(),
-  // Highlight every 5th card for visual variety
-  isHighlighted: (index + 1) % 5 === 0,
-}))
+// Real API call
+async function fetchEmployersFromApi(page: number): Promise<Employer[]> {
+  const response = await apiFetch(`/employers?page=${page}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  })
 
-// Filter options for dropdowns
-export const DISCIPLINE_OPTIONS = [ "Healthcare", "Engineering", "IT", "Other"]
-export const INDUSTRY_OPTIONS = [ "Retail and wholesale", "Other industry", "Crafts/trade"]
-export const SUBJECT_OPTIONS = [ "Dermatology", "Podiatry", "Cosmetics"]
+  console.log("📦 Employers list API response:", response)
 
-/**
- * Data fetching function - FUTURE: Replace with real API call
- * Example: const response = await fetch("/api/employers")
- * For now returns mock data to make the UI plug-and-play ready
- */
-async function getEmployersFromApiLikeSource(): Promise<Employer[]> {
-  // Simulate API delay (optional)
-  await new Promise((resolve) => setTimeout(resolve, 100))
-  return MOCK_EMPLOYERS
+  const data = Array.isArray(response.data) ? response.data : []
+  return data.map(mapApiEmployerToEmployer)
 }
 
 export function EmployersListPageShell() {
@@ -89,16 +104,19 @@ export function EmployersListPageShell() {
   const [industry, setIndustry] = useState("")
   const [subject, setSubject] = useState("")
 
-  // Pagination state
+  // Pagination state (client-side)
   const [currentPage, setCurrentPage] = useState(1)
   const PAGE_SIZE = 12 // 4 rows * 3 columns
 
-  // Load employers on mount
+  // Load employers on mount (first backend page)
   useEffect(() => {
-    getEmployersFromApiLikeSource().then((data) => {
+    async function load() {
+      const data = await fetchEmployersFromApi(1)
       setEmployers(data)
       setCurrentPage(1) // Reset to first page when data loads
-    })
+    }
+
+    load()
   }, [])
 
   // Filter employers based on all filter criteria
@@ -144,7 +162,7 @@ export function EmployersListPageShell() {
     })
   }, [employers, searchTerm, location, discipline, industry, subject])
 
-  // Pagination calculations
+  // Pagination calculations (client-side)
   const totalEmployers = filteredEmployers.length
   const totalPages = Math.max(1, Math.ceil(totalEmployers / PAGE_SIZE))
 
@@ -174,7 +192,7 @@ export function EmployersListPageShell() {
     setCurrentPage(1)
   }
 
-  // Pagination handlers
+  // Pagination handlers (client-side only; backend currently returns single page)
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage((prev) => prev + 1)

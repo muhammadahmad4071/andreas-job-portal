@@ -14,7 +14,7 @@ export default async function HomePage() {
     <main>
       <HomeHero />
       <HomeBannerStrip/>
-      <HomeTopEmployers employers={data.topEmployers} />
+      <HomeTopEmployers/>
       <HomeVideoHighlights />
       <HomeFeaturedJobs/>
       <HomeSeoText />

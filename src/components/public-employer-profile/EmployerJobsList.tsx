@@ -7,7 +7,7 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { MapPin } from "lucide-react"
 
-const jobs = [
+const fallbackJobs = [
   {
     id: "1",
     title: "Sous Chef (f/m/d) at Gut Kaltenbrunn",
@@ -47,11 +47,26 @@ const jobs = [
 
 const INITIAL_VISIBLE_JOBS = 3
 
-export function EmployerJobsList() {
+export type EmployerJobsListItem = {
+  id: string | number
+  title: string
+  company: string
+  location: string
+  logoSrc?: string | null
+}
+
+type EmployerJobsListProps = {
+  jobs?: EmployerJobsListItem[]
+}
+
+export function EmployerJobsList({ jobs }: EmployerJobsListProps) {
+  const sourceJobs =
+    jobs && jobs.length > 0 ? jobs : fallbackJobs
+
   const [showAll, setShowAll] = useState(false)
 
-  const visibleJobs = showAll ? jobs : jobs.slice(0, INITIAL_VISIBLE_JOBS)
-  const hasMore = jobs.length > INITIAL_VISIBLE_JOBS
+  const visibleJobs = showAll ? sourceJobs : sourceJobs.slice(0, INITIAL_VISIBLE_JOBS)
+  const hasMore = sourceJobs.length > INITIAL_VISIBLE_JOBS
 
   return (
     <Card>
@@ -64,7 +79,7 @@ export function EmployerJobsList() {
         {visibleJobs.map((job, index) => (
           <Link
             key={job.id}
-            href={`/jobs/${job.id}`}
+            href={`/public/jobs/${job.id}`}
             className={`flex gap-4 p-4 hover:bg-muted/60 transition-colors rounded-md ${
               index !== visibleJobs.length - 1 ? "border-b" : ""
             }`}

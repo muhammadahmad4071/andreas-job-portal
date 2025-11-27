@@ -20,7 +20,7 @@ export function HomeVideoHighlights() {
         setError(null)
 
         const data = await apiFetch("/jobs/public?page=1")
-        console.log("Video highlights API response:", data)
+        //console.log("Video highlights API response:", data)
 
         const items: any[] = Array.isArray(data.data) ? data.data : []
 

@@ -75,7 +75,7 @@ export function HomeFeaturedJobs() {
 
         const data = await apiFetch("/jobs/public?page=1")
 
-        console.log("HomeFeaturedJobs public jobs response:", data)
+        //console.log("HomeFeaturedJobs public jobs response:", data)
 
         let items: any[] = []
 
