@@ -6,6 +6,35 @@ import { Card } from "@/components/ui/card"
 import type { VideoHighlight } from "@/lib/types"
 import { apiFetch } from "@/lib/api"
 
+// QA: Fix — convert YouTube links to /embed/ URLs to avoid “refused to connect” in iframe.
+function toYoutubeEmbedUrl(raw?: string | null): string {
+  if (!raw) return ""
+
+  try {
+    const url = new URL(raw)
+    const host = url.hostname.replace("www.", "").toLowerCase()
+    let videoId: string | null = null
+
+    if (host === "youtube.com" || host === "m.youtube.com") {
+      if (url.pathname === "/watch") {
+        videoId = url.searchParams.get("v")
+      } else if (url.pathname.startsWith("/embed/")) {
+        videoId = url.pathname.split("/embed/")[1] || null
+      } else if (url.pathname.startsWith("/shorts/")) {
+        videoId = url.pathname.split("/shorts/")[1] || null
+      }
+    } else if (host === "youtu.be") {
+      videoId = url.pathname.slice(1) || null
+    }
+
+    if (!videoId) return ""
+    return `https://www.youtube.com/embed/${videoId}`
+  } catch {
+    return ""
+  }
+}
+
+
 export function HomeVideoHighlights() {
   const [videos, setVideos] = useState<VideoHighlight[]>([])
   const [loading, setLoading] = useState(true)
@@ -32,9 +61,10 @@ export function HomeVideoHighlights() {
           title: job.title ?? "Untitled job",
           employer: job.company_name ?? job.organization?.title ?? "Unknown company",
           location: job.workplace_location ?? "Location not specified",
-          embedUrl: job.video_link, // can be null
+          embedUrl: toYoutubeEmbedUrl(job.video_link), // now always a string
           thumbnailUrl: "",
         }))
+
 
         if (!cancelled) setVideos(mapped)
       } catch (err) {

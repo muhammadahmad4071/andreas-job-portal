@@ -24,8 +24,12 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
     return (
       <Card className="p-12 flex items-center justify-center min-h-[600px]">
         <div className="text-center space-y-2">
-          <p className="text-lg font-medium text-muted-foreground">Select a job to see details</p>
-          <p className="text-sm text-muted-foreground">Click on a job from the list to view its full description.</p>
+          <p className="text-lg font-medium text-muted-foreground">
+            Select a job to see details
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Click on a job from the list to view its full description.
+          </p>
         </div>
       </Card>
     )
@@ -65,8 +69,12 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
 
               <Link href={`/public/jobs/${job.id}/apply`}>
                 <Button className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground flex-shrink-0">
-                  {job.isExpressApplication && <Zap className="h-4 w-4 mr-2" />}
-                  {job.isExpressApplication ? "Express application" : "Apply now"}
+                  {job.isExpressApplication && (
+                    <Zap className="h-4 w-4 mr-2" />
+                  )}
+                  {job.isExpressApplication
+                    ? "Express application"
+                    : "Apply now"}
                 </Button>
               </Link>
             </div>
@@ -92,11 +100,18 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
           </div>
 
           {/* Meta Tags */}
+          {/* QA: Fix — hide generic "Any" values so only meaningful tags are shown */}
           <div className="flex flex-wrap gap-2">
-            <TagPill>{job.industry}</TagPill>
-            <TagPill>{job.employmentType}</TagPill>
-            <TagPill>{job.homeOfficeOption}</TagPill>
-            <TagPill>{job.workExperience}</TagPill>
+            {job.industry !== "Any" && <TagPill>{job.industry}</TagPill>}
+            {job.employmentType !== "Any" && (
+              <TagPill>{job.employmentType}</TagPill>
+            )}
+            {job.homeOfficeOption !== "Any" && (
+              <TagPill>{job.homeOfficeOption}</TagPill>
+            )}
+            {job.workExperience !== "Any" && (
+              <TagPill>{job.workExperience}</TagPill>
+            )}
           </div>
 
           {/* Main content */}
@@ -105,7 +120,8 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
             <section>
               <h2 className="text-xl font-semibold mb-3">Job description</h2>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                {job.teaser || "No detailed description has been provided for this position yet."}
+                {job.teaser ||
+                  "No detailed description has been provided for this position yet."}
               </p>
             </section>
 
@@ -140,9 +156,6 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
               </div>
 
               <div className="space-y-2">
-                {/* <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                  Compensation
-                </h3> */}
                 <ul className="space-y-1 text-sm text-muted-foreground">
                   <li>
                     <span className="font-medium">Experience level:</span>{" "}
@@ -178,8 +191,8 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
             <section>
               <h3 className="text-lg font-semibold mb-2">How to apply</h3>
               <p className="text-sm leading-relaxed text-muted-foreground mb-3">
-                Click on the application button below and follow the next steps to submit your documents for{" "}
-                {job.title} at {job.companyName}.
+                Click on the Apply Now button below and follow the next steps
+                to submit your documents for {job.title} at {job.companyName}.
               </p>
               <Link href={`/public/jobs/${job.id}/apply`}>
                 <Button className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground">

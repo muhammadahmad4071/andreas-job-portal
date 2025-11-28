@@ -115,7 +115,7 @@ export function HomeFeaturedJobs() {
       <div className="container-custom">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
-            TopJobs
+            Top Jobs
           </h2>
           <Link
             href="/public/jobs"

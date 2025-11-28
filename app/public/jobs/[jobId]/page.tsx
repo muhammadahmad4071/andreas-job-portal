@@ -4,7 +4,7 @@ import { JobDetailLayout } from "@/components/public/job-details/JobDetailPage"
 export type JobDetail = {
   id: string
   title: string
-  category: string
+  //category: string
   companyName: string
   companyLogo?: string
   location: string
@@ -112,7 +112,7 @@ async function getJobById(jobId: string): Promise<JobDetail> {
   const jobDetail: JobDetail = {
     id: String(apiJob.id ?? jobId),
     title: apiJob.title ?? "Job",
-    category: apiJob.subject ?? apiJob.professional_discipline ?? "",
+    //category: apiJob.subject ?? apiJob.professional_discipline ?? "",
     companyName: apiJob.company_name ?? apiJob.organization?.title ?? "Company",
     companyLogo: apiJob.company_logo ?? undefined,
     location: apiJob.workplace_location ?? "Location not specified",

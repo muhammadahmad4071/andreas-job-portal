@@ -110,7 +110,7 @@ export function JobAdvertisementInfoCard({
                 <Label htmlFor="job-description" className="text-base font-semibold">
                   Description <span className="text-destructive">*</span>
                 </Label>
-                <Info className="h-4 w-4 text-muted-foreground" />
+                {/* <Info className="h-4 w-4 text-muted-foreground" /> */}
               </div>
               <Textarea
                 id="job-description"

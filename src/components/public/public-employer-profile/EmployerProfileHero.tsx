@@ -127,13 +127,13 @@ export function EmployerProfileHero({
                   </p>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Flame className="h-4 w-4 mt-0.5 flex-shrink-0 text-[#FDB714]" />
-                  <div>
+                  {/* <Flame className="h-4 w-4 mt-0.5 flex-shrink-0 text-[#FDB714]" /> */}
+                  {/* <div>
                     <p className="text-sm font-medium text-foreground">Industry</p>
                     <p className="text-sm text-muted-foreground">
                       {employer.industry}
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 

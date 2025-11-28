@@ -43,10 +43,15 @@ export function JobApplicationForm({ job }: JobApplicationFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
+  const [cvError, setCvError] = useState<string | null>(null)
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] ?? null
     setSelectedFile(file)
+    // QA: Fix — clear CV-specific error once a file is selected
+    if (file) {
+      setCvError(null)
+    }
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -56,13 +61,16 @@ export function JobApplicationForm({ job }: JobApplicationFormProps) {
     setIsSubmitting(true)
     setError(null)
     setSuccess(null)
+    setCvError(null)
 
     const formEl = e.currentTarget
     const formData = new FormData(formEl)
 
-    // Ensure a CV file is present and named as backend expects
-    if (!formData.get("cv_file")) {
-      setError("Please upload your CV (PDF, DOC, DOCX).")
+    // QA: Fix — custom CV validation instead of relying on hidden "required"
+    if (!selectedFile) {
+      const msg = "Please upload your CV (PDF, DOC, DOCX)."
+      setCvError(msg)
+      setError(msg)
       setIsSubmitting(false)
       return
     }
@@ -175,7 +183,9 @@ Mit freundlichen Grüßen`}
 
             {/* Upload CV */}
             <div className="mt-8 space-y-3">
-              <h2 className="text-lg font-semibold">Upload CV</h2>
+              <h2 className="text-lg font-semibold">
+                Upload CV <span className="text-red-500">*</span>
+              </h2>
 
               <div className="border-2 border-dashed border-gray-300 rounded-lg py-10 px-4 flex flex-col items-center justify-center gap-4 text-center">
                 <UploadCloud className="w-12 h-12 text-muted-foreground" />
@@ -192,7 +202,7 @@ Mit freundlichen Grüßen`}
                     className="hidden"
                     accept=".pdf,.doc,.docx"
                     onChange={handleFileChange}
-                    required
+                    // removed required to let React validation handle this
                   />
                   <Button
                     type="button"
@@ -212,6 +222,12 @@ Mit freundlichen Grüßen`}
                   </ul>
                 )}
               </div>
+
+              {cvError && (
+                <p className="text-sm text-red-600">
+                  {cvError}
+                </p>
+              )}
             </div>
 
             {/* Terms checkbox */}
@@ -225,24 +241,17 @@ Mit freundlichen Grüßen`}
                 htmlFor="terms"
                 className="text-sm font-normal text-muted-foreground cursor-pointer"
               >
-                Terms{" "}
-                <a href="#" className="text-[#FDB714] hover:underline">
-                  of use
-                </a>{" "}
-                apply. Information on data protection can be found{" "}
-                <a href="#" className="text-[#FDB714] hover:underline">
-                  here
-                </a>
-                . <span className="text-red-500">*</span>
+                I confirm that all provided information is accurate and true to the best of my knowledge.
+                <span className="text-red-500">*</span>
               </Label>
             </div>
 
             {/* Error / success messages */}
-            {error && (
+            {/* {error && (
               <div className="text-sm text-red-600">
                 {error}
               </div>
-            )}
+            )} */}
             {success && (
               <div className="text-sm text-emerald-600">
                 {success}

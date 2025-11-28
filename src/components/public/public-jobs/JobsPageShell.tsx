@@ -5,11 +5,11 @@ import type React from "react"
 import { useState, useMemo, useEffect } from "react"
 import { apiFetch } from "@/lib/api"
 import { JobsSearchFilters } from "./JobsSearchFilters"
-import { JobAlertBanner } from "./JobAlertBanner"
+// import { JobAlertBanner } from "./JobAlertBanner"
 import { JobsList } from "./JobsList"
 import { JobDetailPanel } from "./JobDetailPanel"
 import { JobsPagination } from "./JobsPagination"
-
+import { useSearchParams } from "next/navigation"   // ⬅️ add this
 export type HomeOfficeOption = "Any" | "On-site" | "Hybrid" | "Remote"
 export type EmploymentType = "Any" | "Full-time" | "Part-time" | "Apprenticeship"
 export type Industry =
@@ -191,29 +191,47 @@ export function JobsPageShell() {
   const [workExperienceFilter, setWorkExperienceFilter] = useState<WorkExperience>("Any")
   const [enterpriseSizeFilter, setEnterpriseSizeFilter] = useState<EnterpriseSize>("Any")
 
+  const searchParams = useSearchParams()
+
+  const searchTermParam = searchParams.get("searchTerm") ?? ""
+  const locationParam = searchParams.get("location") ?? ""
+  const employmentTypeParam =
+    (searchParams.get("employmentType") as EmploymentType | null) ?? null
+
 // ✅ Read query params on client (searchTerm + location + employmentType)
-useEffect(() => {
-  if (typeof window === "undefined") return
-  const params = new URLSearchParams(window.location.search)
+  // 🔁 QA fix: keep employmentTypeFilter in sync with ?employmentType= in the URL
+  // QA: Fix — keep filters in sync with URL query params (hero search + navbar)
+  useEffect(() => {
+    setSearchTerm(searchTermParam)
+  }, [searchTermParam])
 
-  const search = params.get("searchTerm")
-  if (search) {
-    setSearchTerm(search)
-  }
+  useEffect(() => {
+    setLocationTerm(locationParam)
+  }, [locationParam])
 
-  const loc = params.get("location")
-  if (loc) {
-    setLocationTerm(loc)
-  }
+  // QA: Fix — employmentTypeFilter follows ?employmentType= (and resets when removed)
+  useEffect(() => {
+    const allowed: EmploymentType[] = [
+      "Any",
+      "Full-time",
+      "Part-time",
+      "Apprenticeship",
+    ]
 
-  const emp = params.get("employmentType")
-  if (emp) {
-    const allowed: EmploymentType[] = ["Any", "Full-time", "Part-time", "Apprenticeship"]
-    if (allowed.includes(emp as EmploymentType)) {
-      setEmploymentTypeFilter(emp as EmploymentType)
+    // No param in URL → reset to "Any"
+    if (!employmentTypeParam) {
+      setEmploymentTypeFilter("Any")
+      return
     }
-  }
-}, [])
+
+    // Valid param → use it, otherwise fall back to "Any"
+    if (allowed.includes(employmentTypeParam)) {
+      setEmploymentTypeFilter(employmentTypeParam)
+    } else {
+      setEmploymentTypeFilter("Any")
+    }
+  }, [employmentTypeParam])
+
 
   // api state
   const [jobs, setJobs] = useState<Job[]>([])
@@ -376,7 +394,7 @@ useEffect(() => {
 
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] gap-6">
           <div className="space-y-4">
-            <JobAlertBanner />
+            {/* <JobAlertBanner /> */}
 
             {error && (
               <div className="rounded-md border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive">

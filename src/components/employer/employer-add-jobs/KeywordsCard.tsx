@@ -137,7 +137,7 @@ export function KeywordsCard({ value, onChange }: KeywordsCardProps) {
             {/* Professional experience */}
             <div className="space-y-2">
               <Label htmlFor="experience" className="text-base font-semibold">
-                Professional experience
+                Professional experience <span className="text-destructive">*</span>
               </Label>
               <Select
                 value={experience}

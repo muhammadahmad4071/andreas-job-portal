@@ -31,12 +31,7 @@ type AllJobsFiltersProps = {
   onApplyFilters: () => void
 }
 
-const SOURCE_OPTIONS = [
-  "All Jobs",
-  "Draft jobs",
-  "Active jobs",
-  "Expired jobs",
-]
+const SOURCE_OPTIONS = ["All Jobs", "Draft jobs", "Active jobs", "Expired jobs"]
 
 const EMPLOYMENT_TYPE_OPTIONS = [
   "Any type of employment",
@@ -45,17 +40,9 @@ const EMPLOYMENT_TYPE_OPTIONS = [
   "Apprenticeship",
 ]
 
-const WORKFLOW_OPTIONS = [
-  "Any application workflow",
-  "Standard",
-  "Custom",
-]
+const WORKFLOW_OPTIONS = ["Any application workflow", "Standard", "Custom"]
 
-const FRONTEND_OPTIONS = [
-  "Any frontend",
-  "Classic",
-  "Modern",
-]
+const FRONTEND_OPTIONS = ["Any frontend", "Classic", "Modern"]
 
 export function AllJobsFilters({
   filterText,
@@ -77,80 +64,69 @@ export function AllJobsFilters({
 }: AllJobsFiltersProps) {
   return (
     <Card className="shadow-sm">
-      <CardContent className="p-4 md:p-6 space-y-4">
-        {/* Top row */}
-        <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          <Input
-            placeholder="Filtering Jobs"
-            value={filterText}
-            onChange={(e) => onFilterTextChange(e.target.value)}
-            className="bg-white md:flex-1"
-          />
+      <CardContent className="p-4 md:p-6">
+        {/* Main row: inputs + clear all */}
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
+          {/* Left side: text + location (stack on mobile, inline on desktop) */}
+          <div className="flex flex-col gap-3 md:flex-row md:flex-1">
+            <Input
+              placeholder="Filtering Jobs Title"
+              value={filterText}
+              onChange={(e) => onFilterTextChange(e.target.value)}
+              className="bg-white md:flex-[2]"
+            />
 
-          <div className="flex gap-3 md:ml-4">
-            <Button className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-white px-6">
-              Filter
-            </Button>
+            {/* <Input
+              placeholder="Filter by ID"
+              value={filterJobId}
+              onChange={(e) => onFilterJobIdChange(e.target.value)}
+              className="bg-white md:flex-[2]"
+            /> */}
 
-            <Select value={filterSource} onValueChange={onFilterSourceChange}>
-              <SelectTrigger className="bg-white min-w-[140px] justify-between">
-                <SelectValue placeholder="All Jobs" />
-                {/* <ChevronDown className="w-4 h-4 ml-2" /> */}
+            <div className="relative md:flex-[2]">
+              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Input
+                placeholder="Filter by location"
+                value={filterLocation}
+                onChange={(e) => onFilterLocationChange(e.target.value)}
+                className="bg-white pl-9"
+              />
+            </div>
+
+            {/* <Select value={filterSource} onValueChange={onFilterSourceChange}>
+              <SelectTrigger className="bg-white md:flex-[2] justify-between">
+                <SelectValue placeholder="Any Source" />
+                <ChevronDown className="w-4 h-4 ml-2" />
               </SelectTrigger>
               <SelectContent className="bg-white">
                 {SOURCE_OPTIONS.map((option) => (
-                  <SelectItem key={option} value={option}>
-                    {option}
+                  <SelectItem key={`src-${option}`} value={option}>
+                    {option === "All Jobs" ? "Any Source" : option}
                   </SelectItem>
                 ))}
               </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {/* Second row */}
-        <div className="flex flex-col gap-3 md:flex-row">
-          <Input
-            placeholder="Filter by ID"
-            value={filterJobId}
-            onChange={(e) => onFilterJobIdChange(e.target.value)}
-            className="bg-white md:flex-[2]"
-          />
-
-          <div className="relative md:flex-[3]">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <Input
-              placeholder="Filter by location"
-              value={filterLocation}
-              onChange={(e) => onFilterLocationChange(e.target.value)}
-              className="bg-white pl-9"
-            />
+            </Select> */}
           </div>
 
-          <Select value={filterSource} onValueChange={onFilterSourceChange}>
-            <SelectTrigger className="bg-white md:flex-[2] justify-between">
-              <SelectValue placeholder="Any Source" />
-              {/* <ChevronDown className="w-4 h-4 ml-2" /> */}
-            </SelectTrigger>
-            <SelectContent className="bg-white">
-              {SOURCE_OPTIONS.map((option) => (
-                <SelectItem key={`src-${option}`} value={option}>
-                  {option === "All Jobs" ? "Any Source" : option}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {/* Right side: Clear all */}
+          <button
+            type="button"
+            onClick={onClearAll}
+            className="text-sm text-gray-800 hover:underline md:ml-4 self-start md:self-center"
+          >
+            Clear all
+          </button>
         </div>
 
-        {/* Third row */}
-        <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          <Select
+        {/* Extra filters row (still commented, unchanged) */}
+        <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-center">
+          {/* <Select
             value={filterEmploymentType}
             onValueChange={onFilterEmploymentTypeChange}
           >
             <SelectTrigger className="bg-white md:flex-1 justify-between">
               <SelectValue placeholder="Any type of employment" />
-              {/* <ChevronDown className="w-4 h-4 ml-2" /> */}
+              <ChevronDown className="w-4 h-4 ml-2" />
             </SelectTrigger>
             <SelectContent className="bg-white">
               {EMPLOYMENT_TYPE_OPTIONS.map((option) => (
@@ -159,15 +135,15 @@ export function AllJobsFilters({
                 </SelectItem>
               ))}
             </SelectContent>
-          </Select>
+          </Select> */}
 
-          <Select
+          {/* <Select
             value={filterApplicationWorkflow}
             onValueChange={onFilterApplicationWorkflowChange}
           >
             <SelectTrigger className="bg-white md:flex-1 justify-between">
               <SelectValue placeholder="Any application workflow" />
-              {/* <ChevronDown className="w-4 h-4 ml-2" /> */}
+              {/* <ChevronDown className="w-4 h-4 ml-2" /> 
             </SelectTrigger>
             <SelectContent className="bg-white">
               {WORKFLOW_OPTIONS.map((option) => (
@@ -176,15 +152,15 @@ export function AllJobsFilters({
                 </SelectItem>
               ))}
             </SelectContent>
-          </Select>
+          </Select> */}
 
-          <Select
+          {/* <Select
             value={filterFrontend}
             onValueChange={onFilterFrontendChange}
           >
             <SelectTrigger className="bg-white md:flex-1 justify-between">
               <SelectValue placeholder="Any frontend" />
-              {/* <ChevronDown className="w-4 h-4 ml-2" /> */}
+              {/* <ChevronDown className="w-4 h-4 ml-2" /> 
             </SelectTrigger>
             <SelectContent className="bg-white">
               {FRONTEND_OPTIONS.map((option) => (
@@ -193,24 +169,15 @@ export function AllJobsFilters({
                 </SelectItem>
               ))}
             </SelectContent>
-          </Select>
+          </Select> */}
 
-          <Button
+          {/* <Button
             onClick={onApplyFilters}
             className="bg-gray-800 hover:bg-gray-900 text-white px-6 md:ml-2"
           >
             Apply
-          </Button>
+          </Button> */}
         </div>
-
-        {/* Clear all */}
-        <button
-          type="button"
-          onClick={onClearAll}
-          className="text-sm text-gray-800 hover:underline"
-        >
-          Clear all
-        </button>
       </CardContent>
     </Card>
   )

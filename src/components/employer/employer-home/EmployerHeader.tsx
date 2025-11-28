@@ -46,12 +46,12 @@ export function EmployerHeader() {
           </Button>
 
           {/* “For Employers” CTA */}
-          <Link href="/employer/home">
+          {/* <Link href="/employer/home">
           <Button className="bg-primary text-white hover:bg-primary-dark">
           
             For Employers
           </Button>
-        </Link>   
+        </Link>    */}
           {/* USER MENU — contains Logout functionality */}
           <UserMenu />
         </div>

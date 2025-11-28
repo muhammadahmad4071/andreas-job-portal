@@ -2,7 +2,7 @@ import { EmployerSidebar } from "@/components/employer/employer-home/EmployerSid
 import { EmployerHeader } from "@/components/employer/employer-home/EmployerHeader"
 import { EmployerFooter } from "@/components/employer/employer-home/EmployerFooter"
 import { WelcomeBanner } from "@/components/employer/employer-home/WelcomeBanner"
-import { VerificationCard } from "@/components/employer/employer-home/VerificationCard"
+// import { VerificationCard } from "@/components/employer/employer-home/VerificationCard"
 import { EmptyJobsCard } from "@/components/employer/employer-home/EmptyJobsCard"
 import { UserMenu } from "@/components/employer/employer-home/UserMenu"
 import { EmployerApplicationsSection } from "@/components/employer/employer-home/EmployerApplicationsSection"
@@ -38,7 +38,7 @@ export default function EmployerDashboard() {
                   Overview of job advertisements
                 </h2>
 
-                <VerificationCard />
+                {/* <VerificationCard /> */}
                 <EmptyJobsCard />
               </section>
 

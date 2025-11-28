@@ -6,13 +6,11 @@ import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 
 const allBenefits = [
-  "Workwear",
-  "Parking lot",
-  "Coaching",
-  "Distance allowance",
-  "Canteen",
-  "Employee events",
-  "Company doctor",
+  "Casual Wear",
+  "Career Growth",
+  "Professional Training",
+  "Cafeteria",
+  "Casual Leaves",
   "Employee discount",
 ]
 

@@ -56,14 +56,14 @@ export function SalaryIndicationCard({
 
           {/* Right Column */}
           <div className="md:col-span-2 space-y-4">
-            <h4 className="text-base font-semibold">Salary range</h4>
+            <h4 className="text-base font-semibold">Salary range  <span className="text-destructive">*</span></h4>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
               {/* Min salary */}
               <div className="space-y-2">
                 <Label htmlFor="min-salary" className="text-sm font-semibold">
-                  Minimum salary
+                  Minimum salary  <span className="text-destructive">*</span>
                 </Label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">€</span>
@@ -81,7 +81,7 @@ export function SalaryIndicationCard({
               {/* Max salary */}
               <div className="space-y-2">
                 <Label htmlFor="max-salary" className="text-sm font-semibold">
-                  Maximum salary
+                  Maximum salary  <span className="text-destructive">*</span>
                 </Label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">€</span>
@@ -99,7 +99,7 @@ export function SalaryIndicationCard({
               {/* Salary unit */}
               <div className="space-y-2">
                 <Label htmlFor="salary-unit" className="text-sm font-semibold">
-                  Salary unit
+                  Salary unit  <span className="text-destructive">*</span>
                 </Label>
                 <Select
                   value={salaryUnit}

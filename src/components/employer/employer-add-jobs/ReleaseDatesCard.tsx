@@ -35,7 +35,7 @@ export function ReleaseDatesCard({ value, onChange }: ReleaseDatesCardProps) {
           {/* Left Description Column */}
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold text-foreground mb-3">
-              RELEASE DATE &amp; DURATION
+              RELEASE DATE &amp; DURATION 
             </h3>
             <p className="text-sm text-muted-foreground">
               Provide information about the publication date and duration of the job advertisement.
@@ -48,7 +48,7 @@ export function ReleaseDatesCard({ value, onChange }: ReleaseDatesCardProps) {
             {/* Release date */}
             <div className="space-y-2">
               <Label htmlFor="release-date" className="text-base font-semibold">
-                Release date
+                Release date  <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="release-date"
@@ -65,7 +65,7 @@ export function ReleaseDatesCard({ value, onChange }: ReleaseDatesCardProps) {
             {/* Expiration date */}
             <div className="space-y-2">
               <Label htmlFor="expiration-date" className="text-base font-semibold">
-                Expiration date
+                Expiration date  <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="expiration-date"

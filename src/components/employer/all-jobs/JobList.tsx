@@ -1,8 +1,8 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import type { EmployerJob } from "@/components/all-jobs/types"
-import { JobCard } from "@/components/all-jobs/JobCard"
+import type { EmployerJob } from "@/components/employer/all-jobs/types"
+import { JobCard } from "@/components/employer/all-jobs/JobCard"
 
 type JobListProps = {
   jobs: EmployerJob[]

@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { apiFetch } from "@/lib/api"
 import Link from "next/link"
+import { apiFetch } from "@/lib/api"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,48 +13,103 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+type MeResponse = {
+  name?: string
+  organization?: {
+    title?: string
+    logo?: string
+  }
+}
+
 export function UserMenu() {
   const router = useRouter()
   const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+  const [initials, setInitials] = useState<string>("ME")
+
+  // 🔁 Load /me to get organization logo + initials
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadMe() {
+      try {
+        const data = (await apiFetch("/me")) as MeResponse
+
+        if (cancelled) return
+
+        const orgLogo = data?.organization?.logo
+        const orgTitle = data?.organization?.title
+        const name = orgTitle || data?.name || ""
+
+        if (orgLogo) {
+          setAvatarUrl(orgLogo)
+        }
+
+        if (name) {
+          const parts = name.trim().split(/\s+/)
+          const letters = parts
+            .map((p) => p[0])
+            .filter(Boolean)
+            .slice(0, 2)
+            .join("")
+            .toUpperCase()
+
+          if (letters) {
+            setInitials(letters)
+          }
+        }
+      } catch (err) {
+        // If /me fails (not logged in, etc.) just keep defaults
+        console.error("Failed to load /me for user menu:", err)
+      }
+    }
+
+    loadMe()
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
 
     try {
-      // 🔥 Automatically sends Authorization: Bearer <token> (if present)
+      // 🔥 Automatically sends Authorization: Bearer <token>
       await apiFetch("/logout", {
         method: "POST",
       })
     } catch (err) {
       console.error("Logout error:", err)
-      // Continue anyway – we still want to clear tokens client-side
+      // Continue anyway
     } finally {
+      // ❌ Remove token no matter what
       if (typeof window !== "undefined") {
-        // ❌ Remove token from localStorage
-        try {
-          localStorage.removeItem("token")
-        } catch {
-          // ignore
-        }
-
-        // ❌ Remove token cookie used by middleware & apiFetch
-        // Overwrite with empty value and Max-Age=0
-        document.cookie = "employer_token=; Max-Age=0; Path=/"
+        localStorage.removeItem("token")
       }
 
-      // 🔁 Redirect user to login page
       router.push("/employer/login")
-
-      setIsLoggingOut(false)
     }
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="w-10 h-10 rounded-full bg-primary text-white font-semibold flex items-center justify-center hover:bg-primary-dark">
-          {/* You can put initials here later if you want */}
+        {/* Yellow circle with company logo from /me.organization.logo */}
+        <button
+          className="w-10 h-10 rounded-full bg-primary text-white font-semibold flex items-center justify-center hover:bg-primary/90 overflow-hidden border-2 border-white shadow-sm"
+          aria-label="Open user menu"
+        >
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt="Organization logo"
+              className="w-full h-full object-cover rounded-full"
+            />
+          ) : (
+            initials
+          )}
         </button>
+
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
@@ -66,18 +121,16 @@ export function UserMenu() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={() => router.push("/employer/settings")}>
-          <Link href="/employer/settings">
-            Settings
-          </Link>
+        <DropdownMenuItem asChild>
+          <Link href="/employer/settings">Settings</Link>
         </DropdownMenuItem>
 
-        {/* LOGOUT BUTTON */}
         <DropdownMenuItem
           onClick={handleLogout}
-          className="text-destructive cursor-pointer"
+          disabled={isLoggingOut}
+          className="text-destructive"
         >
-          {isLoggingOut ? "Logging out..." : "Logout"}
+          {isLoggingOut ? "Logging out…" : "Logout"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

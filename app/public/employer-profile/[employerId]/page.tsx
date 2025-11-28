@@ -274,7 +274,7 @@ export default async function EmployerProfilePage({ params }: PageProps) {
                 emailVerifiedAt={profile.emailVerifiedAt} // from backend
               />
 
-              <EmployerPicturesGallery />
+              {/* <EmployerPicturesGallery /> */}
 
               <EmployerJobsList jobs={jobsForList} />
             </div>

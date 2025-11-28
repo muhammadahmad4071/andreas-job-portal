@@ -6,12 +6,9 @@ export function WelcomeBanner() {
       <div className="relative z-10 max-w-2xl">
         <h1 className="text-3xl font-bold mb-4">Welcome to our new system!</h1>
         <p className="text-sky-50 leading-relaxed">
-          We have successfully switched to our new software platform. You can find all the
-          important information about using it on our{" "}
-          <Link href="#" className="underline font-semibold hover:text-white">
-            help page
-          </Link>
-          .
+          
+          We’re excited to share our updated platform with you and hope it makes your work easier.
+        
         </p>
       </div>
       

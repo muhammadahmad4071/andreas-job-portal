@@ -27,19 +27,19 @@ export function SiteHeader() {
               href="/public/jobs?employmentType=Apprenticeship"
               className="text-gray-700 hover:text-gray-900 font-medium"
             >
-              Find an apprenticeship
+              Find an Apprenticeship
             </Link>
             <Link
               href="/public/jobs"
               className="text-gray-700 hover:text-gray-900 font-medium"
             >
-              Find jobs
+              Find Jobs
             </Link>
             <Link
               href="/public/employer-list"
               className="text-gray-700 hover:text-gray-900 font-medium"
             >
-              Discover employers
+              Discover Employers
             </Link>
             
           </div>

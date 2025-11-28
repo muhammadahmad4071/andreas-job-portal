@@ -38,7 +38,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                     <Link href="/public/jobs" className="text-[#FDB714] hover:underline">
                       Jobs
                     </Link>
-                    {job.category && (
+                    {/* {job.category && (
                       <>
                         <ChevronRight className="w-4 h-4" />
                         <Link
@@ -48,7 +48,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                           {job.category}
                         </Link>
                       </>
-                    )}
+                    )} */}
                     <ChevronRight className="w-4 h-4" />
                     <span className="text-foreground">{job.title}</span>
                   </div>
@@ -107,7 +107,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                       </div>
 
                       <div className="text-sm text-muted-foreground">
-                        {job.category && <span>{job.category} | </span>}
+                        {/* {job.category && <span>{job.category} | </span>} */}
                         <span>{job.employmentType}</span>
                         {job.professionalExperience && (
                           <>
@@ -217,7 +217,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                 {/* About Us Section */}
                 {job.aboutUs && (
                   <div className="space-y-4 pt-6 border-t">
-                    <h2 className="text-xl font-semibold text-foreground">About us</h2>
+                    <h2 className="text-xl font-semibold text-foreground">Job Description</h2>
                     <p className="text-sm text-muted-foreground leading-relaxed">{job.aboutUs}</p>
                   </div>
                 )}
@@ -225,7 +225,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                 {/* Your Tasks Section */}
                 {hasTasks && (
                   <div className="space-y-4 pt-6 border-t">
-                    <h2 className="text-xl font-semibold text-foreground">Your tasks</h2>
+                    <h2 className="text-xl font-semibold text-foreground">Required Skills</h2>
                     <div className="space-y-3">
                       {job.yourTasks.map((task, index) => (
                         <div key={index} className="flex items-start gap-3">
@@ -338,13 +338,13 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
 
                 {/* Bottom Action Row */}
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-6 border-t">
-                  <Button
+                  {/* <Button
                     variant="outline"
                     className="border-[#FDB714] text-[#FDB714] hover:bg-[#FDB714]/10 bg-transparent"
                   >
                     <Share2 className="w-4 h-4 mr-2" />
                     Divide
-                  </Button>
+                  </Button> */}
 
                   {/* Mobile Apply Button with link */}
                   <Link href={`/public/jobs/${job.id}/apply`} className="sm:hidden w-full">

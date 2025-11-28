@@ -45,7 +45,7 @@ export function EmployerCredentialsForm({ onSuccess }: EmployerCredentialsFormPr
 
     // ✅ Terms & conditions check
     if (!agreed) {
-      setError("Please accept the Terms and Conditions.")
+      setError("Please check the box.")
       return
     }
 
@@ -169,27 +169,32 @@ export function EmployerCredentialsForm({ onSuccess }: EmployerCredentialsFormPr
         </div>
 
         {/* PASSWORD */}
-        <div className="relative">
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 border border-input rounded-md bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent pr-12"
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword((v) => !v)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-            aria-label="Toggle password visibility"
-          >
-            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-          </button>
+        {/* PASSWORD */}
+        <div>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 border border-input rounded-md bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent pr-12"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+              aria-label="Toggle password visibility"
+            >
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
+          </div>
+
           {fieldErrors.password && (
             <p className="mt-1 text-sm text-red-600">{fieldErrors.password}</p>
           )}
         </div>
+
 
         {/* TERMS */}
         <div className="flex items-start gap-3 pt-2">
@@ -204,16 +209,7 @@ export function EmployerCredentialsForm({ onSuccess }: EmployerCredentialsFormPr
             htmlFor="terms"
             className="text-sm text-text-primary leading-relaxed"
           >
-            By clicking this checkbox and clicking the final{" "}
-            <span className="font-semibold">&quot;Register&quot;</span> button,
-            you accept the{" "}
-            <a
-              href="#"
-              className="text-primary font-semibold hover:underline"
-            >
-              Terms and Conditions
-            </a>{" "}
-            on behalf of the organization.{" "}
+           By checking this box, you acknowledge responsibility for the accuracy of the information submitted on behalf of the organization.
             <span className="text-red-500">*</span>
           </label>
         </div>
