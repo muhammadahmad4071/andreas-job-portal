@@ -27,7 +27,7 @@ const navItems = [
   // { icon: Building2, label: "Enterprise", href: "/admin/enterprise", hasSubmenu: false },
   // { icon: UserCircle, label: "admin Profile", href: "/admin/profile", hasSubmenu: false },
   { icon: UserCircle, label: "All Employers", href: "/admin/all-employers", hasSubmenu: false },
-  { icon: UserCircle, label: "SEO Management", href: "#", hasSubmenu: false },
+  { icon: UserCircle, label: "SEO Management", href: "/admin/seo", hasSubmenu: false },
 ]
 
 export function EmployerSidebar() {

@@ -19,7 +19,10 @@ async function fetchSeoText(): Promise<string | null> {
       headers: {
         Accept: "application/json",
       },
-      next: { revalidate: 3600 }, // optional
+      // 🔥 important: disable caching so updates show immediately
+      cache: "no-store",
+      // or alternatively:
+      // next: { revalidate: 0 },
     })
 
     if (!res.ok) return null
