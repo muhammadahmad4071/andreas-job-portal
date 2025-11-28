@@ -40,17 +40,17 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/employers" className="text-gray-300 hover:text-white">
+                <Link href="/employers/login" className="text-gray-300 hover:text-white">
                   For Employers
                 </Link>
               </li>
               <li>
-                <Link href="/register" className="text-gray-300 hover:text-white">
+                <Link href="/employer/register" className="text-gray-300 hover:text-white">
                   Register
                 </Link>
               </li>
               <li>
-                <Link href="/faqs" className="text-gray-300 hover:text-white">
+                <Link href="/" className="text-gray-300 hover:text-white">
                   FAQs
                 </Link>
               </li>
@@ -61,27 +61,27 @@ export function Footer() {
             <h3 className="font-bold text-lg mb-4">ABOUT US</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/contact" className="text-gray-300 hover:text-white">
+                <Link href="/" className="text-gray-300 hover:text-white">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-gray-300 hover:text-white">
+                <Link href="/" className="text-gray-300 hover:text-white">
                   Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-gray-300 hover:text-white">
+                <Link href="/" className="text-gray-300 hover:text-white">
                   Privacy policy
                 </Link>
               </li>
               <li>
-                <Link href="/cookies" className="text-gray-300 hover:text-white">
+                <Link href="/" className="text-gray-300 hover:text-white">
                   Cookie settings
                 </Link>
               </li>
               <li>
-                <Link href="/imprint" className="text-gray-300 hover:text-white">
+                <Link href="/" className="text-gray-300 hover:text-white">
                   Imprint
                 </Link>
               </li>
