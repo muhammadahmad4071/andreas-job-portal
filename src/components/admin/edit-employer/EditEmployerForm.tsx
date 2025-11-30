@@ -37,6 +37,26 @@ type EmployerDetail = {
     logo?: string
   }
 }
+function getAdminToken(): string | null {
+  if (typeof document === "undefined") return null
+
+  // Read admin_token cookie
+  const match = document.cookie.match(/(?:^|; )admin_token=([^;]*)/)
+  if (match) {
+    return decodeURIComponent(match[1])
+  }
+
+  // Optional: fallback to localStorage if you ever stored it there
+  if (typeof window !== "undefined") {
+    return (
+      window.localStorage.getItem("admin_token") ||
+      window.localStorage.getItem("token") || // legacy fallback if still around
+      null
+    )
+  }
+
+  return null
+}
 
 export function EditEmployerForm({ employerId }: EditEmployerFormProps) {
   const [isLoading, setIsLoading] = useState(true)
@@ -144,64 +164,127 @@ export function EditEmployerForm({ employerId }: EditEmployerFormProps) {
   // ===========================
   // 🔥 UPDATE EMPLOYER
   // ===========================
+  // const handleSubmit = async (e: FormEvent) => {
+  //   e.preventDefault()
+  //   setError(null)
+  //   setSuccessMessage("")
+
+  //   try {
+  //     const formData = new FormData()
+  //     formData.append("_method", "PATCH")
+
+  //     formData.append("name", name.trim())
+  //     formData.append("email", email.trim())
+  //     if (username.trim()) formData.append("username", username.trim())
+  //     if (status) formData.append("status", status)
+
+  //     const adminToken = getAdminToken();
+
+  //     formData.append("organization[title]", orgTitle.trim())
+  //     formData.append("organization[address]", orgAddress.trim())
+  //     formData.append("organization[postal_code]", orgPostalCode.trim())
+  //     formData.append("organization[area]", orgArea.trim())
+  //     formData.append("organization[country]", orgCountry.trim())
+
+  //     if (logoFile) {
+  //       formData.append("organization_logo", logoFile)
+  //     }
+
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_API_BASE_URL}/admin/users/${employerId}`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           Accept: "application/json",
+  //           ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
+  //           //Authorization: `Bearer ${localStorage.getItem(adminToken) || ""}`,
+  //         },
+  //         body: formData,
+  //       }
+  //     )
+
+  //     const data = await response.json().catch(() => null)
+  //     console.log("🔵 Update response:", data)
+
+  //     if (!response.ok) {
+  //       throw new Error(
+  //         data?.message || `Failed to update employer (${response.status})`
+  //       )
+  //     }
+
+  //     // SUCCESS
+  //     setSuccessMessage("Employer updated successfully!")
+
+  //     // Redirect in 2 sec
+  //     setTimeout(() => {
+  //       window.location.href = "/admin/all-employers"
+  //     }, 2000)
+
+  //   } catch (err: any) {
+  //     console.error("❌ Employer update failed:", err)
+  //     setError(err?.message || "Failed to update employer.")
+  //   }
+  // }
+
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setSuccessMessage("")
+  e.preventDefault()
+  setError(null)
+  setSuccessMessage("")
 
-    try {
-      const formData = new FormData()
-      formData.append("_method", "PATCH")
+  try {
+    const formData = new FormData()
+    formData.append("_method", "PATCH")
 
-      formData.append("name", name.trim())
-      formData.append("email", email.trim())
-      if (username.trim()) formData.append("username", username.trim())
-      if (status) formData.append("status", status)
+    formData.append("name", name.trim())
+    formData.append("email", email.trim())
+    if (username.trim()) formData.append("username", username.trim())
+    if (status) formData.append("status", status)
 
-      formData.append("organization[title]", orgTitle.trim())
-      formData.append("organization[address]", orgAddress.trim())
-      formData.append("organization[postal_code]", orgPostalCode.trim())
-      formData.append("organization[area]", orgArea.trim())
-      formData.append("organization[country]", orgCountry.trim())
+    formData.append("organization[title]", orgTitle.trim())
+    formData.append("organization[address]", orgAddress.trim())
+    formData.append("organization[postal_code]", orgPostalCode.trim())
+    formData.append("organization[area]", orgArea.trim())
+    formData.append("organization[country]", orgCountry.trim())
 
-      if (logoFile) {
-        formData.append("organization_logo", logoFile)
-      }
-
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/admin/users/${employerId}`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
-          },
-          body: formData,
-        }
-      )
-
-      const data = await response.json().catch(() => null)
-      console.log("🔵 Update response:", data)
-
-      if (!response.ok) {
-        throw new Error(
-          data?.message || `Failed to update employer (${response.status})`
-        )
-      }
-
-      // SUCCESS
-      setSuccessMessage("Employer updated successfully!")
-
-      // Redirect in 2 sec
-      setTimeout(() => {
-        window.location.href = "/admin/all-employers"
-      }, 2000)
-
-    } catch (err: any) {
-      console.error("❌ Employer update failed:", err)
-      setError(err?.message || "Failed to update employer.")
+    if (logoFile) {
+      formData.append("organization_logo", logoFile)
     }
+
+    const adminToken = getAdminToken()
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/admin/users/${employerId}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
+        },
+        body: formData,
+        //credentials: "include", // just in case backend also uses cookies
+      }
+    )
+
+    const data = await response.json().catch(() => null)
+    console.log("🔵 Update response:", data)
+
+    if (!response.ok) {
+      throw new Error(
+        data?.message || `Failed to update employer (${response.status})`
+      )
+    }
+
+    setSuccessMessage("Employer updated successfully!")
+
+    setTimeout(() => {
+      //window.location.href = "/admin/all-employers"
+    }, 2000)
+  } catch (err: any) {
+    console.error("❌ Employer update failed:", err)
+    setError(err?.message || "Failed to update employer.")
   }
+}
+
 
   // ===========================
   // UI RENDER
@@ -266,7 +349,7 @@ export function EditEmployerForm({ employerId }: EditEmployerFormProps) {
                       />
                     </div>
 
-                    <div className="space-y-2">
+                    {/* <div className="space-y-2">
                       <Label>Status</Label>
                       <Select value={status} onValueChange={setStatus}>
                         <SelectTrigger>
@@ -278,7 +361,7 @@ export function EditEmployerForm({ employerId }: EditEmployerFormProps) {
                           <SelectItem value="blocked">Blocked</SelectItem>
                         </SelectContent>
                       </Select>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 

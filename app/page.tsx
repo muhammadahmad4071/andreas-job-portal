@@ -6,7 +6,7 @@ import { HomeTopEmployers } from '@/components/public/home/HomeTopEmployers'
 import { HomeVideoHighlights } from '@/components/public/home/HomeVideoHighlights'
 import { HomeFeaturedJobs } from '@/components/public/home/HomeFeaturedJobs'
 import { HomeSeoText } from '@/components/public/home/HomeSeoText'
-
+export const dynamic = "force-dynamic"
 export default async function HomePage() {
   const data = await getHomePageData()
 

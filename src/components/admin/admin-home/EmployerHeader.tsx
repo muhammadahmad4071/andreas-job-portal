@@ -6,7 +6,7 @@ import Link from "next/link"
 import { Facebook } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { UserMenu } from "@/components/employer/employer-home/UserMenu"
+import { UserMenu } from "@/components/admin/admin-home/UserMenu"
 
 export function EmployerHeader() {
   return (
@@ -17,7 +17,7 @@ export function EmployerHeader() {
         <div className="flex items-center gap-16">
 
           {/* Logo */}
-          <Link href="/employer/home" className="flex items-center gap-3 mr-4">
+          <Link href="/admin/home" className="flex items-center gap-3 mr-4">
             <Image
               src="/logo.png"
               alt="Oberland JOBS"

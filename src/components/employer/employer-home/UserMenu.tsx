@@ -70,26 +70,78 @@ export function UserMenu() {
     }
   }, [])
 
-  const handleLogout = async () => {
-    setIsLoggingOut(true)
+  // const handleLogout = async () => {
+  //   setIsLoggingOut(true)
 
-    try {
-      // 🔥 Automatically sends Authorization: Bearer <token>
-      await apiFetch("/logout", {
-        method: "POST",
-      })
-    } catch (err) {
-      console.error("Logout error:", err)
-      // Continue anyway
-    } finally {
-      // ❌ Remove token no matter what
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("token")
-      }
+  //   try {
+  //     // 🔥 Automatically sends Authorization: Bearer <token>
+  //     await apiFetch("/logout", {
+  //       method: "POST",
+  //     })
+  //   } catch (err) {
+  //     console.error("Logout error:", err)
+  //     // Continue anyway
+  //   } finally {
+  //     // ❌ Remove token no matter what
+  //     if (typeof window !== "undefined") {
+  //       localStorage.removeItem("token")
+  //     }
 
-      router.push("/employer/login")
-    }
+  //     router.push("/employer/login")
+  //   }
+  // }
+
+const handleLogout = async () => {
+  if (isLoggingOut) return
+  setIsLoggingOut(true)
+
+  // Helper to read employer_token from cookies
+  const getEmployerTokenFromCookies = () => {
+    if (typeof document === "undefined") return null
+    const match = document.cookie.match(/(?:^|; )employer_token=([^;]*)/)
+    return match ? decodeURIComponent(match[1]) : null
   }
+
+  try {
+    const base = process.env.NEXT_PUBLIC_API_BASE_URL ?? ""
+
+    // Prefer cookie token, fall back to localStorage
+    const cookieToken = getEmployerTokenFromCookies()
+    const lsToken =
+      typeof window !== "undefined"
+        ? localStorage.getItem("employer_token") ||
+          localStorage.getItem("token") // legacy fallback if you still have it
+        : null
+
+    const token = cookieToken || lsToken
+
+    await fetch(`${base}/logout`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      credentials: "include", // send cookies along just in case backend uses them
+    })
+  } catch (err) {
+    console.error("Logout error:", err)
+    // ignore, we still clear auth & redirect
+  } finally {
+    // Clear employer auth on client
+    if (typeof document !== "undefined") {
+      document.cookie = "employer_token=; Max-Age=0; Path=/"
+    }
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("employer_token")
+      localStorage.removeItem("token") // if you used this before
+    }
+
+    router.replace("/employer/login")
+  }
+}
+
+
 
   return (
     <DropdownMenu>

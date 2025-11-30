@@ -158,9 +158,9 @@ export default function AdminSeoMainTextPage() {
                       <CardTitle className="text-base">
                         Homepage SEO Main Text
                       </CardTitle>
-                      <p className="text-xs text-muted-foreground mt-1">
+                      {/* <p className="text-xs text-muted-foreground mt-1">
                         Key: <code>main-text</code>
-                      </p>
+                      </p> */}
                     </div>
                     <Button size="sm" onClick={handleOpenDialog}>
                       Edit
