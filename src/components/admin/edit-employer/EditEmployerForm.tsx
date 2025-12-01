@@ -240,14 +240,14 @@ export function EditEmployerForm({ employerId }: EditEmployerFormProps) {
     if (username.trim()) formData.append("username", username.trim())
     if (status) formData.append("status", status)
 
-    formData.append("organization[title]", orgTitle.trim())
-    formData.append("organization[address]", orgAddress.trim())
-    formData.append("organization[postal_code]", orgPostalCode.trim())
-    formData.append("organization[area]", orgArea.trim())
-    formData.append("organization[country]", orgCountry.trim())
+    formData.append("title", orgTitle.trim())
+    formData.append("address", orgAddress.trim())
+    formData.append("postal_code", orgPostalCode.trim())
+    formData.append("area", orgArea.trim())
+    formData.append("country", orgCountry.trim())
 
     if (logoFile) {
-      formData.append("organization_logo", logoFile)
+      formData.append("logo", logoFile)
     }
 
     const adminToken = getAdminToken()
@@ -261,7 +261,6 @@ export function EditEmployerForm({ employerId }: EditEmployerFormProps) {
           ...(adminToken ? { Authorization: `Bearer ${adminToken}` } : {}),
         },
         body: formData,
-        //credentials: "include", // just in case backend also uses cookies
       }
     )
 
@@ -274,11 +273,11 @@ export function EditEmployerForm({ employerId }: EditEmployerFormProps) {
       )
     }
 
-    setSuccessMessage("Employer updated successfully!")
+    setSuccessMessage("Employer updated successfully! Redirecting to All Employers...")
 
     setTimeout(() => {
-      //window.location.href = "/admin/all-employers"
-    }, 2000)
+      window.location.href = "/admin/all-employers"
+    }, 1000)
   } catch (err: any) {
     console.error("❌ Employer update failed:", err)
     setError(err?.message || "Failed to update employer.")
