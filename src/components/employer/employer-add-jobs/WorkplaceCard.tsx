@@ -6,7 +6,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { MapPin } from "lucide-react"
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 export type WorkplaceData = {
   workplace: string
   homeOffice: string
@@ -68,7 +74,7 @@ export function WorkplaceCard({ value, onChange }: WorkplaceCardProps) {
             </div>
 
             {/* Home office */}
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <Label htmlFor="home-office" className="text-base font-semibold">
                 Home office option
               </Label>
@@ -88,7 +94,36 @@ export function WorkplaceCard({ value, onChange }: WorkplaceCardProps) {
               <p className="text-sm text-muted-foreground">
                 Inform applicants about home office options.
               </p>
-            </div>
+            </div> */}
+
+            <div className="space-y-2">
+            <Label htmlFor="home-office" className="text-base font-semibold">
+              Home office option
+            </Label>
+
+            <Select
+              value={homeOffice}
+              onValueChange={setHomeOffice}
+            >
+              <SelectTrigger
+                id="home-office"
+                className="h-11 text-base bg-background border border-input"
+              >
+                <SelectValue placeholder="Please select..." />
+              </SelectTrigger>
+
+              <SelectContent className="bg-white">
+                <SelectItem value="100">100% Home office</SelectItem>
+                <SelectItem value="field">Field Service / Travel</SelectItem>
+                <SelectItem value="partial">Partial home office</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <p className="text-sm text-muted-foreground">
+              Inform applicants about home office options.
+            </p>
+          </div>
+
 
           </div>
         </div>

@@ -15,11 +15,16 @@ export type CompanyInformationData = {
 type CompanyInformationCardProps = {
   value?: CompanyInformationData
   onChange: (value: CompanyInformationData) => void
+  errors?: {
+    enterprise?: string
+    logoFile?: string
+  }
 }
 
 export function CompanyInformationCard({
   value,
   onChange,
+  errors,
 }: CompanyInformationCardProps) {
   const [enterprise, setEnterprise] = useState(value?.enterprise ?? "")
   const [logoFile, setLogoFile] = useState<File | null>(value?.logoFile ?? null)
@@ -37,7 +42,8 @@ export function CompanyInformationCard({
     <Card>
       <CardContent className="p-6">
         <div className="md:grid md:grid-cols-3 md:gap-8">
-          {/* Left Description Column */}
+          
+          {/* Left Description */}
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold text-foreground mb-3">
               COMPANY INFORMATION
@@ -49,13 +55,15 @@ export function CompanyInformationCard({
             </div>
           </div>
 
-          {/* Right Form Column */}
+          {/* Right Column */}
           <div className="md:col-span-2 space-y-5">
+
             {/* Enterprise */}
             <div className="space-y-2">
               <Label htmlFor="enterprise" className="text-base font-semibold">
-                Enterprise
+                Enterprise <span className="text-destructive">*</span>
               </Label>
+
               <Input
                 id="enterprise"
                 placeholder="Enter the name of the company"
@@ -63,12 +71,19 @@ export function CompanyInformationCard({
                 value={enterprise}
                 onChange={(e) => setEnterprise(e.target.value)}
               />
+
               <p className="text-sm text-muted-foreground">Name of Employer</p>
+
+              {errors?.enterprise && (
+                <p className="text-sm text-red-600">{errors.enterprise}</p>
+              )}
             </div>
 
             {/* Logo */}
             <div className="space-y-2">
-              <Label className="text-base font-semibold">Logo</Label>
+              <Label className="text-base font-semibold">
+                Logo <span className="text-destructive">*</span>
+              </Label>
 
               <div className="flex items-center gap-4">
                 <Input
@@ -101,7 +116,12 @@ export function CompanyInformationCard({
               <p className="text-sm text-muted-foreground">
                 Add a logo of the company.
               </p>
+
+              {errors?.logoFile && (
+                <p className="text-sm text-red-600">{errors.logoFile}</p>
+              )}
             </div>
+
           </div>
         </div>
       </CardContent>

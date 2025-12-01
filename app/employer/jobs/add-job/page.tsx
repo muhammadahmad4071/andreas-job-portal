@@ -36,6 +36,7 @@ import {
 } from "@/components/employer/employer-add-jobs/JobAdvertisementInfoCard"
 
 import { Button } from "@/components/ui/button"
+//const [companyErrors, setCompanyErrors] = useState<{ enterprise?: string; logoFile?: string }>({})
 
 // --------------------
 // Zod schema for API payload (without file)
@@ -115,7 +116,9 @@ const jobSchema = z
 
     emails: z.array(z.string().email("Invalid email address")).optional(),
 
-    company_name: z.string().max(255).optional(),
+    //company_name: z.string().max(255).optional(),
+    company_name: z.string().min(1, "Enterprise is required").max(255),
+
     home_office: z.string().max(255).optional(),
     subject: z.string().max(255).optional(),
   })
@@ -236,6 +239,7 @@ export default function NewJobPage() {
     { type: "idle" | "success" | "error"; message: string }
   >({ type: "idle", message: "" })
   const [validationErrors, setValidationErrors] = useState<string[]>([])
+  const [companyErrors, setCompanyErrors] = useState<{ enterprise?: string; logoFile?: string }>({})
 
   // --------------------
   // Submit handler
@@ -332,31 +336,73 @@ export default function NewJobPage() {
     if (emailsArr.length) {
       basePayload.emails = emailsArr
     }
-
     // --------------------
-    // Validate with zod
-    // --------------------
-    const result = jobSchema.safeParse(basePayload)
+// Validate with zod
+// --------------------
+const result = jobSchema.safeParse(basePayload)
 
-    if (!result.success) {
-      const issues = result.error.issues.map((issue) => {
-        const path = issue.path.join(".")
-        return path ? `${path}: ${issue.message}` : issue.message
-      })
-      setValidationErrors(issues)
-      setSubmitStatus({
-        type: "error",
-        message: "Please fix the highlighted validation issues.",
-      })
-      return
-    }
+let foundError = false
+let newCompanyErrs: any = {}
 
-    const validPayload = result.data
+// --- ZOD ERRORS ---
+if (!result.success) {
+  const issues = result.error.issues.map((issue) => {
+    const path = issue.path.join(".")
+    return path ? `${path}: ${issue.message}` : issue.message
+  })
 
-    // --------------------
-    // Build FormData
-    // --------------------
-    const formData = new FormData()
+  // enterprise missing?
+  if (!basePayload.company_name) {
+    newCompanyErrs.enterprise = "Enterprise is required"
+  }
+
+  setCompanyErrors(newCompanyErrs)
+  setValidationErrors(issues)
+  setSubmitStatus({
+    type: "error",
+    message: "Please fix the highlighted validation issues.",
+  })
+
+  foundError = true
+}
+
+// --------------------
+// Manual validation for logoFile
+// --------------------
+if (!companyInfo.logoFile) {
+  newCompanyErrs = {
+    ...newCompanyErrs,
+    logoFile: "Company logo is required",
+  }
+
+  setCompanyErrors(newCompanyErrs)
+
+  // Only override validationErrors if Zod was successful
+  if (result.success) {
+    setValidationErrors(["Company logo is required"])
+    setSubmitStatus({
+      type: "error",
+      message: "Please upload a company logo.",
+    })
+  }
+
+  foundError = true
+}
+
+// If ANY error happened, stop here
+if (foundError) return
+
+// --------------------
+// At this point → Zod passed AND logo exists
+// --------------------
+//const validPayload = result.data
+const validPayload = result.data as JobPayload
+
+// --------------------
+// Build FormData
+// --------------------
+const formData = new FormData()
+
 
     // simple fields
     formData.append("type", validPayload.type)
@@ -479,7 +525,13 @@ export default function NewJobPage() {
       >
         <JobAdvertisementInfoCard value={jobAdInfo} onChange={setJobAdInfo} />
 
-        <CompanyInformationCard value={companyInfo} onChange={setCompanyInfo} />
+        {/* <CompanyInformationCard value={companyInfo} onChange={setCompanyInfo} /> */}
+        <CompanyInformationCard
+          value={companyInfo}
+          onChange={setCompanyInfo}
+          errors={companyErrors}
+        />
+
 
         <WorkplaceCard value={workplace} onChange={setWorkplace} />
 
