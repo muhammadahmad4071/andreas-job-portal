@@ -9,17 +9,17 @@ export function EmployerFooter() {
           {/* Applicant Section */}
           <div>
             <h3 className="font-semibold text-sm uppercase mb-4 tracking-wider">
-              Applicant
+              Bewerber
             </h3>
             <ul className="space-y-2">
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Search Jobs
+                  Jobs suchen
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Discover companies
+                  Unternehmen entdecken
                 </Link>
               </li>
             </ul>
@@ -28,32 +28,32 @@ export function EmployerFooter() {
           {/* Employer Section */}
           <div>
             <h3 className="font-semibold text-sm uppercase mb-4 tracking-wider">
-              Employer
+              Arbeitgeber
             </h3>
             <ul className="space-y-2">
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Post a job ad
+                  Stellenanzeige veröffentlichen
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Products & Prices
+                  Produkte & Preise
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  My Employer Profile
+                  Mein Arbeitgeberprofil
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  For Employers
+                  Für Arbeitgeber
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Register
+                  Registrieren
                 </Link>
               </li>
               <li>
@@ -67,32 +67,32 @@ export function EmployerFooter() {
           {/* About Us Section */}
           <div>
             <h3 className="font-semibold text-sm uppercase mb-4 tracking-wider">
-              About Us
+              Über uns
             </h3>
             <ul className="space-y-2">
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Contact
+                  Kontakt
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Terms & Conditions
+                  Allgemeine Geschäftsbedingungen
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Privacy policy
+                  Datenschutzerklärung
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Cookie settings
+                  Cookie-Einstellungen
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Imprint
+                  Impressum
                 </Link>
               </li>
             </ul>
@@ -110,7 +110,7 @@ export function EmployerFooter() {
             </svg>
           </div>
           <p className="text-sm text-gray-400">
-            Powered by joblocal – 2025
+            Bereitgestellt von joblocal – 2025
           </p>
         </div>
       </div>

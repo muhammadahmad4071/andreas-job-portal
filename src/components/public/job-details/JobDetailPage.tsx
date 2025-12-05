@@ -58,7 +58,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                       className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground whitespace-nowrap"
                     >
                       <Briefcase className="w-4 h-4 mr-2" />
-                      Apply
+                      Bewerben
                     </Button>
                   </Link>
                 </div>
@@ -131,31 +131,31 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
 
                 {/* Summary Section */}
                 <div className="space-y-4 pt-6 border-t">
-                  <h2 className="text-xl font-semibold text-foreground">Summary</h2>
+                  <h2 className="text-xl font-semibold text-foreground">Zusammenfassung</h2>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                       <p>
-                        <span className="font-medium">Job Title:</span> {job.title}
+                        <span className="font-medium">Stellenbezeichnung:</span> {job.title}
                       </p>
                     </div>
                     <div className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                       <p>
-                        <span className="font-medium">Location:</span> {job.workplace || job.location}
+                        <span className="font-medium">Ort:</span> {job.workplace || job.location}
                       </p>
                     </div>
                     <div className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                       <p>
-                        <span className="font-medium">Employment Type:</span> {job.employmentType}
+                        <span className="font-medium">Beschäftigungsart:</span> {job.employmentType}
                       </p>
                     </div>
                     {job.homeOffice && (
                       <div className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                         <p>
-                          <span className="font-medium">Home office:</span> {job.homeOffice}
+                          <span className="font-medium">Homeoffice:</span> {job.homeOffice}
                         </p>
                       </div>
                     )}
@@ -163,7 +163,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                       <div className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                         <p>
-                          <span className="font-medium">Experience:</span> {job.professionalExperience}
+                          <span className="font-medium">Erfahrung:</span> {job.professionalExperience}
                         </p>
                       </div>
                     )}
@@ -171,7 +171,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                       <div className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                         <p>
-                          <span className="font-medium">Salary:</span>{" "}
+                          <span className="font-medium">Gehalt:</span>{" "}
                           {job.salaryRange}
                           {job.salaryUnit ? ` (${job.salaryUnit})` : ""}
                         </p>
@@ -181,7 +181,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                       <div className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                         <p>
-                          <span className="font-medium">Language skills:</span>{" "}
+                          <span className="font-medium">Sprachkenntnisse:</span>{" "}
                           {job.languages.join(", ")}
                         </p>
                       </div>
@@ -190,7 +190,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                       <div className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                         <p>
-                          <span className="font-medium">Published on:</span> {job.releaseDate}
+                          <span className="font-medium">Veröffentlicht am:</span> {job.releaseDate}
                         </p>
                       </div>
                     )}
@@ -198,7 +198,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                       <div className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                         <p>
-                          <span className="font-medium">Valid until:</span> {job.expirationDate}
+                          <span className="font-medium">Gültig bis:</span> {job.expirationDate}
                         </p>
                       </div>
                     )}
@@ -206,7 +206,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                       <div className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#FDB714] mt-0.5 flex-shrink-0" />
                         <p>
-                          <span className="font-medium">Contact:</span>{" "}
+                          <span className="font-medium">Kontakt:</span>{" "}
                           {job.contactEmails.join(", ")}
                         </p>
                       </div>
@@ -217,7 +217,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                 {/* About Us Section */}
                 {job.aboutUs && (
                   <div className="space-y-4 pt-6 border-t">
-                    <h2 className="text-xl font-semibold text-foreground">Job Description</h2>
+                    <h2 className="text-xl font-semibold text-foreground">Stellenbeschreibung</h2>
                     <p className="text-sm text-muted-foreground leading-relaxed">{job.aboutUs}</p>
                   </div>
                 )}
@@ -225,7 +225,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                 {/* Your Tasks Section */}
                 {hasTasks && (
                   <div className="space-y-4 pt-6 border-t">
-                    <h2 className="text-xl font-semibold text-foreground">Required Skills</h2>
+                    <h2 className="text-xl font-semibold text-foreground">Erforderliche Fähigkeiten</h2>
                     <div className="space-y-3">
                       {job.yourTasks.map((task, index) => (
                         <div key={index} className="flex items-start gap-3">
@@ -240,7 +240,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                 {/* What We Are Looking For Section */}
                 {hasRequirements && (
                   <div className="space-y-4 pt-6 border-t">
-                    <h2 className="text-xl font-semibold text-foreground">What we are looking for</h2>
+                    <h2 className="text-xl font-semibold text-foreground">Wen wir suchen</h2>
                     <div className="space-y-3">
                       {job.whatWeLookingFor.map((item, index) => (
                         <div key={index} className="flex items-start gap-3">
@@ -252,7 +252,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                         <div className="flex items-start gap-3">
                           <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
                           <p className="text-sm text-muted-foreground">
-                            Language skills: {job.languages.join(", ")}
+                            Sprachkenntnisse: {job.languages.join(", ")}
                           </p>
                         </div>
                       )}
@@ -263,7 +263,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                 {/* Why You Should Come to Us Section (only if backend provides something later) */}
                 {hasWhyJoin && (
                   <div className="space-y-4 pt-6 border-t">
-                    <h2 className="text-xl font-semibold text-foreground">Why you should come to us</h2>
+                    <h2 className="text-xl font-semibold text-foreground">Warum Sie zu uns kommen sollten</h2>
                     <div className="space-y-3">
                       {job.whyJoinUs.map((benefit, index) => (
                         <div key={index} className="flex items-start gap-3">
@@ -281,7 +281,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                     {/* Our Hiring Process Section */}
                     {hasHiringProcess && (
                       <div className="space-y-4 pt-6 border-t">
-                        <h2 className="text-xl font-semibold text-foreground">Our Hiring Process</h2>
+                        <h2 className="text-xl font-semibold text-foreground">Unser Einstellungsprozess</h2>
                         <div className="space-y-3">
                           {job.hiringProcess.map((step, index) => (
                             <div key={index} className="flex items-start gap-3">
@@ -296,7 +296,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                     {/* Workplace Section */}
                     {job.workplace && (
                       <div className="space-y-4 pt-6 border-t">
-                        <h2 className="text-xl font-semibold text-foreground">Workplace</h2>
+                        <h2 className="text-xl font-semibold text-foreground">Arbeitsplatz</h2>
                         <div className="flex items-start gap-3">
                           <Check className="w-4 h-4 text-[#FDB714] mt-1 flex-shrink-0" />
                           <p className="text-sm text-muted-foreground">{job.workplace}</p>
@@ -307,7 +307,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                     {/* Professional Experience Section */}
                     {job.professionalExperience && (
                       <div className="space-y-2">
-                        <h3 className="font-semibold text-foreground">Professional experience</h3>
+                        <h3 className="font-semibold text-foreground">Berufserfahrung</h3>
                         <p className="text-sm text-muted-foreground">{job.professionalExperience}</p>
                       </div>
                     )}
@@ -315,7 +315,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                     {/* Salary Range Section */}
                     {job.salaryRange && (
                       <div className="space-y-2">
-                        <h3 className="font-semibold text-foreground">Salary range</h3>
+                        <h3 className="font-semibold text-foreground">Gehaltsspanne</h3>
                         <p className="text-sm text-muted-foreground">
                           {job.salaryRange}
                           {job.salaryUnit ? ` (${job.salaryUnit})` : ""}
@@ -353,7 +353,7 @@ export function JobDetailLayout({ job }: JobDetailLayoutProps) {
                       className="w-full bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground"
                     >
                       <Briefcase className="w-4 h-4 mr-2" />
-                      Apply
+                      Bewerben
                     </Button>
                   </Link>
                 </div>

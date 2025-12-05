@@ -64,11 +64,11 @@ export default function EmployerRegisterPage() {
                 <div className="max-w-md">
                   <div className="inline-flex items-center px-3 py-1 rounded-full bg-background-darker/70 text-sm font-medium mb-4">
                     <Briefcase className="w-4 h-4 mr-2" />
-                    Registration for employers
+                    Registrierung für Arbeitgeber
                   </div>
 
                   <h2 className="text-2xl lg:text-3xl font-bold mb-6">
-                    Create a free employer profile in just 3 steps
+                    Erstellen Sie ein kostenloses Arbeitgeberprofil in nur 3 Schritten
                   </h2>
 
                   <ol className="space-y-4 text-sm">
@@ -76,19 +76,19 @@ export default function EmployerRegisterPage() {
                       <span className="mt-1 h-7 w-7 flex items-center justify-center rounded-full bg-primary text-text-primary font-bold">
                         1
                       </span>
-                      <p>Create your login credentials.</p>
+                      <p>Erstellen Sie Ihre Anmeldedaten.</p>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="mt-1 h-7 w-7 flex items-center justify-center rounded-full bg-primary text-text-primary font-bold">
                         2
                       </span>
-                      <p>Complete your personal information.</p>
+                      <p>Vervollständigen Sie Ihre persönlichen Daten.</p>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="mt-1 h-7 w-7 flex items-center justify-center rounded-full bg-primary text-text-primary font-bold">
                         3
                       </span>
-                      <p>Complete your company profile.</p>
+                      <p>Vervollständigen Sie Ihr Unternehmensprofil.</p>
                     </li>
                   </ol>
                 </div>
@@ -152,7 +152,7 @@ export default function EmployerRegisterPage() {
                       },
                     }
 
-                    console.log("🔥 Final register payload:", finalPayload)
+                    //console.log("🔥 Final register payload:", finalPayload)
 
                     try {
                       const response = await apiFetch("/register", {
@@ -160,7 +160,7 @@ export default function EmployerRegisterPage() {
                         body: JSON.stringify(finalPayload),
                       })
 
-                      console.log("🎉 REGISTER SUCCESS:", response)
+                      //console.log("🎉 REGISTER SUCCESS:", response)
 
                       setSuccessMessage(
                         "Registration successful! Redirecting to login..."

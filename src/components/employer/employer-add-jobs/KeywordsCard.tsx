@@ -67,15 +67,15 @@ export function KeywordsCard({ value, onChange }: KeywordsCardProps) {
           {/* Left Description Column */}
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold text-foreground mb-3">
-              KEYWORDS OF THE JOB AD
+              SCHLÜSSELWÖRTER DER STELLENANZEIGE
             </h3>
             <div className="text-sm text-muted-foreground space-y-2">
               <p className="font-medium text-primary">
-                TIP: Always be aware of the following:
+                TIPP: Achten Sie stets auf Folgendes:
               </p>
               <p>
-                Think about what candidates are most likely to look for.
-                Here&apos;s how to find the best keywords.
+               Überlegen Sie, wonach Bewerbende höchstwahrscheinlich suchen.
+So finden Sie die besten Schlüsselwörter.
               </p>
             </div>
           </div>
@@ -85,7 +85,7 @@ export function KeywordsCard({ value, onChange }: KeywordsCardProps) {
             {/* Type of employment */}
             <div className="space-y-2">
               <Label htmlFor="employment-type" className="text-base font-semibold">
-                Type of employment <span className="text-destructive">*</span>
+                Beschäftigungsart <span className="text-destructive">*</span>
               </Label>
               <Select
                 value={employmentType}
@@ -95,23 +95,23 @@ export function KeywordsCard({ value, onChange }: KeywordsCardProps) {
                   id="employment-type"
                   className="h-11 text-base bg-background border border-input"
                 >
-                  <SelectValue placeholder="-- Please Select --" />
+                  <SelectValue placeholder="-- Bitte auswählen --" />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
-                  <SelectItem value="apprenticeship">Apprenticeship</SelectItem>
-                  <SelectItem value="full-time">Full-Time</SelectItem>
-                  <SelectItem value="part-time">Part-Time</SelectItem>
+                  <SelectItem value="apprenticeship">Ausbildung</SelectItem>
+                  <SelectItem value="full-time">Vollzeit</SelectItem>
+                  <SelectItem value="part-time"> Teilzeit</SelectItem>
                 </SelectContent>
               </Select>
               <p className="text-sm text-muted-foreground">
-                Please select the type of employment for this job advertisement.
+               Bitte wählen Sie die Beschäftigungsart für diese Stellenanzeige aus.
               </p>
             </div>
 
             {/* Educational qualification */}
             <div className="space-y-2">
               <Label htmlFor="education" className="text-base font-semibold">
-                Required educational qualification
+                Erforderliche Ausbildungsqualifikation
               </Label>
               <Select
                 value={education}
@@ -121,23 +121,23 @@ export function KeywordsCard({ value, onChange }: KeywordsCardProps) {
                   id="education"
                   className="h-11 text-base bg-background border border-input"
                 >
-                  <SelectValue placeholder="-- Please Select --" />
+                  <SelectValue placeholder="-- Bitte auswählen --" />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
-                  <SelectItem value="enrolled-student">Enrolled Student</SelectItem>
-                  <SelectItem value="graduate">Graduate</SelectItem>
-                  <SelectItem value="technician">Technician</SelectItem>
+                  <SelectItem value="enrolled-student">Eingeschriebene/r Student/in</SelectItem>
+                  <SelectItem value="graduate">Absolvent/in</SelectItem>
+                  <SelectItem value="technician">Techniker/in</SelectItem>
                 </SelectContent>
               </Select>
               <p className="text-sm text-muted-foreground">
-                Please select the required educational qualification.
+                Bitte wählen Sie die erforderliche Ausbildungsqualifikation aus.
               </p>
             </div>
 
             {/* Professional experience */}
             <div className="space-y-2">
               <Label htmlFor="experience" className="text-base font-semibold">
-                Professional experience <span className="text-destructive">*</span>
+                Berufserfahrung <span className="text-destructive">*</span>
               </Label>
               <Select
                 value={experience}
@@ -147,25 +147,25 @@ export function KeywordsCard({ value, onChange }: KeywordsCardProps) {
                   id="experience"
                   className="h-11 text-base bg-background border border-input"
                 >
-                  <SelectValue placeholder="-- Please Select --" />
+                  <SelectValue placeholder="-- Bitte auswählen --" />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
-                  <SelectItem value="entry">Entry level</SelectItem>
-                  <SelectItem value="1-3">1–3 years</SelectItem>
-                  <SelectItem value="3-5">3–5 years</SelectItem>
-                  <SelectItem value="5+">5+ years</SelectItem>
-                  <SelectItem value="senior">Senior level</SelectItem>
+                  <SelectItem value="entry">Berufseinsteiger/in</SelectItem>
+                  <SelectItem value="1-3">1–3 Jahre</SelectItem>
+                  <SelectItem value="3-5">3–5 Jahre</SelectItem>
+                  <SelectItem value="5+">5+ Jahre</SelectItem>
+                  <SelectItem value="senior">Erfahrene/r Fachkraft</SelectItem>
                 </SelectContent>
               </Select>
               <p className="text-sm text-muted-foreground">
-                Indicate how much experience is required for this job.
+                Geben Sie an, wie viel Erfahrung für diese Stelle erforderlich ist.
               </p>
             </div>
 
             {/* Discipline */}
             <div className="space-y-2">
               <Label htmlFor="discipline" className="text-base font-semibold">
-                Discipline <span className="text-destructive">*</span>
+                Fachrichtung <span className="text-destructive">*</span>
               </Label>
               <Select
                 value={discipline}
@@ -175,23 +175,23 @@ export function KeywordsCard({ value, onChange }: KeywordsCardProps) {
                   id="discipline"
                   className="h-11 text-base bg-background border border-input"
                 >
-                  <SelectValue placeholder="-- Please Select --" />
+                  <SelectValue placeholder="-- Bitte auswählen --" />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
-                  <SelectItem value="art">Art</SelectItem>
-                  <SelectItem value="engineering">Engineering</SelectItem>
-                  <SelectItem value="health">Health</SelectItem>
+                  <SelectItem value="art">Kunst</SelectItem>
+                  <SelectItem value="engineering">Ingenieurwesen</SelectItem>
+                  <SelectItem value="health">Gesundheitswesen</SelectItem>
                 </SelectContent>
               </Select>
               <p className="text-sm text-muted-foreground">
-                Enter suitable career fields for this position here.
+                Geben Sie hier passende Berufsfelder für diese Position an.
               </p>
             </div>
 
             {/* Subject */}
             <div className="space-y-2">
               <Label htmlFor="subject" className="text-base font-semibold">
-                Subject
+                Fachgebiet
               </Label>
               <Select
                 value={subject}
@@ -201,23 +201,23 @@ export function KeywordsCard({ value, onChange }: KeywordsCardProps) {
                   id="subject"
                   className="h-11 text-base bg-background border border-input"
                 >
-                  <SelectValue placeholder="-- Please Select --" />
+                  <SelectValue placeholder="-- Bitte auswählen --" />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
-                  <SelectItem value="architecture">Architecture</SelectItem>
-                  <SelectItem value="biology">Biology</SelectItem>
-                  <SelectItem value="chemistry">Chemistry</SelectItem>
+                  <SelectItem value="architecture">Architektur</SelectItem>
+                  <SelectItem value="biology">Biologie</SelectItem>
+                  <SelectItem value="chemistry">Chemie</SelectItem>
                 </SelectContent>
               </Select>
               <p className="text-sm text-muted-foreground">
-                Provide information about the fields of study relevant to this position.
+                Geben Sie Informationen zu den für diese Position relevanten Studienrichtungen an.
               </p>
             </div>
 
             {/* Language skills */}
             <div className="space-y-2">
               <Label htmlFor="languages" className="text-base font-semibold">
-                Required language skills
+                Erforderliche Sprachkenntnisse
               </Label>
               <Select
                 value={languages}
@@ -227,33 +227,33 @@ export function KeywordsCard({ value, onChange }: KeywordsCardProps) {
                   id="languages"
                   className="h-11 text-base bg-background border border-input"
                 >
-                  <SelectValue placeholder="-- Please Select --" />
+                  <SelectValue placeholder="-- Bitte auswählen --" />
                 </SelectTrigger>
                 <SelectContent className="bg-white">
-                  <SelectItem value="arabic">Arabic</SelectItem>
-                  <SelectItem value="english">English</SelectItem>
-                  <SelectItem value="french">French</SelectItem>
+                  <SelectItem value="arabic">Arabisch</SelectItem>
+                  <SelectItem value="english">Englisch</SelectItem>
+                  <SelectItem value="french">Französisch</SelectItem>
                 </SelectContent>
               </Select>
               <p className="text-sm text-muted-foreground">
-                Indicate what language skills are required for this position.
+                Geben Sie an, welche Sprachkenntnisse für diese Position erforderlich sind.
               </p>
             </div>
 
             {/* Required skills */}
             <div className="space-y-2">
               <Label htmlFor="skills" className="text-base font-semibold">
-                Required Skills
+                Erforderliche Fähigkeiten
               </Label>
               <Input
                 id="skills"
-                placeholder="Please type..."
+                placeholder="Bitte geben Sie ein…"
                 className="text-base"
                 value={skills}
                 onChange={(e) => setSkills(e.target.value)}
               />
               <p className="text-sm text-muted-foreground">
-                Please indicate all skills that applicants should have.
+                Bitte geben Sie alle Fähigkeiten an, die Bewerbende mitbringen sollten.
               </p>
             </div>
           </div>

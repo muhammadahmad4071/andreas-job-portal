@@ -1,4 +1,4 @@
-import { EmployersListPageShell } from "@/components/employer/employers-list/EmployersListPageShell"
+import { EmployersListPageShell } from "@/components/public/employers-list/EmployersListPageShell"
 
 export default function EmployersListPage() {
   return (

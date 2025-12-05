@@ -82,10 +82,10 @@ export function ApplicationProcessCard({ value, onChange }: ApplicationProcessCa
           {/* LEFT COLUMN */}
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold text-foreground mb-3">
-              APPLICATION PROCESS
+              BEWERBUNGSPROZESS
             </h3>
             <p className="text-sm text-muted-foreground">
-              Specify how candidates can apply for this job.
+              Geben Sie an, wie sich Bewerbende für diese Stelle bewerben können.
             </p>
           </div>
 
@@ -94,7 +94,7 @@ export function ApplicationProcessCard({ value, onChange }: ApplicationProcessCa
             {/* EMAILS */}
             <div className="space-y-3">
               <Label className="text-base font-semibold">
-                E-mail for applications <span className="text-destructive">*</span>
+                E-Mail für Bewerbungen <span className="text-destructive">*</span>
               </Label>
 
               {emails.map((email, index) => (
@@ -103,7 +103,7 @@ export function ApplicationProcessCard({ value, onChange }: ApplicationProcessCa
                     type="email"
                     value={email}
                     onChange={(e) => handleEmailChange(index, e.target.value)}
-                    placeholder="Enter application email"
+                    placeholder="Bewerbungs-E-Mail eingeben"
                     className="text-base"
                     required
                   />
@@ -117,7 +117,7 @@ export function ApplicationProcessCard({ value, onChange }: ApplicationProcessCa
                       onClick={() => handleRemoveEmail(index)}
                     >
                       <X className="h-4 w-4 mr-1" />
-                      Remove
+                      Entfernen
                     </Button>
                   )}
                 </div>
@@ -131,18 +131,18 @@ export function ApplicationProcessCard({ value, onChange }: ApplicationProcessCa
                 onClick={handleAddEmail}
               >
                 <Plus className="h-4 w-4 mr-1" />
-                Add email
+                E-Mail hinzufügen
               </Button>
 
               <p className="text-sm text-muted-foreground">
-                Enter one or more email addresses where applications should be sent.
+                Geben Sie eine oder mehrere E-Mail-Adressen ein, an die Bewerbungen gesendet werden sollen.
               </p>
             </div>
 
             {/* QUESTIONS */}
             <div className="space-y-4">
               <Label className="text-base font-semibold">
-                Qualification questions
+                Qualifikationsfragen
               </Label>
 
               {questions.map((q, index) => (
@@ -161,7 +161,7 @@ export function ApplicationProcessCard({ value, onChange }: ApplicationProcessCa
                   )}
 
                   <Input
-                    placeholder="Enter qualification question"
+                    placeholder="Qualifikationsfrage eingeben"
                     className="text-base"
                     value={q.text}
                     onChange={(e) => handleQuestionChange(index, e.target.value)}
@@ -180,7 +180,7 @@ export function ApplicationProcessCard({ value, onChange }: ApplicationProcessCa
                       htmlFor={`mandatory-${index}`}
                       className="font-normal cursor-pointer"
                     >
-                      Mandatory question
+                      Pflichtfrage
                     </Label>
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export function ApplicationProcessCard({ value, onChange }: ApplicationProcessCa
                 className="bg-[#FDB913] hover:bg-[#FDB913]/90 text-black font-semibold"
               >
                 <Plus className="w-4 h-4 mr-2" />
-                Add a question
+                Eine Frage hinzufügen
               </Button>
             </div>
           </div>

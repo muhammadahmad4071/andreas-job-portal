@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation"
 import { z } from "zod"
 
 const loginSchema = z.object({
-  login: z.string().min(1, "Please enter your e-mail address or username."),
-  password: z.string().min(1, "Please enter your password."),
+  login: z.string().min(1, "Bitte geben Sie Ihre E-Mail-Adresse oder Ihren Benutzernamen ein."),
+  password: z.string().min(1, "Bitte geben Sie Ihr Passwort ein."),
 })
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -69,7 +69,7 @@ export default function EmployerLoginPage() {
       }
 
       console.error("Unexpected validation error:", err)
-      setError("Something went wrong while validating your data. Please try again.")
+      setError("Beim Überprüfen Ihrer Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.")
       return
     }
 
@@ -147,7 +147,7 @@ export default function EmployerLoginPage() {
         defaultHome = "/admin/home"
       }
 
-      setSuccess("Login successful! Redirecting...")
+      setSuccess("Anmeldung erfolgreich! Weiterleitung...")
       setError(null)
 
       // Respect ?redirectTo=... from middleware, fallback to role-based home
@@ -155,7 +155,7 @@ export default function EmployerLoginPage() {
       router.push(target)
     } catch (err: any) {
       console.error("Login failed:", err)
-      setError(err?.message || "Something went wrong. Please try again.")
+      setError(err?.message || "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.")
       setSuccess(null)
     } finally {
       setIsSubmitting(false)
@@ -182,7 +182,7 @@ export default function EmployerLoginPage() {
             {/* Header */}
             <div className="mb-8">
               <h1 className="text-3xl lg:text-4xl font-bold text-text-primary">
-                Announce
+                Anmelden
               </h1>
             </div>
 
@@ -192,7 +192,7 @@ export default function EmployerLoginPage() {
               <div>
                 <input
                   type="text"
-                  placeholder="E-mail address or Username"
+                  placeholder="E-Mail-Adresse oder Benutzername"
                   value={emailOrUsername}
                   onChange={(e) => setEmailOrUsername(e.target.value)}
                   className="w-full px-4 py-3 border border-input rounded-md bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -209,7 +209,7 @@ export default function EmployerLoginPage() {
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
-                    placeholder="Password"
+                    placeholder="Passwort"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-3 border border-input rounded-md bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent pr-12"
@@ -258,19 +258,19 @@ export default function EmployerLoginPage() {
                 className="w-full bg-primary hover:bg-primary/90 text-text-primary font-semibold py-3 rounded-md transition-colors flex items-center justify-center gap-2"
               >
                 <LogIn className="w-5 h-5" />
-                {isSubmitting ? "Logging in..." : "Log in"}
+                {isSubmitting ? "Anmeldung läuft..." : "Anmelden"}
               </Button>
             </form>
 
             {/* Footer */}
             <div className="mt-8 space-y-4 text-center">
               <p className="text-sm text-text-secondary">
-                Don't have an account yet?{" "}
+                Noch kein Konto?{" "}
                 <Link
                   href="/employer/register"
                   className="text-primary font-semibold hover:underline"
                 >
-                  Register now and create a free employer profile!
+                  Jetzt registrieren und ein kostenloses Arbeitgeberprofil erstellen!
                 </Link>
               </p>
             </div>

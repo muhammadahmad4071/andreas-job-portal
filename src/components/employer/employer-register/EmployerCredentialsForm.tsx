@@ -126,13 +126,14 @@ export function EmployerCredentialsForm({ onSuccess }: EmployerCredentialsFormPr
       {/* Intro copy for step 1 */}
       <div className="mb-8">
         <h1 className="text-2xl lg:text-3xl font-bold text-text-primary mb-4">
-          CREATE A FREE EMPLOYER PROFILE NOW
+          JETZT KOSTENLOSES ARBEITGERSPROFIL ERSTELLEN
         </h1>
         <p className="text-text-secondary text-base">
-          Register your free account and get started right away!
+          {/* Register your free account and get started right away! */}
+          Registrieren Sie Ihr kostenloses Konto und legen Sie sofort los!
         </p>
         <p className="text-text-secondary text-base">
-          To complete the registration, you will receive a confirmation email.
+          Zur Vervollständigung der Registrierung erhalten Sie eine Bestätigungs-E-Mail.
         </p>
       </div>
 
@@ -142,7 +143,7 @@ export function EmployerCredentialsForm({ onSuccess }: EmployerCredentialsFormPr
         <div>
           <input
             type="text"
-            placeholder="Enter your username"
+            placeholder="Geben Sie Ihren Benutzernamen ein"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="w-full px-4 py-3 border border-input rounded-md bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -157,7 +158,7 @@ export function EmployerCredentialsForm({ onSuccess }: EmployerCredentialsFormPr
         <div>
           <input
             type="email"
-            placeholder="Enter your email address"
+            placeholder="Geben Sie Ihre E-Mail-Adresse ein"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full px-4 py-3 border border-input rounded-md bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -174,7 +175,7 @@ export function EmployerCredentialsForm({ onSuccess }: EmployerCredentialsFormPr
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
+              placeholder="Geben Sie Ihr Passwort ein"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 border border-input rounded-md bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent pr-12"
@@ -209,7 +210,7 @@ export function EmployerCredentialsForm({ onSuccess }: EmployerCredentialsFormPr
             htmlFor="terms"
             className="text-sm text-text-primary leading-relaxed"
           >
-           By checking this box, you acknowledge responsibility for the accuracy of the information submitted on behalf of the organization.
+           Indem Sie dieses Kästchen markieren, bestätigen Sie die Verantwortung für die Richtigkeit der im Namen der Organisation übermittelten Informationen.
             <span className="text-red-500">*</span>
           </label>
         </div>
@@ -224,12 +225,12 @@ export function EmployerCredentialsForm({ onSuccess }: EmployerCredentialsFormPr
           className="w-full bg-primary hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed text-text-primary font-semibold py-3 rounded-md flex items-center justify-center gap-2"
         >
           <Building2 className="w-5 h-5" />
-          {isSubmitting ? "Registering..." : "Register for free"}
+          {isSubmitting ? "Registrierung läuft..." : "Kostenlos registrieren"}
         </Button>
 
         {/* LOGIN LINK */}
         <div className="text-center pt-2">
-          <span className="text-text-secondary">Already have an account? </span>
+          <span className="text-text-secondary">Haben Sie bereits ein Konto? </span>
           <Link
             href="/employer/login"
             className="text-primary font-semibold hover:underline"

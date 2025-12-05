@@ -5,7 +5,7 @@ import { Phone, Mail } from "lucide-react"
 
 const fallbackContact = {
   name: "Antonia Widmann",
-  role: "Human Resources Officer",
+  role: "Personalreferent",
   // phone: "089 4168 219",
   email: "jobs@gut-kaltenbrunn.de",
   initials: "AW",
@@ -29,7 +29,7 @@ export function EmployerContactCard({ name, email }: EmployerContactCardProps) {
   return (
     <Card>
       <CardHeader>
-        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Contact</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Kontakt</p>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-start gap-3">

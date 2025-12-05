@@ -88,7 +88,8 @@ export function EmployerProfileHero({
                 </div>
                 <div className="text-center md:text-left space-y-1">
                   <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    Employer
+                    {/* Employer */}
+                    Arbeitgeber
                   </p>
                   <h1 className="text-xl md:text-2xl font-semibold text-foreground mb-1">
                     {displayName}
@@ -96,7 +97,7 @@ export function EmployerProfileHero({
                   <div className="flex items-start gap-2 text-sm text-muted-foreground mt-2">
                     <Building2 className="h-4 w-4 mt-0.5 flex-shrink-0 text-[#FDB714]" />
                     <div>
-                      <p className="font-medium text-foreground">Head office</p>
+                      <p className="font-medium text-foreground">Hauptsitz</p>
                       <p>
                         {headStreet}, {headPostcode} {headCity}, {headCountry}
                       </p>
@@ -109,20 +110,21 @@ export function EmployerProfileHero({
               <div className="space-y-4 text-center md:text-left text-sm">
                 <div className="space-y-2">
                   <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    Address
+                    {/* Address */}
+                    Adresse
                   </p>
                   <p>
-                    <span className="font-medium">Street: </span>
+                    <span className="font-medium">Straße: </span>
                     <span className="text-muted-foreground">{addressStreet}</span>
                   </p>
                   <p>
-                    <span className="font-medium">Postal code / City: </span>
+                    <span className="font-medium">Postleitzahl / Stadt: </span>
                     <span className="text-muted-foreground">
                       {headPostcode} {headCity}
                     </span>
                   </p>
                   <p>
-                    <span className="font-medium">Country: </span>
+                    <span className="font-medium">Land: </span>
                     <span className="text-muted-foreground">{headCountry}</span>
                   </p>
                 </div>

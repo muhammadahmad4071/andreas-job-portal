@@ -27,19 +27,19 @@ export function SiteHeader() {
               href="/public/jobs?employmentType=Apprenticeship"
               className="text-gray-700 hover:text-gray-900 font-medium"
             >
-              Find an Apprenticeship
+              Ausbildung finden
             </Link>
             <Link
               href="/public/jobs"
               className="text-gray-700 hover:text-gray-900 font-medium"
             >
-              Find Jobs
+              Jobs finden
             </Link>
             <Link
               href="/public/employer-list"
               className="text-gray-700 hover:text-gray-900 font-medium"
             >
-              Discover Employers
+              Arbeitgeber entdecken
             </Link>
             
           </div>
@@ -57,12 +57,14 @@ export function SiteHeader() {
             </Link>
             <Link href="/employer/register">
               <Button variant="primary" className="hidden md:block">
-                For Employers
+                {/* For Employers */}
+                Für Arbeitgeber
               </Button>
             </Link>
             <Link href="/employer/login">
               <Button variant="outline" className="hidden md:block">
-                Announce
+                {/* Announce */}
+                Anmelden
               </Button>
             </Link>
           </div>

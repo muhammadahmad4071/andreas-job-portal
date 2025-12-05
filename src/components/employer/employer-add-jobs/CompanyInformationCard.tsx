@@ -46,11 +46,11 @@ export function CompanyInformationCard({
           {/* Left Description */}
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold text-foreground mb-3">
-              COMPANY INFORMATION
+              UNTERNEHMENSINFORMATIONEN
             </h3>
             <div className="text-sm text-muted-foreground space-y-2">
               <p>
-                Complete the details of your company. These are used for your employer profile.
+                Vervollständigen Sie die Angaben zu Ihrem Unternehmen. Diese werden für Ihr Arbeitgeberprofil verwendet.
               </p>
             </div>
           </div>
@@ -61,18 +61,18 @@ export function CompanyInformationCard({
             {/* Enterprise */}
             <div className="space-y-2">
               <Label htmlFor="enterprise" className="text-base font-semibold">
-                Enterprise <span className="text-destructive">*</span>
+                Unternehmen <span className="text-destructive">*</span>
               </Label>
 
               <Input
                 id="enterprise"
-                placeholder="Enter the name of the company"
+                placeholder="Geben Sie den Namen des Unternehmens ein"
                 className="text-base"
                 value={enterprise}
                 onChange={(e) => setEnterprise(e.target.value)}
               />
 
-              <p className="text-sm text-muted-foreground">Name of Employer</p>
+              <p className="text-sm text-muted-foreground">Name des Arbeitgebers</p>
 
               {errors?.enterprise && (
                 <p className="text-sm text-red-600">{errors.enterprise}</p>
@@ -103,7 +103,7 @@ export function CompanyInformationCard({
                   }
                 >
                   <Upload className="h-4 w-4 mr-2" />
-                  Upload
+                  Hochladen
                 </Button>
 
                 {logoFile && (
@@ -114,7 +114,7 @@ export function CompanyInformationCard({
               </div>
 
               <p className="text-sm text-muted-foreground">
-                Add a logo of the company.
+                Fügen Sie ein Logo des Unternehmens hinzu.
               </p>
 
               {errors?.logoFile && (

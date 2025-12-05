@@ -35,7 +35,7 @@ export default function EmployerDashboard() {
               {/* Overview of job advertisements */}
               <section className="space-y-4">
                 <h2 className="text-2xl font-semibold text-text-primary">
-                  Overview of job advertisements
+                  Übersicht der Stellenanzeigen
                 </h2>
 
                 {/* <VerificationCard /> */}

@@ -143,7 +143,7 @@ export function JobApplicationForm({ job }: JobApplicationFormProps) {
             {/* Full name */}
             <div className="space-y-1">
               <Label htmlFor="name">
-                Full name <span className="text-red-500">*</span>
+                Vollständiger Name <span className="text-red-500">*</span>
               </Label>
               <Input id="name" name="name" required />
             </div>
@@ -151,21 +151,21 @@ export function JobApplicationForm({ job }: JobApplicationFormProps) {
             {/* E-mail address */}
             <div className="space-y-1">
               <Label htmlFor="email">
-                E-mail address <span className="text-red-500">*</span>
+                E-Mail-Adresse <span className="text-red-500">*</span>
               </Label>
               <Input id="email" name="email" type="email" required />
             </div>
 
             {/* Phone number */}
             <div className="space-y-1">
-              <Label htmlFor="phone_number">Phone number</Label>
+              <Label htmlFor="phone_number">Telefonnummer</Label>
               <Input id="phone_number" name="phone_number" type="tel" />
             </div>
 
             {/* Applicant's cover letter */}
             <div className="space-y-1">
               <Label htmlFor="cover_letter">
-                Applicant&apos;s cover letter{" "}
+                Anschreiben{" "}
                 <span className="text-red-500">*</span>
               </Label>
               <Textarea
@@ -184,14 +184,14 @@ Mit freundlichen Grüßen`}
             {/* Upload CV */}
             <div className="mt-8 space-y-3">
               <h2 className="text-lg font-semibold">
-                Upload CV <span className="text-red-500">*</span>
+                Lebenslauf hochladen <span className="text-red-500">*</span>
               </h2>
 
               <div className="border-2 border-dashed border-gray-300 rounded-lg py-10 px-4 flex flex-col items-center justify-center gap-4 text-center">
                 <UploadCloud className="w-12 h-12 text-muted-foreground" />
                 <p className="text-sm text-muted-foreground">
-                  Drag &amp; drop your CV here or click the button to upload.
-                  Accepted formats: PDF, DOC, DOCX (max 5MB).
+                  Ziehen Sie hier Ihren Lebenslauf per Drag &amp; Drop hinein oder klicken Sie auf die Schaltfläche, um ihn hochzuladen.
+Akzeptierte Formate: PDF, DOC, DOCX (max. 5 MB).
                 </p>
 
                 <div>
@@ -212,7 +212,7 @@ Mit freundlichen Grüßen`}
                     }
                     className="px-8"
                   >
-                    Upload
+                    Hochladen
                   </Button>
                 </div>
 
@@ -241,7 +241,8 @@ Mit freundlichen Grüßen`}
                 htmlFor="terms"
                 className="text-sm font-normal text-muted-foreground cursor-pointer"
               >
-                I confirm that all provided information is accurate and true to the best of my knowledge.
+                {/* I confirm that all provided information is accurate and true to the best of my knowledge. */}
+                Ich bestätige, dass alle angegebenen Informationen nach bestem Wissen korrekt und wahr sind.
                 <span className="text-red-500">*</span>
               </Label>
             </div>
@@ -265,7 +266,7 @@ Mit freundlichen Grüßen`}
                 className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground px-8"
                 disabled={!acceptedTerms || isSubmitting}
               >
-                {isSubmitting ? "Submitting..." : "Apply"}
+                {isSubmitting ? "Submitting..." : "Bewerben"}
               </Button>
             </div>
           </form>

@@ -47,23 +47,23 @@ export function SalaryIndicationCard({
           {/* Left Column */}
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold text-foreground mb-3">
-              SALARY INDICATION
+              GEHALTSANGABE
             </h3>
             <p className="text-sm text-muted-foreground">
-              Providing a salary range increases job discoverability on Google for Jobs.
+              Die Angabe einer Gehaltsspanne erhöht die Auffindbarkeit der Stelle bei Google for Jobs.
             </p>
           </div>
 
           {/* Right Column */}
           <div className="md:col-span-2 space-y-4">
-            <h4 className="text-base font-semibold">Salary range  <span className="text-destructive">*</span></h4>
+            <h4 className="text-base font-semibold">Gehaltsspanne  <span className="text-destructive">*</span></h4>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
               {/* Min salary */}
               <div className="space-y-2">
                 <Label htmlFor="min-salary" className="text-sm font-semibold">
-                  Minimum salary  <span className="text-destructive">*</span>
+                 Mindestgehalt  <span className="text-destructive">*</span>
                 </Label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">€</span>
@@ -81,7 +81,7 @@ export function SalaryIndicationCard({
               {/* Max salary */}
               <div className="space-y-2">
                 <Label htmlFor="max-salary" className="text-sm font-semibold">
-                  Maximum salary  <span className="text-destructive">*</span>
+                  Höchstgehalt  <span className="text-destructive">*</span>
                 </Label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">€</span>
@@ -99,7 +99,7 @@ export function SalaryIndicationCard({
               {/* Salary unit */}
               <div className="space-y-2">
                 <Label htmlFor="salary-unit" className="text-sm font-semibold">
-                  Salary unit  <span className="text-destructive">*</span>
+                 Gehaltsangabe (Einheit)  <span className="text-destructive">*</span>
                 </Label>
                 <Select
                   value={salaryUnit}
@@ -109,16 +109,17 @@ export function SalaryIndicationCard({
                     <SelectValue placeholder="-- Please Select --" />
                   </SelectTrigger>
                   <SelectContent className="bg-white">
-                    <SelectItem value="hour">Per hour</SelectItem>
-                    <SelectItem value="month">Per month</SelectItem>
-                    <SelectItem value="year">Per year</SelectItem>
+                    <SelectItem value="hour">Pro Stunde</SelectItem>
+                    <SelectItem value="month">Pro Monat</SelectItem>
+                    <SelectItem value="year">Pro Jahr</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             <p className="text-sm text-muted-foreground">
-              Provide a salary range for this job.
+              Geben Sie eine Gehaltsspanne für diese Stelle an.
+
             </p>
           </div>
 

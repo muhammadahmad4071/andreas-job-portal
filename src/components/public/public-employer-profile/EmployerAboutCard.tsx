@@ -26,7 +26,7 @@ export function EmployerAboutCard({
     <Card>
       <CardHeader className="space-y-1 pb-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          About us
+          Über uns
         </p>
       </CardHeader>
 
@@ -37,7 +37,8 @@ export function EmployerAboutCard({
           <Briefcase className="h-5 w-5 text-[#FDB714]" />
           <div>
             <p className="text-sm font-medium text-foreground">
-              Active Job Posts
+              {/* Active Job Posts */}
+              Aktuelle Stellenangebote
             </p>
             <p className="text-sm text-muted-foreground">
               {activeJobsCount ?? 0}
@@ -49,7 +50,10 @@ export function EmployerAboutCard({
         <div className="flex items-center gap-3">
           <ShieldCheck className="h-5 w-5 text-[#FDB714]" />
           <div>
-            <p className="text-sm font-medium text-foreground">Profile Status</p>
+            <p className="text-sm font-medium text-foreground">
+              {/* Profile Status */}
+              Profilstatus
+              </p>
             <p className={`text-sm ${verificationColor}`}>{verificationLabel}</p>
           </div>
         </div>
@@ -58,7 +62,7 @@ export function EmployerAboutCard({
         <div className="flex items-center gap-3 pt-2 border-t">
           <Users className="h-5 w-5 text-[#FDB714]" />
           <div>
-            <p className="text-sm font-medium text-foreground">Employees</p>
+            <p className="text-sm font-medium text-foreground">Mitarbeiter</p>
             <p className="text-sm text-muted-foreground">{employeesLabel}</p>
           </div>
         </div>

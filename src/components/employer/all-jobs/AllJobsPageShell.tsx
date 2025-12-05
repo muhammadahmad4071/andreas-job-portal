@@ -204,7 +204,8 @@ export function AllJobsPageShell() {
     <section className="w-full h-full">
       <div className="container-custom py-8 space-y-6">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-          Manage Job Ads
+          {/* Manage Job Ads */}
+          Stellenanzeigen verwalten 
         </h1>
 
         <AllJobsFilters
@@ -236,7 +237,7 @@ export function AllJobsPageShell() {
           >
             <Link href="/employer/jobs/add-job">
               <Plus className="w-4 h-4 mr-2" />
-              Add a job ad
+              Stellenanzeige hinzufügen
             </Link>
           </Button>
         </div>

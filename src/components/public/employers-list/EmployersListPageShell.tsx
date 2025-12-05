@@ -208,7 +208,7 @@ export function EmployersListPageShell() {
   return (
     <section className="container-custom py-8 md:py-10">
       {/* Page title */}
-      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 md:mb-8">Enterprise</h1>
+      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 md:mb-8">Unternehmen</h1>
 
       {/* Filters section */}
       <EmployersFilters

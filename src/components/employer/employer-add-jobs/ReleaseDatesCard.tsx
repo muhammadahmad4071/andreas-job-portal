@@ -35,10 +35,11 @@ export function ReleaseDatesCard({ value, onChange }: ReleaseDatesCardProps) {
           {/* Left Description Column */}
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold text-foreground mb-3">
-              RELEASE DATE &amp; DURATION 
+              VERÖFFENTLICHUNGSDATUM & DAUER
             </h3>
             <p className="text-sm text-muted-foreground">
-              Provide information about the publication date and duration of the job advertisement.
+              Geben Sie Informationen zum Veröffentlichungsdatum und zur Dauer der Stellenausschreibung an.
+
             </p>
           </div>
 
@@ -48,7 +49,7 @@ export function ReleaseDatesCard({ value, onChange }: ReleaseDatesCardProps) {
             {/* Release date */}
             <div className="space-y-2">
               <Label htmlFor="release-date" className="text-base font-semibold">
-                Release date  <span className="text-destructive">*</span>
+                Veröffentlichungsdatum  <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="release-date"
@@ -58,14 +59,14 @@ export function ReleaseDatesCard({ value, onChange }: ReleaseDatesCardProps) {
                 onChange={(e) => setReleaseDate(e.target.value)}
               />
               <p className="text-sm text-muted-foreground">
-                Select when the job ad should be published.
+                Wählen Sie aus, wann die Stellenausschreibung veröffentlicht werden soll.
               </p>
             </div>
 
             {/* Expiration date */}
             <div className="space-y-2">
               <Label htmlFor="expiration-date" className="text-base font-semibold">
-                Expiration date  <span className="text-destructive">*</span>
+                Ablaufdatum  <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="expiration-date"
@@ -75,7 +76,7 @@ export function ReleaseDatesCard({ value, onChange }: ReleaseDatesCardProps) {
                 onChange={(e) => setExpirationDate(e.target.value)}
               />
               <p className="text-sm text-muted-foreground">
-                Select when the job should go offline.
+                Wählen Sie aus, wann die Stelle offline gehen soll.
               </p>
             </div>
 

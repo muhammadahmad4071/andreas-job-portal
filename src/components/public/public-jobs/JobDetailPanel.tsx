@@ -74,7 +74,7 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
                   )}
                   {job.isExpressApplication
                     ? "Express application"
-                    : "Apply now"}
+                    : "Jetzt bewerben"}
                 </Button>
               </Link>
             </div>
@@ -118,7 +118,10 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
           <div className="space-y-6 border-t pt-6">
             {/* Intro / teaser */}
             <section>
-              <h2 className="text-xl font-semibold mb-3">Job description</h2>
+              <h2 className="text-xl font-semibold mb-3">
+                {/* Job description */}
+                Stellenbeschreibung
+                </h2>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 {job.teaser ||
                   "No detailed description has been provided for this position yet."}
@@ -129,26 +132,38 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
             <section className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                  Position details
+                  Positionsdetails
                 </h3>
                 <ul className="space-y-1 text-sm text-muted-foreground">
                   <li>
-                    <span className="font-medium">Type of employment:</span>{" "}
+                    <span className="font-medium">
+                      {/* Type of employment: */}
+                      Art der Beschäftigung:
+                      </span>{" "}
                     {job.employmentType}
                   </li>
                   <li>
-                    <span className="font-medium">Work model:</span>{" "}
+                    <span className="font-medium">
+                      {/* Work model: */}
+                      Arbeitsmodell:
+                      </span>{" "}
                     {job.homeOfficeOption}
                   </li>
                   {job.subject && (
                     <li>
-                      <span className="font-medium">Subject:</span>{" "}
+                      <span className="font-medium">
+                        {/* Subject: */}
+                        Betreff:
+                        </span>{" "}
                       {job.subject}
                     </li>
                   )}
                   {job.discipline !== "Any" && (
                     <li>
-                      <span className="font-medium">Discipline:</span>{" "}
+                      <span className="font-medium">
+                        {/* Discipline */}
+                        Fachbereich:
+                        </span>{" "}
                       {job.discipline}
                     </li>
                   )}
@@ -158,28 +173,28 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
               <div className="space-y-2">
                 <ul className="space-y-1 text-sm text-muted-foreground">
                   <li>
-                    <span className="font-medium">Experience level:</span>{" "}
+                    <span className="font-medium">Erfahrungsstufe:</span>{" "}
                     {job.workExperience}
                   </li>
                   {hasSalary && (
                     <li>
-                      <span className="font-medium">Salary:</span>{" "}
+                      <span className="font-medium">Gehalt:</span>{" "}
                       {job.salary}
                     </li>
                   )}
                   {job.salaryUnit && (
                     <li>
-                      <span className="font-medium">Salary Schedule:</span>{" "}
+                      <span className="font-medium">Gehaltsplan:</span>{" "}
                       {job.salaryUnit}
                     </li>
                   )}
                   <li>
-                    <span className="font-medium">Published on:</span>{" "}
+                    <span className="font-medium">Veröffentlicht am:</span>{" "}
                     {formattedPublishedAt}
                   </li>
                   {formattedExpirationDate && (
                     <li>
-                      <span className="font-medium">Expires on:</span>{" "}
+                      <span className="font-medium">Läuft ab am:</span>{" "}
                       {formattedExpirationDate}
                     </li>
                   )}
@@ -189,14 +204,15 @@ export function JobDetailPanel({ job }: JobDetailPanelProps) {
 
             {/* How to apply */}
             <section>
-              <h3 className="text-lg font-semibold mb-2">How to apply</h3>
+              <h3 className="text-lg font-semibold mb-2">So bewerben Sie sich</h3>
               <p className="text-sm leading-relaxed text-muted-foreground mb-3">
-                Click on the Apply Now button below and follow the next steps
-                to submit your documents for {job.title} at {job.companyName}.
+                Klicken Sie auf die Schaltfläche ‚Jetzt bewerben‘ unten und folgen Sie den nächsten Schritten,
+                um Ihre Unterlagen einzureichen für {job.title} at {job.companyName}.
               </p>
               <Link href={`/public/jobs/${job.id}/apply`}>
                 <Button className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground">
-                  Apply now
+                  {/* Apply now */}
+                  Jetzt bewerben
                 </Button>
               </Link>
             </section>

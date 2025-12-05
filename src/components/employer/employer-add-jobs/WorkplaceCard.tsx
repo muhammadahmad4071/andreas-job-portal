@@ -42,10 +42,10 @@ export function WorkplaceCard({ value, onChange }: WorkplaceCardProps) {
           {/* Left Column */}
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold text-foreground mb-3">
-              WORKPLACE
+              ARBEITSPLATZ
             </h3>
             <p className="text-sm text-muted-foreground space-y-3">
-              Enter workplace location & specify home office options.
+              Geben Sie den Arbeitsort ein und geben Sie Home-Office-Optionen an.
             </p>
           </div>
 
@@ -55,7 +55,7 @@ export function WorkplaceCard({ value, onChange }: WorkplaceCardProps) {
             {/* Workplace */}
             <div className="space-y-2">
               <Label htmlFor="workplace" className="text-base font-semibold">
-                Workplace <span className="text-destructive">*</span>
+                Arbeitsort <span className="text-destructive">*</span>
               </Label>
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -69,7 +69,7 @@ export function WorkplaceCard({ value, onChange }: WorkplaceCardProps) {
                 />
               </div>
               <p className="text-sm text-muted-foreground">
-                Enter the locations where the job is available.
+                Geben Sie die Orte an, an denen die Stelle verfügbar ist.
               </p>
             </div>
 
@@ -98,7 +98,7 @@ export function WorkplaceCard({ value, onChange }: WorkplaceCardProps) {
 
             <div className="space-y-2">
             <Label htmlFor="home-office" className="text-base font-semibold">
-              Home office option
+              Home-office-option
             </Label>
 
             <Select
@@ -109,18 +109,18 @@ export function WorkplaceCard({ value, onChange }: WorkplaceCardProps) {
                 id="home-office"
                 className="h-11 text-base bg-background border border-input"
               >
-                <SelectValue placeholder="Please select..." />
+                <SelectValue placeholder="Bitte auswählen…" />
               </SelectTrigger>
 
               <SelectContent className="bg-white">
-                <SelectItem value="100">100% Home office</SelectItem>
-                <SelectItem value="field">Field Service / Travel</SelectItem>
-                <SelectItem value="partial">Partial home office</SelectItem>
+                <SelectItem value="100">100% Home-office</SelectItem>
+                <SelectItem value="field">Außendienst / Reisetätigkeit</SelectItem>
+                <SelectItem value="partial">Teilweise home-office</SelectItem>
               </SelectContent>
             </Select>
 
             <p className="text-sm text-muted-foreground">
-              Inform applicants about home office options.
+              Informieren Sie die Bewerbenden über die Home-Office-Möglichkeiten.
             </p>
           </div>
 

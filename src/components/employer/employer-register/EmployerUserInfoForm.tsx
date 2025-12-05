@@ -163,17 +163,19 @@ export function EmployerUserInfoForm({
         {/* Left side label / helper text */}
         <div className="text-sm text-text-secondary">
           <h2 className="text-xs font-bold tracking-wide text-text-primary mb-2">
-            USER INFORMATION
+           BENUTZERINFORMATIONEN
           </h2>
-          <p>Please complete your user information.</p>
-          <p>This information is not publicly visible.</p>
+          <p>Bitte vervollständigen Sie Ihre Benutzerdaten.</p>
+          <p>Diese Informationen sind öffentlich nicht sichtbar.</p>
         </div>
 
         {/* Right side form fields */}
         <div className="space-y-6">
           {/* Salutation */}
           <div>
-            <h3 className="font-bold text-text-primary mb-3">Salutation</h3>
+            <h3 className="font-bold text-text-primary mb-3">Anrede
+              <span className="text-red-500">*</span>
+            </h3>
 
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm text-text-primary">
@@ -214,7 +216,7 @@ export function EmployerUserInfoForm({
             </div>
 
             <p className="mt-2 text-xs text-text-secondary">
-              Choose your salutation
+              Wählen Sie Ihre Anrede
             </p>
 
             {fieldErrors.salutation && (
@@ -227,17 +229,17 @@ export function EmployerUserInfoForm({
           {/* First name */}
           <div className="space-y-1">
             <label className="block text-sm font-bold text-text-primary">
-              First name <span className="text-red-500">*</span>
+              Vorname <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              placeholder="Please enter your first name."
+              placeholder="Bitte geben Sie Ihren Vornamen ein."
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               className="w-full px-4 py-3 border border-input rounded-md bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
             <p className="text-xs text-text-secondary">
-              Enter your first name.
+              Geben Sie Ihren Vornamen ein.
             </p>
             {fieldErrors.firstName && (
               <p className="mt-1 text-sm text-red-600">
@@ -249,17 +251,17 @@ export function EmployerUserInfoForm({
           {/* Last name */}
           <div className="space-y-1">
             <label className="block text-sm font-bold text-text-primary">
-              Last name <span className="text-red-500">*</span>
+              Nachname <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              placeholder="Enter your last name."
+              placeholder="Geben Sie Ihren Nachnamen ein."
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               className="w-full px-4 py-3 border border-input rounded-md bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
             <p className="text-xs text-text-secondary">
-              Enter your last name.
+             Geben Sie Ihren Nachnamen ein.
             </p>
             {fieldErrors.lastName && (
               <p className="mt-1 text-sm text-red-600">
@@ -271,17 +273,17 @@ export function EmployerUserInfoForm({
           {/* Phone number */}
           <div className="space-y-1">
             <label className="block text-sm font-bold text-text-primary">
-              Phone number <span className="text-red-500">*</span>
+              Telefonnummer <span className="text-red-500">*</span>
             </label>
             <input
               type="tel"
-              placeholder="Please provide your phone number"
+              placeholder="Bitte geben Sie Ihre Telefonnummer an."
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="w-full px-4 py-3 border border-input rounded-md bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
             <p className="text-xs text-text-secondary">
-              Your telephone number
+             Ihre Telefonnummer
             </p>
             {fieldErrors.phone && (
               <p className="mt-1 text-sm text-red-600">
@@ -297,13 +299,13 @@ export function EmployerUserInfoForm({
             </label>
             <input
               type="text"
-              placeholder="Enter your position within the organization"
+              placeholder="Geben Sie Ihre Position innerhalb der Organisation ein"
               value={position}
               onChange={(e) => setPosition(e.target.value)}
               className="w-full px-4 py-3 border border-input rounded-md bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
             <p className="text-xs text-text-secondary">
-              Your position in the organization.
+              Ihre Position in der Organisation.
             </p>
             {fieldErrors.position && (
               <p className="mt-1 text-sm text-red-600">
@@ -327,14 +329,14 @@ export function EmployerUserInfoForm({
               onClick={onCancel}
               className="px-6 bg-background-darker text-white hover:bg-background-darker/90 border-none"
             >
-              Cancel
+              Abbrechen
             </Button>
             <Button
               type="submit"
               disabled={isSubmitting}
               className="px-8 bg-primary text-text-primary hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Saving..." : "Further"}
+              {isSubmitting ? "Speichern läuft..." : "Weiter"}
             </Button>
           </div>
         </div>

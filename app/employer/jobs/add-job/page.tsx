@@ -511,9 +511,10 @@ const formData = new FormData()
       {/* Page Header */}
       <div className="w-full md:w-[70%] mx-auto px-4 py-12 text-center">
         <h1 className="text-4xl font-bold text-foreground mb-3">
-          Create A New Job Post
+          Neue Stellenanzeige erstellen
         </h1>
         <p className="text-muted-foreground text-lg">
+          {/* Configure your job advertisement by filling out the sections below to attract the best candidates. */}
           Configure your job advertisement by filling out the sections below to attract the best candidates.
         </p>
       </div>
@@ -552,7 +553,7 @@ const formData = new FormData()
         {/* Validation errors */}
         {validationErrors.length > 0 && (
           <div className="border border-red-200 bg-red-50 text-red-700 rounded-md p-4 text-sm space-y-2">
-            <p className="font-semibold">Please fix the following issues:</p>
+            <p className="font-semibold">Bitte beheben Sie die folgenden Probleme:</p>
             <ul className="list-disc pl-5 space-y-1">
               {validationErrors.map((err, idx) => (
                 <li key={idx}>{err}</li>
@@ -577,7 +578,7 @@ const formData = new FormData()
         {/* Form Actions */}
         <div className="flex justify-end gap-4 pt-6">
           <Button asChild variant="outline" size="lg" disabled={isSubmitting}>
-            <Link href="/employer/home">Abort</Link>
+            <Link href="/employer/home">Abbrechen</Link>
           </Button>
           <Button
             type="submit"
@@ -585,7 +586,7 @@ const formData = new FormData()
             disabled={isSubmitting}
             className="bg-[#FDB913] hover:bg-[#FDB913]/90 text-black font-semibold disabled:opacity-70"
           >
-            {isSubmitting ? "Publishing…" : "Publish job"}
+            {isSubmitting ? "Veröffentlichen läuft…" : "Stelle veröffentlichen"}
           </Button>
         </div>
       </form>

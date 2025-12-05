@@ -29,7 +29,7 @@ export function EmployerHeader() {
 
           {/* Simple Nav (keep or remove as needed) */}
           <nav className="flex items-center gap-6 text-sm font-medium text-text-secondary">
-            <Link href="#" className="hover:text-text-primary">Product</Link>
+            <Link href="#" className="hover:text-text-primary">Produkt</Link>
             <Link href="#" className="hover:text-text-primary">Shop</Link>
           </nav>
         </div>

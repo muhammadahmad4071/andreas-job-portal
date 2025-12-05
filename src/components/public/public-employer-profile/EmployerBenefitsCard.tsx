@@ -6,13 +6,14 @@ import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 
 const allBenefits = [
-  "Casual Wear",
-  "Career Growth",
-  "Professional Training",
-  "Cafeteria",
-  "Casual Leaves",
-  "Employee discount",
+  "Freizeitkleidung",
+  "Karrierewachstum",
+  "Professionelle Weiterbildung",
+  "Kantine",
+  "Freistellungen",
+  "Mitarbeiterrabatt",
 ]
+
 
 export function EmployerBenefitsCard() {
   const [showAll, setShowAll] = useState(false)
@@ -21,7 +22,7 @@ export function EmployerBenefitsCard() {
   return (
     <Card>
       <CardHeader>
-        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Benefits</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Vorteile</p>
       </CardHeader>
       <CardContent className="space-y-3">
         <div className="space-y-2">

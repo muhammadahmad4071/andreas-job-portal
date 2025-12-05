@@ -35,7 +35,8 @@ export function EmployerJobsList({ jobs }: EmployerJobsListProps) {
     <Card>
       <CardHeader>
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          Our jobs
+          {/* Our jobs */}
+          Unsere Stellenangebote
         </p>
       </CardHeader>
 
@@ -43,7 +44,8 @@ export function EmployerJobsList({ jobs }: EmployerJobsListProps) {
         {/* No jobs available */}
         {sourceJobs.length === 0 && (
           <div className="p-4 text-sm text-muted-foreground">
-            No jobs available for this employer.
+            {/* No jobs available for this employer. */}
+            Für diesen Arbeitgeber sind keine Stellenangebote verfügbar.
           </div>
         )}
 

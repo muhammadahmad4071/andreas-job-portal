@@ -85,7 +85,8 @@ export function HomeVideoHighlights() {
     <section className="py-16 bg-background-dark">
       <div className="container-custom">
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-12">
-          Jobs at a glance
+          {/* Jobs at a glance */}
+          Jobs im Blick
         </h2>
 
         {loading && <p className="text-gray-300">Loading videos…</p>}

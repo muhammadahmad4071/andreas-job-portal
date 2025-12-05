@@ -169,12 +169,12 @@ const handleLogout = async () => {
         className="w-44 bg-white border border-border shadow-lg rounded-md"
       >
         <DropdownMenuLabel className="text-text-primary">
-          My Account
+          Mein Konto
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href="/employer/settings">Settings</Link>
+          <Link href="/employer/settings">Einstellungen</Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem
@@ -182,7 +182,7 @@ const handleLogout = async () => {
           disabled={isLoggingOut}
           className="text-destructive"
         >
-          {isLoggingOut ? "Logging out…" : "Logout"}
+          {isLoggingOut ? "Melde dich ab…" : "Abmelden"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

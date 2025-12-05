@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Plus, MapPin, Info } from "lucide-react"
-import type { EmployerJob } from "@/components/all-jobs/types"
+import type { EmployerJob } from "@/components/employer/all-jobs/types"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -203,7 +203,8 @@ export function EmptyJobsCard() {
               size="lg"
             >
               <Plus className="w-4 h-4 mr-2" />
-              Add a job ad
+              {/* Add a job ad */}
+              Eine Stellenanzeige hinzufügen
             </Button>
           </Link>
         </div>
@@ -289,8 +290,8 @@ export function EmptyJobsCard() {
           </div>
 
           <p className="text-muted-foreground max-w-md">
-            You have not published any job advertisements at the moment. As
-            soon as you create a new job advertisement, it will appear here.
+            Sie haben momentan keine Stellenanzeigen veröffentlicht. Sobald Sie eine neue Stellenanzeige erstellen, 
+            wird sie hier angezeigt.
           </p>
 
           <Link href="/employer/jobs/add-job">
@@ -299,7 +300,7 @@ export function EmptyJobsCard() {
               size="lg"
             >
               <Plus className="w-4 h-4 mr-2" />
-              Add a job ad
+              Eine Stellenanzeige hinzufügen
             </Button>
           </Link>
         </div>
@@ -314,11 +315,11 @@ export function EmptyJobsCard() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
             <p className="text-sm font-semibold text-gray-900">
-              Your job advertisements
+              Ihre Stellenanzeigen
             </p>
             <p className="text-xs text-muted-foreground">
-              You currently have {jobs.length} job
-              {jobs.length === 1 ? "" : "s"} published.
+              Sie haben derzeit {jobs.length} Stellenanzeigen
+              {jobs.length === 1 ? "" : "s"} veröffentlicht.
             </p>
           </div>
 

@@ -80,7 +80,8 @@ export function JobsSearchFilters({
           <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="Enter job"
+            // placeholder="Enter job"
+            placeholder="Beruf eingeben"
             value={searchTerm}
             onChange={(e) => onSearchTermChange(e.target.value)}
             className="pl-9"
@@ -92,7 +93,8 @@ export function JobsSearchFilters({
           <MapPin className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="Enter location"
+            // placeholder="Enter location"
+            placeholder="Ort eingeben"
             value={locationTerm}
             onChange={(e) => onLocationTermChange(e.target.value)}
             className="pl-9"
@@ -210,7 +212,8 @@ export function JobsSearchFilters({
             onClick={onSubmitSearch}
             className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-primary-foreground px-6"
           >
-            Search
+            {/* Search */}
+            Suchen
           </Button>
 
           <Button
@@ -219,8 +222,10 @@ export function JobsSearchFilters({
             onClick={handleClearFilters}
             className="text-sm border-dashed"
           >
-            Clear filters
+            {/* Clear filters */}
+            Filter zurücksetzen
           </Button>
+
         </div>
       </div>
     </div>

@@ -4,9 +4,9 @@ export function WelcomeBanner() {
   return (
     <div className="bg-sky-500 rounded-lg p-8 text-white relative overflow-hidden">
       <div className="relative z-10 max-w-2xl">
-        <h1 className="text-3xl font-bold mb-4">Welcome to our new system!</h1>
+        <h1 className="text-3xl font-bold mb-4">Willkommen in unserem neuen System!</h1>
         <p className="text-sky-50 leading-relaxed">
-          We’re excited to share our updated platform with you and hope it makes your work easier.
+          Wir freuen uns, Ihnen unsere aktualisierte Plattform vorzustellen, und hoffen, dass sie Ihre Arbeit erleichtert.
         </p>
       </div>
       

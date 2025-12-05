@@ -43,43 +43,41 @@ export function JobAdvertisementInfoCard({
           {/* Left Description Column */}
           <div className="mb-6 md:mb-0">
             <h3 className="text-lg font-semibold text-foreground mb-3">
-              INFORMATION IN THE JOB ADVERTISEMENT
+              INFORMATIONEN ZUR STELLENANZEIGE
             </h3>
             <div className="text-sm text-muted-foreground space-y-3">
               <p className="font-medium text-primary">
-                Our tips for the perfect job ad
+                Unsere Tipps für die perfekte Stellenanzeige
               </p>
-              <p>Divide your ad clearly into the following sections:</p>
+              <p>Teilen Sie Ihre Anzeige klar in die folgenden Abschnitte auf:</p>
               <ul className="space-y-1.5 ml-1">
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">✓</span>
-                  <span>Introduction</span>
+                  <span>Einleitung</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">✓</span>
-                  <span>Tasks</span>
+                  <span>Aufgaben</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">✓</span>
-                  <span>Preconditions</span>
+                  <span>Voraussetzungen</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">✓</span>
-                  <span>Benefits</span>
+                  <span>Vorteile</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">✓</span>
-                  <span>Call for applications</span>
+                  <span>Aufforderung zur Bewerbung</span>
                 </li>
               </ul>
-              <p className="pt-2">Choose a &quot;you&quot; or &quot;you&quot; address for your ad.</p>
+              <p className="pt-2">Wählen Sie für Ihre Anzeige eine "Du"- oder "Sie"-Ansprache.</p>
               <p>
-                Formulate the sections in bullet points for better readability
-                and use the stored heading formats.
+                Formulieren Sie die Abschnitte in Aufzählungspunkten für bessere Lesbarkeit und verwenden Sie die gespeicherten Überschriftenformate.
               </p>
               <p>
-                Pay attention to the terminology and wording that is
-                appropriate for the target group.
+                Achten Sie auf die für die Zielgruppe passende Terminologie und Formulierung.
               </p>
             </div>
           </div>
@@ -89,18 +87,18 @@ export function JobAdvertisementInfoCard({
             {/* Title */}
             <div className="space-y-2">
               <Label htmlFor="job-title" className="text-base font-semibold">
-                Title <span className="text-destructive">*</span>
+                Titel <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="job-title"
-                placeholder="Specify the title of the job"
+                placeholder="Geben Sie den Jobtitel an"
                 className="text-base"
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
               <p className="text-sm text-muted-foreground">
-                Use a descriptive 3–6 word title.
+                Verwenden Sie einen aussagekräftigen Titel mit 3–6 Wörtern.
               </p>
             </div>
 
@@ -108,20 +106,20 @@ export function JobAdvertisementInfoCard({
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Label htmlFor="job-description" className="text-base font-semibold">
-                  Description <span className="text-destructive">*</span>
+                  Beschreibung <span className="text-destructive">*</span>
                 </Label>
                 {/* <Info className="h-4 w-4 text-muted-foreground" /> */}
               </div>
               <Textarea
                 id="job-description"
-                placeholder="Provide detailed information about the job advertisement..."
+                placeholder="Geben Sie ausführliche Informationen zur Stellenanzeige an..."
                 className="min-h-[280px] text-base font-normal resize-y"
                 required
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
               <p className="text-sm text-muted-foreground">
-                Provide detailed information about the job advertisement.
+                Geben Sie ausführliche Informationen zur Stellenanzeige an.
               </p>
             </div>
 
@@ -157,8 +155,8 @@ export function JobAdvertisementInfoCard({
                 onChange={(e) => setVideoUrl(e.target.value)}
               />
               <p className="text-sm text-muted-foreground">
-                Paste the full URL of the video you want to embed (Youtube or
-                Vimeo) starting with &quot;https://&quot;
+                Fügen Sie die vollständige URL des Videos ein, das Sie einbetten möchten (YouTube oder Vimeo), 
+                beginnend mit "https://".
               </p>
             </div>
           </div>

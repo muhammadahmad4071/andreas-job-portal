@@ -5,48 +5,41 @@ export function Footer() {
     <footer className="bg-background-darker text-white py-12">
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          
+          {/* BEWERBER */}
           <div>
-            <h3 className="font-bold text-lg mb-4">APPLICANT</h3>
+            <h3 className="font-bold text-lg mb-4">BEWERBER</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/public/jobs" className="text-gray-300 hover:text-white">
-                  Search Jobs
+                  Jobs suchen
                 </Link>
               </li>
               <li>
                 <Link href="/public/employer-list" className="text-gray-300 hover:text-white">
-                  Discover companies
+                  Firmen entdecken
                 </Link>
               </li>
             </ul>
           </div>
 
+          {/* ARBEITGEBER */}
           <div>
-            <h3 className="font-bold text-lg mb-4">EMPLOYER</h3>
+            <h3 className="font-bold text-lg mb-4">ARBEITGEBER</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/employer/login" className="text-gray-300 hover:text-white">
-                  Post a job ad
-                </Link>
-              </li>
-              <li>
-                <Link href="/employer/login" className="text-gray-300 hover:text-white">
-                  Products & Prices
+                  Stellenanzeige schalten
                 </Link>
               </li>
               <li>
                 <Link href="/employer/profile" className="text-gray-300 hover:text-white">
-                  My Employer Profile
-                </Link>
-              </li>
-              <li>
-                <Link href="/employers/login" className="text-gray-300 hover:text-white">
-                  For Employers
+                  Mein Arbeitgeber-Profil
                 </Link>
               </li>
               <li>
                 <Link href="/employer/register" className="text-gray-300 hover:text-white">
-                  Register
+                  Registrieren
                 </Link>
               </li>
               <li>
@@ -57,32 +50,33 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* ÜBER UNS */}
           <div>
-            <h3 className="font-bold text-lg mb-4">ABOUT US</h3>
+            <h3 className="font-bold text-lg mb-4">ÜBER UNS</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/" className="text-gray-300 hover:text-white">
-                  Contact
+                  Kontakt
                 </Link>
               </li>
               <li>
                 <Link href="/" className="text-gray-300 hover:text-white">
-                  Terms & Conditions
+                  Allgemeine Geschäftsbedingungen
                 </Link>
               </li>
               <li>
                 <Link href="/" className="text-gray-300 hover:text-white">
-                  Privacy policy
+                  Datenschutzerklärung
                 </Link>
               </li>
               <li>
                 <Link href="/" className="text-gray-300 hover:text-white">
-                  Cookie settings
+                  Cookie Einstellungen
                 </Link>
               </li>
               <li>
                 <Link href="/" className="text-gray-300 hover:text-white">
-                  Imprint
+                  Impressum
                 </Link>
               </li>
             </ul>

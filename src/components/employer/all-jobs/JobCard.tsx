@@ -87,7 +87,7 @@ export function JobCard({ job }: JobCardProps) {
 
             {/* Title with label */}
             <div className="mt-2 text-sm text-gray-800">
-              <span className="font-semibold">Title: </span>
+              <span className="font-semibold">Titel: </span>
               <span className="text-[#FDB714] font-semibold">
                 {job.title}
               </span>
@@ -95,7 +95,7 @@ export function JobCard({ job }: JobCardProps) {
 
             {/* Company with label */}
             <div className="mt-1 text-sm text-gray-800">
-              <span className="font-semibold">Company: </span>
+              <span className="font-semibold">Unternehmen: </span>
               <span>{job.companyName}</span>
             </div>
 
@@ -103,7 +103,7 @@ export function JobCard({ job }: JobCardProps) {
             <div className="mt-1 flex items-center gap-2 text-sm text-gray-700">
               <MapPin className="w-4 h-4" />
               <span>
-                <span className="font-semibold">Location: </span>
+                <span className="font-semibold">Standort: </span>
                 {job.location}
               </span>
             </div>
@@ -111,7 +111,7 @@ export function JobCard({ job }: JobCardProps) {
             {/* Description + toggle */}
             <div className="mt-3 text-sm text-gray-700">
               <p>
-                <span className="font-semibold">Description: </span>
+                <span className="font-semibold">Beschreibung: </span>
                 <span>{shownDescription}</span>
               </p>
 
@@ -121,7 +121,7 @@ export function JobCard({ job }: JobCardProps) {
                 onClick={() => setExpanded((prev) => !prev)}
                 className="mt-1 inline-flex items-center text-sm font-medium text-gray-800 hover:text-gray-900"
               >
-                {expanded ? "See less details" : "See more details"}
+                {expanded ? "Weniger Details anzeigen" : "Mehr Details anzeigen"}
                 {expanded ? (
                   <ChevronUp className="w-4 h-4 ml-1" />
                 ) : (
@@ -135,7 +135,7 @@ export function JobCard({ job }: JobCardProps) {
               <div className="mt-3 border-t pt-3 text-sm text-gray-700 space-y-1">
                 {job.employmentType && (
                   <p>
-                    <span className="font-semibold">Employment type: </span>
+                    <span className="font-semibold">Beschäftigungsart: </span>
                     <span>{job.employmentType}</span>
                   </p>
                 )}
@@ -149,14 +149,14 @@ export function JobCard({ job }: JobCardProps) {
 
                 {createdDate && (
                   <p>
-                    <span className="font-semibold">Created at: </span>
+                    <span className="font-semibold">Erstellt am: </span>
                     <span>{createdDate}</span>
                   </p>
                 )}
 
                 {updatedDate && (
                   <p>
-                    <span className="font-semibold">Last updated: </span>
+                    <span className="font-semibold">Zuletzt aktualisiert: </span>
                     <span>{updatedDate}</span>
                   </p>
                 )}
@@ -174,7 +174,7 @@ export function JobCard({ job }: JobCardProps) {
             >
               <Link href={`/employer/jobs/${job.id}/edit`}>
                 <Edit className="w-4 h-4 mr-1" />
-                Edit
+                Bearbeiten
               </Link>
             </Button>
 
@@ -196,17 +196,16 @@ export function JobCard({ job }: JobCardProps) {
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>
-                    Delete this job?
+                    Diese Stelle löschen?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
-                    Are you sure you want to delete the job{" "}
-                    <span className="font-semibold">{job.title}</span>? This
-                    action cannot be undone.
+                    Sind Sie sicher, dass Sie die Stelle löschen möchten?{" "}
+                    <span className="font-semibold">{job.title}</span>? Diese Aktion kann nicht rückgängig gemacht werden.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel disabled={isDeleting}>
-                    Cancel
+                    Abbrechen
                   </AlertDialogCancel>
                   <AlertDialogAction
                     onClick={(e) => {
@@ -216,7 +215,7 @@ export function JobCard({ job }: JobCardProps) {
                     className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                     disabled={isDeleting}
                   >
-                    {isDeleting ? "Deleting…" : "Delete"}
+                    {isDeleting ? "Löschen läuft…" : "Löschen"}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

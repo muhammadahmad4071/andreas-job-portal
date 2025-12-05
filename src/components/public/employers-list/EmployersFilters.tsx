@@ -47,7 +47,7 @@ export function EmployersFilters({
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input
               type="text"
-              placeholder="Enter search term"
+              placeholder="Suchbegriff eingeben"
               value={searchTerm}
               onChange={(e) => onSearchTermChange(e.target.value)}
               className="pl-10 bg-white"
@@ -59,7 +59,7 @@ export function EmployersFilters({
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input
               type="text"
-              placeholder="Enter location"
+              placeholder="Ort eingeben"
               value={location}
               onChange={(e) => onLocationChange(e.target.value)}
               className="pl-10 bg-white"
@@ -127,7 +127,7 @@ export function EmployersFilters({
           <div className="relative flex-1 min-w-[220px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input
-              placeholder="Enter search term"
+              placeholder="Suchbegriff eingeben"
               value={searchTerm}
               onChange={(e) => onSearchTermChange(e.target.value)}
               className="pl-10 bg-white"
@@ -138,7 +138,7 @@ export function EmployersFilters({
           <div className="relative w-[200px]">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input
-              placeholder="Enter location"
+              placeholder="Ort eingeben"
               value={location}
               onChange={(e) => onLocationChange(e.target.value)}
               className="pl-10 bg-white"
@@ -196,11 +196,13 @@ export function EmployersFilters({
           <div className="flex items-center gap-2 ml-auto">
             <Button onClick={onSubmitSearch} className="bg-[#FDB714] hover:bg-[#FDB714]/90">
               <Search className="w-4 h-4 mr-2" />
-              Search
+              {/* Search */}
+              Suchen
             </Button>
 
             <Button variant="outline" onClick={onReset}>
-              Reset search
+              {/* Reset search */}
+              Filter zurücksetzen
             </Button>
           </div>
         </div>

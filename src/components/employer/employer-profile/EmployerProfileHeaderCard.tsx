@@ -28,10 +28,10 @@ export function EmployerProfileHeaderCard({
   const org = profile?.organization
 
   // ---- READ-ONLY VALUES FROM API ----
-  const companyTitle = org?.title ?? "Company Name"
-  const headOfficeArea = org?.area ?? "Head office area not specified"
-  const address = org?.address ?? "No address provided"
-  const country = org?.country ?? "Country not specified"
+  const companyTitle = org?.title ?? "Firmenname"
+  const headOfficeArea = org?.area ?? "Hauptsitzbereich nicht angegeben"
+  const address = org?.address ?? "Keine Adresse angegeben"
+  const country = org?.country ?? "Land nicht angegeben"
 
   // backend returns logo path in organization.logo
   // const logoPath: string | undefined = org?.logo
@@ -175,12 +175,12 @@ const logoSrc =
       <Card className="bg-white shadow-sm">
         <CardContent className="p-8">
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold">Edit employer profile</h3>
+            <h3 className="text-xl font-semibold">Arbeitgeberprofil bearbeiten</h3>
 
             {/* UPDATE IMAGE SECTION */}
             <div className="space-y-3">
               <p className="text-sm font-medium text-foreground">
-                Update Image
+                Bild aktualisieren
               </p>
               <div className="flex items-center gap-4">
                 <div className="relative w-32 h-32 bg-muted rounded-lg overflow-hidden flex items-center justify-center">
@@ -200,8 +200,8 @@ const logoSrc =
                 </div>
 
                 <div className="text-xs text-muted-foreground space-y-1">
-                  <p>Click the image to upload a new company logo.</p>
-                  <p>Recommended: square image, max size 2MB.</p>
+                  <p>Klicken Sie auf das Bild, um ein neues Firmenlogo hochzuladen.</p>
+                  <p>Empfohlen: quadratisches Bild, maximale Größe 2 MB.</p>
                 </div>
               </div>
 
@@ -217,42 +217,42 @@ const logoSrc =
             {/* TEXT FIELDS */}
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="companyTitle">Company name</Label>
+                <Label htmlFor="companyTitle">Firmenname</Label>
                 <Input
                   id="companyTitle"
                   value={editCompanyTitle}
                   onChange={(e) => setEditCompanyTitle(e.target.value)}
-                  placeholder="Enter company name"
+                  placeholder="Firmennamen eingeben"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="headOfficeArea">Head office (area)</Label>
+                <Label htmlFor="headOfficeArea">Hauptsitz (area)</Label>
                 <Input
                   id="headOfficeArea"
                   value={editHeadOfficeArea}
                   onChange={(e) => setEditHeadOfficeArea(e.target.value)}
-                  placeholder="Enter head office area"
+                  placeholder="Hauptsitzbereich eingeben"
                 />
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="address">Address</Label>
+                <Label htmlFor="address">Adresse</Label>
                 <Input
                   id="address"
                   value={editAddress}
                   onChange={(e) => setEditAddress(e.target.value)}
-                  placeholder="Enter company address"
+                  placeholder="Firmenadresse eingeben"
                 />
               </div>
 
               <div className="space-y-2 md:col-span-2 md:max-w-sm">
-                <Label htmlFor="country">Country</Label>
+                <Label htmlFor="country">Land</Label>
                 <Input
                   id="country"
                   value={editCountry}
                   onChange={(e) => setEditCountry(e.target.value)}
-                  placeholder="Enter country"
+                  placeholder="Land eingeben"
                 />
               </div>
             </div>
@@ -265,7 +265,7 @@ const logoSrc =
 
             <div className="flex justify-end gap-3 pt-2">
               <Button variant="outline" onClick={onCancel} disabled={saving}>
-                Cancel
+                Abbrechen
               </Button>
               <Button
                 type="button"
@@ -273,7 +273,7 @@ const logoSrc =
                 onClick={handleSave}
                 disabled={saving}
               >
-                {saving ? "Saving..." : "Save changes"}
+                {saving ? "Speichern..." : "Änderungen speichern"}
               </Button>
             </div>
           </div>
@@ -307,7 +307,7 @@ const logoSrc =
                 {companyTitle}
               </h1>
               <p className="text-sm text-muted-foreground mt-1">
-                <span className="font-semibold">Company name: </span>
+                <span className="font-semibold">Firmenname: </span>
                 <span>{companyTitle}</span>
               </p>
             </div>
@@ -315,18 +315,18 @@ const logoSrc =
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Crown className="h-4 w-4 text-primary" />
               <span className="font-semibold text-foreground">
-                Head office:
+                Hauptsitz:
               </span>
               <span>{headOfficeArea}</span>
             </div>
 
             <p className="text-sm text-muted-foreground">
-              <span className="font-semibold">Address: </span>
+              <span className="font-semibold">Adresse: </span>
               <span>{address}</span>
             </p>
 
             <p className="text-sm text-muted-foreground">
-              <span className="font-semibold">Country: </span>
+              <span className="font-semibold">Land: </span>
               <span>{country}</span>
             </p>
           </div>

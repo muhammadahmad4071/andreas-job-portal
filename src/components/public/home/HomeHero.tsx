@@ -47,7 +47,7 @@ export function HomeHero() {
         <div className="relative z-10 px-4 w-full">
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-1xl md:text-2xl lg:text-3xl font-medium text-white mb-8 leading-snug">
-              The largest selection - The best employers{" "}
+              Die größte Auswahl - Die besten Arbeitgeber{" "}
               <span className="text-primary">#im Oberland</span>
             </h1>
 
@@ -57,7 +57,8 @@ export function HomeHero() {
                 <div className="flex-1 flex items-center">
                   <input
                     type="text"
-                    placeholder="Enter search term"
+                    // placeholder="Enter search term"
+                    placeholder="Suchbegriff eingeben"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="h-full w-full px-6 text-base font-normal text-gray-800 placeholder:text-gray-400 focus:outline-none"
@@ -69,7 +70,8 @@ export function HomeHero() {
                 <div className="flex-1 flex items-center">
                   <input
                     type="text"
-                    placeholder="Enter location"
+                    // placeholder="Enter location"
+                    placeholder="Ort eingeben"
                     value={locationTerm}
                     onChange={(e) => setLocationTerm(e.target.value)}
                     className="h-full w-full px-6 text-base font-normal text-gray-800 placeholder:text-gray-400 focus:outline-none"
@@ -82,7 +84,8 @@ export function HomeHero() {
                   type="button"
                   onClick={handleSearch}
                 >
-                  Search
+                  {/* Search */}
+                  Suchen
                 </Button>
               </div>
             </div>
@@ -105,13 +108,13 @@ export function HomeHero() {
 
           <div className="text-white flex flex-col">
             <h3 className="text-3xl mb-2">
-              <span className="text-primary">#apprentice</span>{" "}
-              <span className="text-primary">#future</span>{" "}
-              <span className="text-primary">#careerstart</span>
+              <span className="text-primary">#azubi</span>{" "}
+              <span className="text-primary">#zukunft</span>{" "}
+              <span className="text-primary">#karrierestart</span>
             </h3>
 
             <p className="text-gray-300 mb-6">
-              Start your career now – with an apprenticeship for your future!
+              Starte Deine Karriere jetzt – mit einer Ausbildung für Deine Zukunft!
             </p>
 
             <Link href="/public/jobs?employmentType=Apprenticeship">
@@ -120,7 +123,7 @@ export function HomeHero() {
                 className="bg-white border-none shadow-md hover:bg-white"
               >
                 <span className="text-black font-semibold">
-                  Find your apprenticeship here &gt;
+                  Finde hier deine Ausbildungsstelle &gt;
                 </span>
               </Button>
             </Link>

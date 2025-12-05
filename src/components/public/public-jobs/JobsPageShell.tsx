@@ -368,7 +368,8 @@ export function JobsPageShell() {
             {filteredJobs.length.toLocaleString()} Jobs
           </h1>
           <p className="text-sm text-muted-foreground">
-            Find your next opportunity in the Oberland region.
+            {/* Find your next opportunity in the Oberland region. */}
+            Finden Sie Ihre nächste Gelegenheit in der Oberland-Region.
           </p>
         </div>
 

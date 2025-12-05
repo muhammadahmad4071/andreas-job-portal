@@ -95,16 +95,16 @@ export function EmployerAboutCard({
       <Card className="bg-white shadow-sm">
         <CardHeader>
           <CardTitle className="text-sm font-semibold uppercase text-foreground">
-            About Us
+            Über uns
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
             <p className="text-sm font-medium text-foreground">
-              Number of employees
+              Anzahl der Mitarbeitenden
             </p>
             <p className="text-xs text-muted-foreground">
-              Select the size range that best describes your organization.
+             Wählen Sie den Größenbereich aus, der Ihr Unternehmen am besten beschreibt.
             </p>
 
             <Select
@@ -112,12 +112,12 @@ export function EmployerAboutCard({
               onValueChange={(value) => setEditSize(value)}
             >
               <SelectTrigger className="w-full md:w-64">
-                <SelectValue placeholder="Select size range" />
+                <SelectValue placeholder="Größenbereich auswählen" />
               </SelectTrigger>
               <SelectContent className="bg-white">
                 {SIZE_OPTIONS.map((option) => (
                   <SelectItem key={option} value={option}>
-                    {option} employees
+                    {option} Mitarbeitende
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -132,7 +132,7 @@ export function EmployerAboutCard({
 
           <div className="flex justify-end gap-3">
             <Button variant="outline" onClick={onCancel} disabled={saving}>
-              Cancel
+              Abbrechen
             </Button>
             <Button
               type="button"
@@ -140,7 +140,7 @@ export function EmployerAboutCard({
               onClick={handleSave}
               disabled={saving}
             >
-              {saving ? "Saving..." : "Save changes"}
+              {saving ? "Speichern..." : "Änderungen speichern"}
             </Button>
           </div>
         </CardContent>
@@ -153,7 +153,7 @@ export function EmployerAboutCard({
     <Card className="bg-white shadow-sm relative">
       <CardHeader>
         <CardTitle className="text-sm font-semibold uppercase text-foreground">
-          About Us
+          Über uns
         </CardTitle>
         <Button
           variant="ghost"
@@ -169,9 +169,9 @@ export function EmployerAboutCard({
           <Users className="h-4 w-4 text-muted-foreground" />
           <span className="text-muted-foreground">
             <span className="font-medium text-foreground">
-              Number of employees:
+              Anzahl der Mitarbeitenden:
             </span>{" "}
-            {currentSize} employees
+            {currentSize} Mitarbeitende
           </span>
         </div>
       </CardContent>

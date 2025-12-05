@@ -154,7 +154,8 @@ export function HomeTopEmployers() {
       <div className="container-custom relative">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-semibold text-[#9aa2ad] text-center mb-12">
-          Top Employer
+          {/* Top Employer */}
+          Top Arbeitgeber
         </h2>
 
         {/* Featured Employers */}

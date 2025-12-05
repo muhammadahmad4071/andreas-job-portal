@@ -22,11 +22,11 @@ interface EmployerCompanyInfoFormProps {
 
 // ✅ Zod schema aligned with backend rules
 const companySchema = z.object({
-  title: z.string().min(1, "Organization title is required."),
-  address: z.string().min(1, "Address is required."),
-  postal_code: z.string().min(1, "Postal code is required."),
-  area: z.string().min(1, "Area is required."),
-  country: z.string().min(1, "Country is required."),
+  title: z.string().min(1, "Der Name der Organisation ist erforderlich."),
+  address: z.string().min(1, "Die Adresse ist erforderlich."),
+  postal_code: z.string().min(1, "Die Postleitzahl ist erforderlich."),
+  area: z.string().min(1, "Der Bereich ist erforderlich."),
+  country: z.string().min(1, "Das Land ist erforderlich."),
   size: z
     .string()
     .optional()
@@ -36,7 +36,7 @@ const companySchema = z.object({
         ["1-10", "11-100", "101-1000", "1001-10000", "10000+"].includes(val),
       {
         message:
-          "Invalid company size. Please select one of the provided options.",
+          "Ungültige Unternehmensgröße. Bitte wählen Sie eine der angegebenen Optionen.",
       }
     ),
 })
@@ -116,7 +116,7 @@ export function EmployerCompanyInfoForm({
       }
 
       console.error("Unexpected validation error:", err)
-      setError("Something went wrong. Please try again.")
+      setError("Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.")
       return
     }
 
@@ -134,7 +134,7 @@ export function EmployerCompanyInfoForm({
       console.error("Step 3 validation failed:", err)
 
       let message =
-        "Something went wrong while validating your company information. Please try again."
+        "Beim Überprüfen Ihrer Unternehmensinformationen ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
 
       if (err?.body?.message && typeof err.body.message === "string") {
         message = err.body.message
@@ -163,10 +163,10 @@ export function EmployerCompanyInfoForm({
         {/* Left side text */}
         <div className="text-sm text-text-secondary">
           <h2 className="text-xs font-bold tracking-wide text-text-primary mb-2">
-            COMPANY INFORMATION
+            UNTERNEHMENSINFORMATIONEN
           </h2>
-          <p>Please complete your company details.</p>
-          <p>This information will be used for your employer profile.</p>
+          <p>Bitte vervollständigen Sie die Angaben zu Ihrem Unternehmen.</p>
+          <p>Diese Informationen werden für Ihr Arbeitgeberprofil verwendet.</p>
         </div>
 
         {/* Right side fields */}
@@ -174,7 +174,7 @@ export function EmployerCompanyInfoForm({
           {/* Title */}
           <div className="space-y-1">
             <label className="block text-sm font-bold text-text-primary">
-              Organization title <span className="text-red-500">*</span>
+              Name der Organisation <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -191,11 +191,11 @@ export function EmployerCompanyInfoForm({
           {/* Address */}
           <div className="space-y-1">
             <label className="block text-sm font-bold text-text-primary">
-              Street and house number <span className="text-red-500">*</span>
+              Straße und Hausnummer <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              placeholder="Street and house number"
+              placeholder="Straße und Hausnummer"
               value={streetAndNumber}
               onChange={(e) => setStreetAndNumber(e.target.value)}
               className="w-full px-4 py-3 border border-input rounded-md bg-white"
@@ -208,11 +208,11 @@ export function EmployerCompanyInfoForm({
           {/* Postal code */}
           <div className="space-y-1">
             <label className="block text-sm font-bold text-text-primary">
-              Postal code <span className="text-red-500">*</span>
+              Postleitzahl <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              placeholder="Enter the postal code."
+              placeholder="Geben Sie die Postleitzahl ein."
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
               className="w-full px-4 py-3 border border-input rounded-md bg-white"
@@ -225,11 +225,11 @@ export function EmployerCompanyInfoForm({
           {/* Area */}
           <div className="space-y-1">
             <label className="block text-sm font-bold text-text-primary">
-              Area <span className="text-red-500">*</span>
+              Ortsteil <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              placeholder="Enter the area"
+              placeholder="Geben Sie den Ortsteil ein"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               className="w-full px-4 py-3 border border-input rounded-md bg-white"
@@ -242,7 +242,7 @@ export function EmployerCompanyInfoForm({
           {/* Country */}
           <div className="space-y-1">
             <label className="block text-sm font-bold text-text-primary">
-              Country <span className="text-red-500">*</span>
+              Land <span className="text-red-500">*</span>
             </label>
             <select
               value={country}
@@ -259,19 +259,19 @@ export function EmployerCompanyInfoForm({
           {/* Company size */}
           <div className="space-y-1">
             <label className="block text-sm font-bold text-text-primary">
-              Company size
+              Unternehmensgröße
             </label>
             <select
               value={companySize}
               onChange={(e) => setCompanySize(e.target.value)}
               className="w-full px-4 py-3 border border-input rounded-md bg-white"
             >
-              <option value="">-- Please select --</option>
-              <option value="1-10">1–10 employees</option>
-              <option value="11-100">11–100 employees</option>
-              <option value="101-1000">101–1000 employees</option>
-              <option value="1001-10000">1001–10000 employees</option>
-              <option value="10000+">10000+ employees</option>
+              <option value="">-- Bitte auswählen --</option>
+              <option value="1-10">1–10 Mitarbeiter</option>
+              <option value="11-100">11–100 Mitarbeiter</option>
+              <option value="101-1000">101–1000 Mitarbeiter</option>
+              <option value="1001-10000">1001–10000 Mitarbeiter</option>
+              <option value="10000+">10000+ Mitarbeiter</option>
             </select>
             {fieldErrors.size && (
               <p className="text-sm text-red-600">{fieldErrors.size}</p>
@@ -289,14 +289,14 @@ export function EmployerCompanyInfoForm({
               onClick={onBack}
               className="px-6 bg-background-darker text-white border-none"
             >
-              Back
+              Zurück
             </Button>
             <Button
               type="submit"
               disabled={isSubmitting}
               className="px-8 bg-primary text-text-primary hover:bg-primary/90 disabled:opacity-60"
             >
-              {isSubmitting ? "Saving..." : "Save"}
+              {isSubmitting ? "Speichern läuft..." : "Speichern"}
             </Button>
           </div>
         </div>

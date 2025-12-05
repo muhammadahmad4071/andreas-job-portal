@@ -188,246 +188,246 @@ export default function EmployerSettingsPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-muted">
-      {/* HEADER (same as employer) */}
-      <EmployerHeader />
+  <div className="min-h-screen flex flex-col bg-muted">
+    {/* HEADER (same as employer) */}
+    <EmployerHeader />
 
-      <main className="flex-1">
-        <div className="container-custom max-w-3xl mx-auto py-10 space-y-8">
-          <header className="mb-4">
-            <h1 className="text-3xl font-bold text-foreground">
-              Account Settings
-            </h1>
-            <p className="text-muted-foreground mt-1">
-              Manage your profile information and login credentials.
-            </p>
-          </header>
+    <main className="flex-1">
+      <div className="container-custom max-w-3xl mx-auto py-10 space-y-8">
+        <header className="mb-4">
+          <h1 className="text-3xl font-bold text-foreground">
+            Kontoeinstellungen
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Verwalten Sie Ihre Profilinformationen und Anmeldedaten.
+          </p>
+        </header>
 
-          {/* Update Password */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Update Password</CardTitle>
-              <CardDescription>
-                Change the password you use to sign in.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4" onSubmit={handlePasswordSubmit}>
-                <div className="space-y-2">
-                  <Label htmlFor="current-password">Current password</Label>
+        {/* Update Password */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Passwort aktualisieren</CardTitle>
+            <CardDescription>
+              Ändern Sie das Passwort, mit dem Sie sich anmelden.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-4" onSubmit={handlePasswordSubmit}>
+              <div className="space-y-2">
+                <Label htmlFor="current-password">Aktuelles Passwort</Label>
+                <Input
+                  id="current-password"
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="new-password">Neues Passwort</Label>
+                <div className="relative">
                   <Input
-                    id="current-password"
-                    type="password"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    id="new-password"
+                    type={showNewPassword ? "text" : "password"}
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
                     required
+                    className="pr-10"
                   />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="new-password">New password</Label>
-                  <div className="relative">
-                    <Input
-                      id="new-password"
-                      type={showNewPassword ? "text" : "password"}
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      required
-                      className="pr-10"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowNewPassword((v) => !v)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    >
-                      {showNewPassword ? (
-                        <EyeOff className="w-5 h-5" />
-                      ) : (
-                        <Eye className="w-5 h-5" />
-                      )}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="confirm-password">
-                    Confirm new password
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      id="confirm-password"
-                      type={showConfirmPassword ? "text" : "password"}
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                      className="pr-10"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword((v) => !v)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    >
-                      {showConfirmPassword ? (
-                        <EyeOff className="w-5 h-5" />
-                      ) : (
-                        <Eye className="w-5 h-5" />
-                      )}
-                    </button>
-                  </div>
-                </div>
-
-                {passwordStatus.type !== "idle" && (
-                  <p
-                    className={
-                      passwordStatus.type === "success"
-                        ? "text-sm text-emerald-600"
-                        : "text-sm text-red-600"
-                    }
+                  <button
+                    type="button"
+                    onClick={() => setShowNewPassword((v) => !v)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   >
-                    {passwordStatus.message}
-                  </p>
-                )}
+                    {showNewPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
 
-                <Button
-                  type="submit"
-                  className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-black font-semibold"
-                >
-                  Save password
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          {/* Update Username */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Update Username</CardTitle>
-              <CardDescription>
-                Change the username displayed within the employer area.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4" onSubmit={handleUsernameSubmit}>
-                <div className="space-y-2">
-                  <Label htmlFor="username">New username</Label>
+              <div className="space-y-2">
+                <Label htmlFor="confirm-password">
+                  Neues Passwort bestätigen
+                </Label>
+                <div className="relative">
                   <Input
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    id="confirm-password"
+                    type={showConfirmPassword ? "text" : "password"}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     required
+                    className="pr-10"
                   />
-                </div>
-
-                {usernameStatus.type !== "idle" && (
-                  <p
-                    className={
-                      usernameStatus.type === "success"
-                        ? "text-sm text-emerald-600"
-                        : "text-sm text-red-600"
-                    }
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword((v) => !v)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   >
-                    {usernameStatus.message}
-                  </p>
-                )}
-
-                <Button
-                  type="submit"
-                  className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-black font-semibold"
-                >
-                  Save username
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          {/* Update Name */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Update Name</CardTitle>
-              <CardDescription>
-                Change the name associated with your account.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4" onSubmit={handleNameSubmit}>
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full name</Label>
-                  <Input
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                  />
+                    {showConfirmPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
                 </div>
+              </div>
 
-                {nameStatus.type !== "idle" && (
-                  <p
-                    className={
-                      nameStatus.type === "success"
-                        ? "text-sm text-emerald-600"
-                        : "text-sm text-red-600"
-                    }
-                  >
-                    {nameStatus.message}
-                  </p>
-                )}
-
-                <Button
-                  type="submit"
-                  className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-black font-semibold"
+              {passwordStatus.type !== "idle" && (
+                <p
+                  className={
+                    passwordStatus.type === "success"
+                      ? "text-sm text-emerald-600"
+                      : "text-sm text-red-600"
+                  }
                 >
-                  Save name
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+                  {passwordStatus.message}
+                </p>
+              )}
 
-          {/* Update Email */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Update Email</CardTitle>
-              <CardDescription>
-                Change the email address linked to your account.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4" onSubmit={handleEmailSubmit}>
-                <div className="space-y-2">
-                  <Label htmlFor="email">New email address</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
+              <Button
+                type="submit"
+                className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-black font-semibold"
+              >
+                Passwort speichern
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
 
-                {emailStatus.type !== "idle" && (
-                  <p
-                    className={
-                      emailStatus.type === "success"
-                        ? "text-sm text-emerald-600"
-                        : "text-sm text-red-600"
-                    }
-                  >
-                    {emailStatus.message}
-                  </p>
-                )}
+        {/* Update Username */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Benutzername aktualisieren</CardTitle>
+            <CardDescription>
+              Ändern Sie den im Arbeitgeberbereich angezeigten Benutzernamen.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-4" onSubmit={handleUsernameSubmit}>
+              <div className="space-y-2">
+                <Label htmlFor="username">Neuer Benutzername</Label>
+                <Input
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
 
-                <Button
-                  type="submit"
-                  className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-black font-semibold"
+              {usernameStatus.type !== "idle" && (
+                <p
+                  className={
+                    usernameStatus.type === "success"
+                      ? "text-sm text-emerald-600"
+                      : "text-sm text-red-600"
+                  }
                 >
-                  Save email
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
-      </main>
+                  {usernameStatus.message}
+                </p>
+              )}
 
-      <EmployerFooter />
-    </div>
-  )
+              <Button
+                type="submit"
+                className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-black font-semibold"
+              >
+                Benutzername speichern
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Update Name */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Name aktualisieren</CardTitle>
+            <CardDescription>
+              Ändern Sie den mit Ihrem Konto verknüpften Namen.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-4" onSubmit={handleNameSubmit}>
+              <div className="space-y-2">
+                <Label htmlFor="name">Vollständiger Name</Label>
+                <Input
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+
+              {nameStatus.type !== "idle" && (
+                <p
+                  className={
+                    nameStatus.type === "success"
+                      ? "text-sm text-emerald-600"
+                      : "text-sm text-red-600"
+                  }
+                >
+                  {nameStatus.message}
+                </p>
+              )}
+
+              <Button
+                type="submit"
+                className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-black font-semibold"
+              >
+                Namen speichern
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Update Email */}
+        <Card>
+          <CardHeader>
+            <CardTitle>E-Mail-Adresse aktualisieren</CardTitle>
+            <CardDescription>
+              Ändern Sie die mit Ihrem Konto verknüpfte E-Mail-Adresse.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-4" onSubmit={handleEmailSubmit}>
+              <div className="space-y-2">
+                <Label htmlFor="email">Neue E-Mail-Adresse</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              {emailStatus.type !== "idle" && (
+                <p
+                  className={
+                    emailStatus.type === "success"
+                      ? "text-sm text-emerald-600"
+                      : "text-sm text-red-600"
+                  }
+                >
+                  {emailStatus.message}
+                </p>
+              )}
+
+              <Button
+                type="submit"
+                className="bg-[#FDB714] hover:bg-[#FDB714]/90 text-black font-semibold"
+              >
+                E-Mail speichern
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    </main>
+
+    <EmployerFooter />
+  </div>
+)
 }

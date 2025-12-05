@@ -122,7 +122,8 @@ export function HomeFeaturedJobs() {
             className="text-gray-700 hover:text-gray-900 font-medium flex items-center gap-2"
           >
             <span className="text-2xl">+</span>
-            View all jobs
+            {/* View all jobs */}
+            Alle Jobs ansehen
           </Link>
         </div>
 

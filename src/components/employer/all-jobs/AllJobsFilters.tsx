@@ -70,7 +70,7 @@ export function AllJobsFilters({
           {/* Left side: text + location (stack on mobile, inline on desktop) */}
           <div className="flex flex-col gap-3 md:flex-row md:flex-1">
             <Input
-              placeholder="Filtering Jobs Title"
+              placeholder="Filterung nach Stellenbezeichnung"
               value={filterText}
               onChange={(e) => onFilterTextChange(e.target.value)}
               className="bg-white md:flex-[2]"
@@ -86,7 +86,7 @@ export function AllJobsFilters({
             <div className="relative md:flex-[2]">
               <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
-                placeholder="Filter by location"
+                placeholder="Nach Standort filtern"
                 value={filterLocation}
                 onChange={(e) => onFilterLocationChange(e.target.value)}
                 className="bg-white pl-9"
@@ -114,7 +114,8 @@ export function AllJobsFilters({
             onClick={onClearAll}
             className="text-sm text-gray-800 hover:underline md:ml-4 self-start md:self-center"
           >
-            Clear all
+            {/* Clear all */}
+            Alle löschen
           </button>
         </div>
 

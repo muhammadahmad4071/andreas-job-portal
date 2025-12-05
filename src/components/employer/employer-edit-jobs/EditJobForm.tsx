@@ -604,10 +604,12 @@ export function EditJobForm({ jobId }: EditJobFormProps) {
       {/* Page Header (same width as create page) */}
       <div className="w-full md:w-[70%] mx-auto px-4 py-12 text-center">
         <h1 className="text-4xl font-bold text-foreground mb-3">
-          Edit Job Post
+          {/* Edit Job Post */}
+          Stellenanzeige bearbeiten
         </h1>
         <p className="text-muted-foreground text-lg">
-          Update your job advertisement details and save the changes.
+          {/* Update your job advertisement details and save the changes. */}
+          Aktualisieren Sie die Details Ihrer Stellenanzeige und speichern Sie die Änderungen.
         </p>
       </div>
 
@@ -641,7 +643,7 @@ export function EditJobForm({ jobId }: EditJobFormProps) {
 
         {validationErrors.length > 0 && (
           <div className="border border-red-200 bg-red-50 text-red-700 rounded-md p-4 text-sm space-y-2">
-            <p className="font-semibold">Please fix the following issues:</p>
+            <p className="font-semibold">Bitte beheben Sie die folgenden Probleme:</p>
             <ul className="list-disc pl-5 space-y-1">
               {validationErrors.map((err, idx) => (
                 <li key={idx}>{err}</li>
@@ -664,7 +666,7 @@ export function EditJobForm({ jobId }: EditJobFormProps) {
 
         <div className="flex justify-end gap-4 pt-6">
           <Button asChild variant="outline" size="lg" disabled={isSubmitting}>
-            <Link href="/employer/jobs/all-jobs">Cancel</Link>
+            <Link href="/employer/jobs/all-jobs">Abbrechen</Link>
           </Button>
           <Button
             type="submit"
@@ -672,7 +674,7 @@ export function EditJobForm({ jobId }: EditJobFormProps) {
             disabled={isSubmitting}
             className="bg-[#FDB913] hover:bg-[#FDB913]/90 text-black font-semibold disabled:opacity-70"
           >
-            {isSubmitting ? "Saving…" : "Save changes"}
+            {isSubmitting ? "Speichern läuft…" : "Speichern läuft…"}
           </Button>
         </div>
       </form>

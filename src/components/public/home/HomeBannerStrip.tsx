@@ -74,9 +74,9 @@ export function HomeBannerStrip() {
     <section className="bg-primary py-8">
       <div className="container-custom">
         <h2 className="text-2xl md:text-3xl font text-black mb-6">
-          Job board for Oberland{" "}
+          Jobbörse für Oberland {" "}
           <span className="font-bold text-white">
-            Regional job offers, apprenticeships and Apprenticeship
+            Regionale Stellenangebote, Ausbildungsplätze und Minijobs
           </span>
         </h2>
 
@@ -100,7 +100,7 @@ export function HomeBannerStrip() {
                 href={`/public/jobs?location=${encodeURIComponent(region.name)}`}
                 className="bg-white text-gray-800 px-5 py-2.5 rounded-full font-medium hover:bg-gray-100 transition-colors duration-200"
               >
-                Jobs in {region.name}
+                Jobs in {region.name} &gt;
               </Link>
             ))}
         </div>
